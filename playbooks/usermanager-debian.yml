@@ -1,0 +1,11 @@
+---
+- name: Manage users (Debian)
+  hosts: target_hosts
+  become: true
+  vars:
+    enable_useradd: "true"
+
+  vars_files:
+    - "../roles/usermanager-debian/vars/vars.yml"
+  roles:
+    - usermanager-debian

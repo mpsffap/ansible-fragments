@@ -1,0 +1,9 @@
+---
+- name: OPTIONALS - Optional stats tools
+  ansible.builtin.apt:
+    name:
+      - iftop
+      - sysstat
+      - fio
+    state: present
+  become: true

@@ -1,0 +1,15 @@
+---
+- name: Gather all groups from users list
+  set_fact:
+    all_groups: "{{ all_groups | default([]) + (item.groups | default([]) + [item.group] | default([])) }}"
+  loop: "{{ users }}"
+
+- name: Deduplicate groups
+  set_fact:
+    all_groups: "{{ all_groups | unique }}"
+
+- name: Ensure groups exist
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ all_groups }}"

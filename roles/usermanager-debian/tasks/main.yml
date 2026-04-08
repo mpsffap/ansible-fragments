@@ -1,0 +1,11 @@
+- name: Prepare passwords
+  ansible.builtin.include_tasks: add-user-passwords.yml
+
+- name: Manage groups
+  ansible.builtin.include_tasks: add-user.yml
+  loop: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    user_data: "{{ item }}"
+  when: enable_useradd == "true"

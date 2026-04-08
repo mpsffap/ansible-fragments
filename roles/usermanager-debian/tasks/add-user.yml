@@ -1,0 +1,9 @@
+---
+- name: Manage groups
+  ansible.builtin.include_tasks: add-user-groups.yml
+
+- name: Manage user
+  ansible.builtin.include_tasks: add-user-os.yml
+
+- name: Manage SSH
+  ansible.builtin.include_tasks: add-user-ssh.yml

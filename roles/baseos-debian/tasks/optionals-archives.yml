@@ -1,0 +1,11 @@
+---
+- name: OPTIONALS - Essentials archive tools
+  ansible.builtin.apt:
+    name:
+      - zip
+      - unzip
+      - bzip2
+      - attr
+      - dtrx
+    state: present
+  become: true
