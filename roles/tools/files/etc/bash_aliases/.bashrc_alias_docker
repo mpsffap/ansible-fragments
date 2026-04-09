@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# docker
+alias dps="docker ps -a"
+alias dcexec="docker exec -ti "
+alias dcstop="docker container stop "
+alias dckill="docker container kill "
+alias dcrm="docker container rm"
+alias dnls="docker network ls"
+alias dvls="docker volume ls"
+alias dirm="docker image rm"
+alias dia="docker images -a"
+alias dlogs="docker logs -f"
+alias dexe="docker exec -it"
+alias diatagged='docker images -a | grep -v "<none>"'
+function dbash() { docker exec -it "$1" bash ;}
+function dsh() { docker exec -it "$1" sh ;}
+function dip() { docker exec "$1" cat /etc/hosts | grep "$1" | cut -f 1; }
+function dips() {
+  if [ -z "$1" ]; then
+    docker ps -q | xargs -n1 docker inspect --format '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}' | sed 's|^/||'
+  else
+    docker inspect --format '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}' "$1" | sed 's|^/||'
+  fi
+}
+

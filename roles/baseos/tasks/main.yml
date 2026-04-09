@@ -1,0 +1,99 @@
+---
+# Init
+## INIT: Packages
+### INIT: Package sources default
+- name: Include essential apt packages
+  ansible.builtin.include_tasks: init-apt.yml
+  when: enable_init == "true"
+
+### INIT: Package upgrades
+- name: Include essential auto-upgrade configurations
+  ansible.builtin.include_tasks: init-autoupgrades.yml
+  when: enable_init == "true"
+
+## INIT: Locale
+### INIT: Default locale
+- name: Include essential locale configurations
+  ansible.builtin.include_tasks: init-locale.yml
+  when: enable_init == "true"
+
+## INIT: Time server
+### INIT: Install default time server
+- name: Include essential time server configurations
+  ansible.builtin.include_tasks: init-time.yml
+  when: enable_init == "true"
+
+## INIT: Fonts
+### INIT: Install default terminal font
+- name: Include essential time server configurations
+  ansible.builtin.include_tasks: init-time.yml
+  when: enable_init == "true"
+
+## INIT: Essentials
+### INIT: Essenttial packages
+- name: Include essential packages
+  ansible.builtin.include_tasks: init-essentials.yml
+  when: enable_init == "true"
+
+### INIT: Essential file managers
+- name: Include essential filemanager packages
+  ansible.builtin.include_tasks: init-fm.yml
+  when: enable_init == "true"
+
+### INIT: Configure ssh
+- name: Include default ssh config
+  ansible.builtin.include_tasks: init-ssh-client.yml
+  when: enable_init == "true"
+
+### INIT: Configure sshd
+- name: Include default sshd config
+  ansible.builtin.include_tasks: init-ssh-server.yml
+  when: enable_init == "true"
+
+# OPTIONALS
+## OPTIONALS: Additional packages
+### OPTIONALS: Optional QoL-tools for archives
+- name: Include optional archive packages
+  ansible.builtin.include_tasks: optionals-archives.yml
+  when: enable_optionals == "true" and enable_optionals_archives == "true"
+
+### OPTIONALS: Optional QoL-tools for build tools
+- name: Include optional build tool packages
+  ansible.builtin.include_tasks: optionals-build.yml
+  when: enable_optionals == "true" and enable_optionals_build == "true"
+
+  ### OPTIONALS: Optional QoL-tools for terminal and sripting
+- name: Include optional filemanager packages
+  ansible.builtin.include_tasks: optionals-fm.yml
+  when: enable_optionals == "true" and enable_optionals_fm == "true"
+
+### OPTIONALS: Optional QoL-tools for build tools
+- name: Include optional networking packages
+  ansible.builtin.include_tasks: optionals-networking.yml
+  when: enable_optionals == "true" and enable_optionals_networking == "true"
+
+  ### OPTIONALS: Optional QoL-tools for stats
+- name: Include optional networking packages
+  ansible.builtin.include_tasks: optionals-stats.yml
+  when: enable_optionals == "true" and enable_optionals_stats == "true"
+
+### OPTIONALS: Optional QoL-tools for the terminal
+- name: Include optional terminal tools
+  ansible.builtin.include_tasks: optionals-terminal.yml
+  when: enable_optionals == "true" and enable_optionals_terminal == "true"
+
+# HARDEN
+## HARDEN: default security measures
+### HARDEN: Default firewall rules
+- name: Include default rules via iptables
+  ansible.builtin.include_tasks: harden-firewall.yml
+  when: enable_harden == "true" and enable_harden_firewall == "true"
+### HARDEN: Default app policies/ACL
+- name: Include hardening with apparmor
+  ansible.builtin.include_tasks: harden-apparmor.yml
+  when: enable_harden == "true" and enable_harden_apparmor == "true"
+
+### HARDEN: Basic auditing daemon
+- name: Include hardening with auditd packages
+  ansible.builtin.include_tasks: harden-auditd.yml
+  when: enable_harden == "true" and enable_harden_auditing == "true"

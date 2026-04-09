@@ -1,0 +1,17 @@
+---
+- name: Manage tools (Debian)
+  hosts: target_hosts
+  become: true
+  vars:
+    enable_terminal: "false"
+    enable_bash: "false"
+    enable_tmux: "false"
+    enable_vim: "false"
+    enable_nvim: "true"
+    enable_rust: "false"
+    enable_yazi: "false"
+
+  vars_files:
+    - "../roles/tools/vars/vars_tools.yml"
+  roles:
+    - tools

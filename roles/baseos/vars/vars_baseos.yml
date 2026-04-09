@@ -1,0 +1,61 @@
+---
+# -- Source files
+src_etcfiles: "../files/etc"
+
+# -- Target directoories
+dst_fontdir: /usr/share/fonts
+
+# -- Locale
+default_locale: "en_US.UTF-8"
+
+# Timezone
+default_timezone: "Europe/Berlin"
+
+# -- Keyboard
+default_kbd_model: "pc105"
+default_kbd_layout: "de"
+default_kbd_variant: "nodeadkeys"
+default_kbd_options: "compose:menu"
+
+# -- Console
+default_console_charset: "UTF-8"
+default_console_codeset: "Lat15"
+default_console_fontface: "Terminus"
+default_console_fontsize: "8x16"
+
+# -- Auditd
+audit_repo: "https://github.com/linux-audit/audit-userspace.git"
+audit_src_dir: "/usr/local/src/audit-userspace"
+audit_run_dir: /var/run/audit
+audit_log_file: /var/log/audit/audit.log
+localstatedir: "/var"
+
+# -- Fonts
+fonts:
+  - name: JetBrainsMono
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+    dst_unzip_path: "{{ dst_fontdir }}/JetBrainsMono"
+
+  - name: codicon
+    url: https://github.com/microsoft/vscode-codicons/releases/download/0.0.36/codicon.ttf
+    dst_unzip_path: "{{ dst_fontdir }}/codicon"
+    file_only: true
+
+# -- firewall
+firewall_policies:
+  input: DROP
+  output: ACCEPT
+  forward: DROP
+
+firewall_tcp_ports: ["22"]
+firewall_udp_ports: []
+firewall_allow_icmp: true
+firewall_rules_path: /etc/iptables/rules.v4
+firewall_rules_dir: /etc/iptables
+firewall_service_name: iptables
+firewall_with_docker: true
+
+nat_enable_ip_forwarding: true
+nat_out_interface: enp0s5
+nat_source_network: "10.10.100.0/24"
+nat_persist_rules: true

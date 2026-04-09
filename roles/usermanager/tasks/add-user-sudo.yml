@@ -1,0 +1,30 @@
+---
+- name: Create sudo macros file
+  template:
+    src: macro.j2
+    dest: "/etc/sudoers.d/00_macros"
+    owner: root
+    group: root
+    mode: "0440"
+  vars:
+    macros: "{{ sudo_macros }}"
+
+# - name: Ensure main sudoers includes 00_macros
+#   lineinfile:
+#     path: /etc/sudoers
+#     state: present
+#     regexp: "^#include /etc/sudoers.d/00_macros$"
+#     line: "#include /etc/sudoers.d/00_macros"
+#     validate: "visudo -cf %s"
+
+- name: Ensure sudoers file for each user
+  template:
+    src: sudoers.j2
+    dest: "/etc/sudoers.d/{{ item.name }}"
+    owner: root
+    group: root
+    mode: "0440"
+  loop: "{{ users_present }}"
+  when: item.sudo is defined
+  vars:
+    user: "{{ item }}"

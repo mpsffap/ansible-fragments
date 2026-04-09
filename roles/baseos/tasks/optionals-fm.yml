@@ -1,0 +1,15 @@
+- name: OPTIONALS - Optional file managers
+  ansible.builtin.apt:
+    name:
+      - fd-find
+      - fzf
+      - ranger
+      - zoxide
+      - plocate
+    state: present
+  become: true
+
+- name: OPTIONALS - Optional file managers
+  ansible.builtin.shell:
+    cmd: "updatedb.plocate"
+  become: true

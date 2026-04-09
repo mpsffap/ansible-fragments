@@ -1,0 +1,29 @@
+---
+- name: Ensure .ssh directory exists
+  file:
+    path: "{{ item.home }}/.ssh"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.group | default(item.name) }}"
+    mode: "0700"
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Deploy SSH key files
+  copy:
+    dest: "{{ item.0.home }}/.ssh/{{ item.1.name }}"
+    content: "{{ item.1.content if item.1.content is defined else lookup('file', item.1.path) }}"
+    owner: "{{ item.0.name }}"
+    group: "{{ item.0.group | default(item.0.name) }}"
+    mode: "0600"
+  loop: "{{ users_present | subelements('ssh_keys', skip_missing=True) }}"
+
+- name: Deploy authorized_keys
+  copy:
+    dest: "{{ item.0.home }}/.ssh/authorized_keys"
+    content: "{{ item.1.content | default(lookup('file', item.1.path)) }}"
+    owner: "{{ item.0.name }}"
+    group: "{{ item.0.group | default(item.0.name) }}"
+    mode: "0600"
+  loop: "{{ users_present | subelements('authorized_keys', skip_missing=True) }}"

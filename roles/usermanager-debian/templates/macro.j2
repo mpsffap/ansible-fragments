@@ -1,4 +1,0 @@
-{% for macro_name, macro_cmds in macros.items() %}
-Cmnd_Alias {{ macro_name }} = {% for cmd in macro_cmds %}{{ cmd }}{% if not loop.last %}, {% endif %}{% endfor %}
-
-{% endfor %}

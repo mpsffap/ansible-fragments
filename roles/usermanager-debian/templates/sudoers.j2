@@ -1,5 +1,0 @@
-{% if user.sudo.nopasswd | default(false) %}
-{{ user.name }} ALL=(ALL) NOPASSWD: ALL
-{% else %}
-{{ user.name }} ALL=(ALL) NOPASSWD: {% for macro_name in user.sudo.macros %}{{ macro_name }}{% if not loop.last %}, {% endif %}{% endfor %}
-{% endif %}

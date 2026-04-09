@@ -1,0 +1,12 @@
+---
+- name: Setup base os (Debian)
+  hosts: target_hosts
+  become: true
+  vars_files:
+    - "../roles/baseos/vars/vars_baseos.yml"
+    - "../roles/tools/vars/vars_tools.yml"
+    - "../roles/usermanager/vars/vars_user.yml"
+  roles:
+    - baseos
+    - usermanager
+    - tools

@@ -1,0 +1,17 @@
+[Unit]
+Description=iptables starter
+{% if firewall_docker_present %}
+Requires=docker.service
+After=docker.service
+{% endif %}
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory={{ firewall_rules_dir }}
+ExecStart=/bin/bash -c "/usr/sbin/iptables-restore < {{ firewall_rules_path | basename }}"
+ExecStop=/usr/bin/iptables -F
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target

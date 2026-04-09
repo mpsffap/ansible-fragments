@@ -1,0 +1,30 @@
+---
+- name: Show generated password and hash
+  debug:
+    msg: |
+      User {{ item.name }}
+        Original  : '{{ item.password }}'
+        Plaintext : '{{ item.password_plain }}'
+        Hash      : '{{ item.password_hash }}'
+  loop: "{{ users_with_passwords }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Create users with cleaned hashed passwords
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    append: "{{ item.append_groups | default(omit) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    shell: "{{ item.shell | default(omit) }}"
+    home: "{{ item.home | default(omit) }}"
+    create_home: "{{ item.create_home | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+    expires: "{{ item.expires | default(omit) }}"
+    password: "{{ item.password_hash }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ item.name }}"
