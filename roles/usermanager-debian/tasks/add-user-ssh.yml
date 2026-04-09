@@ -6,7 +6,7 @@
     owner: "{{ item.name }}"
     group: "{{ item.group | default(item.name) }}"
     mode: "0700"
-  loop: "{{ users }}"
+  loop: "{{ users_present }}"
   loop_control:
     label: "{{ item.name }}"
 
@@ -17,7 +17,7 @@
     owner: "{{ item.0.name }}"
     group: "{{ item.0.group | default(item.0.name) }}"
     mode: "0600"
-  loop: "{{ users | subelements('ssh_keys', skip_missing=True) }}"
+  loop: "{{ users_present | subelements('ssh_keys', skip_missing=True) }}"
 
 - name: Deploy authorized_keys
   copy:
@@ -26,4 +26,4 @@
     owner: "{{ item.0.name }}"
     group: "{{ item.0.group | default(item.0.name) }}"
     mode: "0600"
-  loop: "{{ users | subelements('authorized_keys', skip_missing=True) }}"
+  loop: "{{ users_present | subelements('authorized_keys', skip_missing=True) }}"

@@ -1,9 +1,12 @@
 ---
-- name: Manage groups
+- name: Add user groups
   ansible.builtin.include_tasks: add-user-groups.yml
 
-- name: Manage user
+- name: Add user
   ansible.builtin.include_tasks: add-user-os.yml
 
-- name: Manage SSH
+- name: Add SSH keys and authorization
   ansible.builtin.include_tasks: add-user-ssh.yml
+
+- name: Manage sudo permissions
+  ansible.builtin.include_tasks: add-user-sudo.yml

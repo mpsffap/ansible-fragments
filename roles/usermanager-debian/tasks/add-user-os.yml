@@ -25,6 +25,6 @@
     expires: "{{ item.expires | default(omit) }}"
     password: "{{ item.password_hash }}"
     state: "{{ item.state | default('present') }}"
-  loop: "{{ users }}"
+  loop: "{{ users_present }}"
   loop_control:
     label: "{{ item.name }}"

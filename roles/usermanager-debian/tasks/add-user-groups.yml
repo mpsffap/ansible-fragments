@@ -2,7 +2,7 @@
 - name: Gather all groups from users list
   set_fact:
     all_groups: "{{ all_groups | default([]) + (item.groups | default([]) + [item.group] | default([])) }}"
-  loop: "{{ users }}"
+  loop: "{{ users_present }}"
 
 - name: Deduplicate groups
   set_fact:

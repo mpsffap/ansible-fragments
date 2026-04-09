@@ -4,6 +4,7 @@
   become: true
   vars:
     enable_useradd: "true"
+    enable_userdel: "true"
 
   vars_files:
     - "../roles/usermanager-debian/vars/vars.yml"
