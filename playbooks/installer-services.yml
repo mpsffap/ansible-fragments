@@ -1,0 +1,11 @@
+---
+- name: Manage installers-services (Debian)
+  hosts: target_hosts
+  become: true
+  vars:
+    enable_docker: "true"
+
+  vars_files:
+    - "../roles/installer-services/vars/vars_installer_services.yml"
+  roles:
+    - installer-services

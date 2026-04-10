@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# info
+alias info-tmux="tmux ls"
+alias info-pubip='echo $(curl -s ifconfig.me)'
+alias info-mps="ls -la ~/mps/"
+alias info-fs='df -h | head -n1 ; df -h | tail -n +2 | sort -k1,5'
+alias info-zram='sudo zramctl'
+alias info-mounts='sudo mount -a'
+alias info-net='sudo netstat -tulpano |sort -k 4 -n'
+alias info-fw='sudo iptables -L -n -v -tnat'
+alias info-fwnat='sudo iptables -L -n -v -tnat'
+alias info-bridges='sudo brctl show'
+alias info-routes='sudo route -n'
+alias info-nics='sudo ifconfig -a'
+

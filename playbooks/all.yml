@@ -4,9 +4,11 @@
   become: true
   vars_files:
     - "../roles/baseos/vars/vars_baseos.yml"
-    - "../roles/tools/vars/vars_tools.yml"
     - "../roles/usermanager/vars/vars_user.yml"
+    - "../roles/installer-terminal/vars/vars_tools_terminal.yml"
+    - "../roles/installer-terminal/vars/vars_tools_services.yml"
   roles:
     - baseos
     - usermanager
-    - tools
+    - installer-terminal
+    - installer-services

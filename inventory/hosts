@@ -1,3 +1,0 @@
-[target_hosts]
-localhost ansible_user=deploy ansible_port=22
-

@@ -1,0 +1,10 @@
+---
+# -- Destination files
+dst_docker_keyring_dir: /etc/apt/keyrings
+dst_docker_key: /etc/apt/keyrings/docker.asc
+dst_docker_list: /etc/apt/sources.list.d/docker.list
+dst_docker_root: /srv/docker
+
+# -- Urls
+url_docker_gpg: https://download.docker.com/linux/debian/gpg
+url_docker_repo: https://download.docker.com/linux/debian

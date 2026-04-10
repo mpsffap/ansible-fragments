@@ -1,0 +1,7 @@
+slash /
+etc /etc
+logs /var/log
+home ~
+.config ~/.config
+nvim ~/.config/nvim
+

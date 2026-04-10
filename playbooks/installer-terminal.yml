@@ -1,0 +1,17 @@
+---
+- name: Manage installers-terminal (Debian)
+  hosts: target_hosts
+  become: true
+  vars:
+    enable_terminal: "true"
+    enable_bash: "true"
+    enable_tmux: "true"
+    enable_vim: "true"
+    enable_nvim: "true"
+    enable_rust: "true"
+    enable_yazi: "true"
+
+  vars_files:
+    - "../roles/installer-terminal/vars/vars_installer_terminal.yml"
+  roles:
+    - installer-terminal
