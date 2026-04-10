@@ -1,4 +1,11 @@
 ---
+- name: rust essential packages
+  ansible.builtin.apt:
+    name:
+      - clang
+    state: present
+  become: true
+
 - name: Ensure Rustup directory exists
   ansible.builtin.file:
     path: "{{ dst_tools }}/rustup"
