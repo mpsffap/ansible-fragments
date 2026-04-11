@@ -1,0 +1,11 @@
+- name: HARDEN-MAIN - Include base hardening packages
+  ansible.builtin.include_tasks: harden-base.yml
+  when: enable_harden_base is true
+
+- name: HARDEN-MAIN - Include common hardening packages
+  ansible.builtin.include_tasks: harden-common.yml
+  when: enable_harden_base is true
+
+- name: HARDEN-MAIN - Include optional hardening packages
+  ansible.builtin.include_tasks: harden-optional.yml
+  when: enable_harden_base is true

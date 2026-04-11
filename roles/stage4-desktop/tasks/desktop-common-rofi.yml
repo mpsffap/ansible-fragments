@@ -1,0 +1,42 @@
+---
+- name: DESKTOP-COMMON-ROFI - Install essentials rofi
+  ansible.builtin.apt:
+    name:
+      - rofi
+    state: present
+  become: true
+
+- name: DESKTOP-COMMON-ROFI - Create mps folders
+  when: user != {}
+  block:
+    - name: DESKTOP-COMMON-ROFI - Copy rofi snippets
+      ansible.builtin.copy:
+        src: "{{ src_dotfiles }}/.config/rofi/themes"
+        dest: "{{ dst_rofi_snippets }}"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: "0700"
+
+    - name: DESKTOP-COMMON-ROFI - Create rofi folder
+      ansible.builtin.file:
+        path: "{{ user.home }}/.config/rofi"
+        state: "directory"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: "0700"
+
+    - name: DESKTOP-COMMON-ROFI - Copy rofi config
+      ansible.builtin.copy:
+        src: "{{ src_dotfiles }}/.config/rofi/config.rasi"
+        dest: "{{ user.home }}/.config/rofi/config.rasi"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: "0700"
+
+    - name: DESKTOP-COMMON-ROFI - Copy rofi themes
+      ansible.builtin.copy:
+        src: "{{ src_dotfiles }}/.config/rofi/themes"
+        dest: "{{ user.home }}/.config/rofi"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: "0700"

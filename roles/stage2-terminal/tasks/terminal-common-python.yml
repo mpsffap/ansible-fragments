@@ -1,0 +1,40 @@
+- name: TERMINAL-COMMON-PYTHON3 - Essential python packages
+  ansible.builtin.apt:
+    name:
+      - python3
+      - python3-venv
+    state: present
+  become: true
+
+- name: TERMINAL-COMMON-PYTHON3 - Setup per-user Python venv
+  become: true
+  become_user: "{{ user.name }}"
+  block:
+    - name: TERMINAL-COMMON-PYTHON3 - Ensure venv base directory exists
+      file:
+        path: "{{ dst_venv }}"
+        state: directory
+        mode: "0700"
+
+    - name: TERMINAL-COMMON-PYTHON3 - Create venv (if missing)
+      command: "python3 -m venv {{ dst_venv_default }}"
+      args:
+        creates: "{{ dst_venv_default }}/bin/activate"
+
+    - name: TERMINAL-COMMON-PYTHON3 - Install base tooling
+      pip:
+        name:
+          - pip
+          - setuptools
+          - wheel
+        virtualenv: "{{ dst_venv_default }}"
+
+    - name: TERMINAL-COMMON-PYTHON3 - Install configured packages
+      pip:
+        name: "{{ python_venv_packages | default([]) }}"
+        virtualenv: "{{ dst_venv_default }}"
+
+    - name: TERMINAL-COMMON-PYTHON3 - Add venv to PATH
+      lineinfile:
+        path: "~/.bashrc"
+        line: "source {{ dst_venv_default }}/bin/activate"

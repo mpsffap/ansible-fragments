@@ -3,12 +3,16 @@
   hosts: target_hosts
   become: true
   vars_files:
-    - "../roles/baseos/vars/vars_baseos.yml"
-    - "../roles/usermanager/vars/vars_user.yml"
-    - "../roles/installer-terminal/vars/vars_tools_terminal.yml"
-    - "../roles/installer-terminal/vars/vars_tools_services.yml"
+    - "../roles/stage0-init/vars/vars_init.yml"
+    - "../roles/stage1-users/vars/vars_user.yml"
+    - "../roles/stage2-terminal/vars/vars_installer_terminal.yml"
+    - "../roles/stage3-services/vars/vars_installer_services.yml"
+    - "../roles/stage4-desktop/vars/vars_installer_desktop.yml"
+    - "../roles/stage8-harden/vars/vars_harden.yml"
   roles:
-    - baseos
-    - usermanager
-    - installer-terminal
-    - installer-services
+    - stage0-init
+    - stage1-users
+    - stage2-terminal
+    - stage3-services
+    - stage4-desktop
+    - stage8-harden

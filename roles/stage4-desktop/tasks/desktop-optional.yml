@@ -1,0 +1,8 @@
+---
+- name: DESKTOP-OPTIONAL-BRAVE - Install brave browser
+  ansible.builtin.include_tasks: desktop-optional-brave.yml
+  when: enable_desktop_optional_brave
+
+- name: DESKTOP-OPTIONAL-GNOMETOOLS - Install gnome tools
+  ansible.builtin.include_tasks: desktop-optional-gnometools.yml
+  when: enable_desktop_optional_gnometools

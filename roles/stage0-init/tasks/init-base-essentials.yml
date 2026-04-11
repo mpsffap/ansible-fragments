@@ -1,0 +1,20 @@
+---
+- name: INIT-BASE-ESSENTIALS - Essential packages
+  ansible.builtin.apt:
+    name:
+      - sudo
+      - curl
+      - wget
+      - rsync
+      - gnupg
+      - lsb-release
+      - debconf
+      - debconf-utils
+      - fontconfig
+      - psutils
+      - psmisc
+      - htop
+      - rsyslog
+      - bsdmainutils
+    state: present
+  become: true

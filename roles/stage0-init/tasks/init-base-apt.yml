@@ -1,0 +1,44 @@
+---
+- name: INIT-BASE-APT - Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: INIT-BASE-APT - Ensure apt essentials are installed
+  ansible.builtin.apt:
+    name:
+      - apt-utils
+      - apt-transport-https
+      - ca-certificates
+    state: present
+
+- name: INIT-BASE-APT - Copy apt sources
+  ansible.builtin.template:
+    src: "{{ src_templates }}/apt/sources.list.j2"
+    dest: "/etc/apt/sources.list"
+    owner: "root"
+    group: "root"
+    mode: "0744"
+
+- name: INIT-BASE-APT - Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: INIT-BASE-APT - Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: dist
+    autoremove: true
+
+- name: INIT-BASE-APT - Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: full
+    autoremove: true
+
+- name: INIT-BASE-APT - Ensure apt-utils is installed
+  ansible.builtin.apt:
+    name:
+      - apt-utils
+      - apt-file
+      - apt-transport-https
+      - ca-certificates
+    autoremove: true
+    state: present

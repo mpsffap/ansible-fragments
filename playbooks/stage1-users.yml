@@ -1,0 +1,9 @@
+---
+- name: Manage users (Debian)
+  hosts: target_hosts
+  become: true
+
+  vars_files:
+    - "../roles/stage1-users/vars/vars_user.yml"
+  roles:
+    - stage1-users

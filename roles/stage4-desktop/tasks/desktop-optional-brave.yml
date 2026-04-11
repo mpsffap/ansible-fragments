@@ -1,0 +1,29 @@
+---
+- name: DESKTOP-OPTIONAL-QTILE - Ensure required packages are installed
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+    update_cache: true
+
+- name: DESKTOP-OPTIONAL-QTILE - Download Brave GPG key
+  ansible.builtin.get_url:
+    url: "{{ url_brave_repo }}brave-browser-archive-keyring.gpg"
+    dest: "{{ dst_brave_keyring }}"
+    mode: "0644"
+
+- name: DESKTOP-OPTIONAL-QTILE - Add Brave repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [signed-by={{ dst_brave_keyring }}]
+      {{ url_brave_repo }} stable main
+    filename: brave-browser
+    state: present
+
+- name: DESKTOP-OPTIONAL-QTILE - Install Brave browser
+  ansible.builtin.apt:
+    name: brave-browser
+    state: present
+    update_cache: true

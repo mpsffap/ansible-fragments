@@ -1,0 +1,12 @@
+---
+- name: TERMINAL-BASE - Include terminal base installers
+  ansible.builtin.include_tasks: terminal-base.yml
+  when: enable_terminal_base
+
+- name: TERMINAL-COMMON - Include terminal common installers
+  ansible.builtin.include_tasks: terminal-common.yml
+  when: enable_terminal_common
+
+- name: TERMINAL-OPTIONAL - Include terminal optional installers
+  ansible.builtin.include_tasks: terminal-optional.yml
+  when: enable_terminal_optional

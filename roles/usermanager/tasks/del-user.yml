@@ -1,6 +1,0 @@
----
-- name: delete user
-  ansible.builtin.include_tasks: del-user-os.yml
-
-- name: delete user in sudo config
-  ansible.builtin.include_tasks: del-user-sudo.yml

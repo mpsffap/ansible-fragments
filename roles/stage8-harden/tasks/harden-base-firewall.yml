@@ -1,0 +1,216 @@
+---
+# --------------------------------------------------
+# Detect docker
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Check if docker exists
+  ansible.builtin.command: which docker
+  register: docker_check
+  failed_when: false
+  changed_when: false
+
+- name: INIT-HARDEN-FIREWALL - Set docker flag
+  ansible.builtin.set_fact:
+    firewall_docker_present: "{{ docker_check.rc == 0 and firewall_with_docker }}"
+
+- name: INIT-HARDEN-FIREWALL - Set INPUT policy
+  ansible.builtin.iptables:
+    chain: INPUT
+    policy: "ACCEPT"
+
+- name: INIT-HARDEN-FIREWALL - Set OUTPUT policy
+  ansible.builtin.iptables:
+    chain: OUTPUT
+    policy: "ACCEPT"
+
+- name: INIT-HARDEN-FIREWALL - Set FORWARD policy
+  ansible.builtin.iptables:
+    chain: FORWARD
+    policy: "ACCEPT"
+
+# --------------------------------------------------
+# Flush existing rules (MODULE ✔)
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Flush filter table chains
+  ansible.builtin.iptables:
+    table: filter
+    chain: "{{ item }}"
+    flush: true
+  loop:
+    - INPUT
+    - OUTPUT
+    - FORWARD
+
+- name: INIT-HARDEN-FIREWALL - Flush nat table chains (optional but safer)
+  ansible.builtin.iptables:
+    table: nat
+    chain: "{{ item }}"
+    flush: true
+  loop:
+    - PREROUTING
+    - POSTROUTING
+    - OUTPUT
+
+# --------------------------------------------------
+# Restart docker
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Restart docker if present
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+  when: firewall_docker_present
+
+# --------------------------------------------------
+# Loopback
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Allow loopback INPUT
+  ansible.builtin.iptables:
+    chain: INPUT
+    in_interface: lo
+    jump: ACCEPT
+
+- name: INIT-HARDEN-FIREWALL - Allow loopback OUTPUT
+  ansible.builtin.iptables:
+    chain: OUTPUT
+    out_interface: lo
+    jump: ACCEPT
+
+# --------------------------------------------------
+# Established connections
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Allow established INPUT
+  ansible.builtin.iptables:
+    chain: INPUT
+    ctstate:
+      - ESTABLISHED
+      - RELATED
+    jump: ACCEPT
+
+- name: INIT-HARDEN-FIREWALL - Allow established OUTPUT
+  ansible.builtin.iptables:
+    chain: OUTPUT
+    ctstate:
+      - ESTABLISHED
+      - RELATED
+    jump: ACCEPT
+
+# --------------------------------------------------
+# ICMP
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Allow ICMP INPUT
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: icmp
+    jump: ACCEPT
+  when: firewall_allow_icmp
+
+- name: INIT-HARDEN-FIREWALL - Allow ICMP OUTPUT
+  ansible.builtin.iptables:
+    chain: OUTPUT
+    protocol: icmp
+    jump: ACCEPT
+  when: firewall_allow_icmp
+
+# --------------------------------------------------
+# TCP ports
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Allow TCP ports
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item }}"
+    ctstate: NEW
+    jump: ACCEPT
+  loop: "{{ firewall_tcp_ports }}"
+
+# --------------------------------------------------
+# UDP ports
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Allow UDP ports
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: udp
+    destination_port: "{{ item }}"
+    ctstate: NEW
+    jump: ACCEPT
+  loop: "{{ firewall_udp_ports }}"
+
+# --------------------------------------------------
+# Policies
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Set INPUT policy
+  ansible.builtin.iptables:
+    chain: INPUT
+    policy: "{{ firewall_policies.input }}"
+
+- name: INIT-HARDEN-FIREWALL - Set OUTPUT policy
+  ansible.builtin.iptables:
+    chain: OUTPUT
+    policy: "{{ firewall_policies.output }}"
+
+- name: INIT-HARDEN-FIREWALL - Set FORWARD policy
+  ansible.builtin.iptables:
+    chain: FORWARD
+    policy: "{{ firewall_policies.forward }}"
+
+# --------------------------------------------------
+# Ensure rules directory exists
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Create rules directory
+  ansible.builtin.file:
+    path: "{{ firewall_rules_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-HARDEN-FIREWALL - Ensure IP forwarding is configured via sysctl
+  ansible.builtin.sysctl:
+    name: net.ipv4.ip_forward
+    value: "{{ 1 if nat_enable_ip_forwarding else 0 }}"
+    state: present
+    reload: true
+  when: nat_enable_ip_forwarding
+
+- name: INIT-HARDEN-FIREWALL - Ensure masquerading rule exists
+  ansible.builtin.iptables:
+    table: nat
+    chain: POSTROUTING
+    source: "{{ nat_source_network }}"
+    out_interface: "{{ nat_out_interface }}"
+    jump: MASQUERADE
+    state: present
+    comment: "ansible-nat"
+    rule_num: 1
+  when: nat_enable_ip_forwarding
+
+- name: INIT-HARDEN-FIREWALL - Allow forwarding from internal network to WAN
+  ansible.builtin.iptables:
+    chain: FORWARD
+    source: "{{ nat_source_network }}"
+    out_interface: "{{ nat_out_interface }}"
+    jump: ACCEPT
+    state: present
+    rule_num: 1
+
+# --------------------------------------------------
+# Save rules (still required ❗)
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Save iptables rules
+  ansible.builtin.shell: iptables-save > {{ firewall_rules_path }}
+
+# --------------------------------------------------
+# Systemd service
+# --------------------------------------------------
+- name: INIT-HARDEN-FIREWALL - Deploy iptables systemd service
+  ansible.builtin.template:
+    src: "{{ src_templates }}/systemd/iptables.service.j2"
+    dest: "{{ dst_systemd_dir }}/{{ firewall_service_name }}.service"
+    mode: "0644"
+
+- name: INIT-HARDEN-FIREWALL - Enable service
+  ansible.builtin.service:
+    name: "{{ firewall_service_name }}"
+    enabled: true
+
+- name: INIT-HARDEN-FIREWALL - Restart service
+  ansible.builtin.service:
+    name: "{{ firewall_service_name }}"
+    state: restarted

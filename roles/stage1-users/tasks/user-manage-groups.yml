@@ -1,0 +1,8 @@
+---
+- name: USER-MANAGE-ADD-GROUPS - Ensure groups exist
+  ansible.builtin.group:
+    name: "{{ group }}"
+    state: present
+  loop: "{{ all_groups }}"
+  loop_control:
+    loop_var: "group"

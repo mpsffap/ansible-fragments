@@ -1,8 +1,0 @@
----
-- name: Remove sudoers file for absent users
-  file:
-    path: "/etc/sudoers.d/{{ item.name }}"
-    state: absent
-  loop: "{{ users_absent }}"
-  loop_control:
-    label: "{{ item.name }}"

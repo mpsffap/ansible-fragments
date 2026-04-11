@@ -1,0 +1,11 @@
+---
+- name: INIT-BASE-TIME - Set timezone
+  community.general.timezone:
+    name: "{{ default_timezone }}"
+
+- name: INIT-BASE-TIME - Install chrony
+  ansible.builtin.apt:
+    name:
+      - chrony
+    state: present
+  become: true

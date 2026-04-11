@@ -1,0 +1,11 @@
+---
+- name: DESKTOP-MAIN-FACTS - Prepare user facts
+  ansible.builtin.include_tasks: facts-desktop-user.yml
+
+- name: DESKTOP-MAIN - Include desktop base installers
+  ansible.builtin.include_tasks: desktop.yml
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    user: "{{ item }}"

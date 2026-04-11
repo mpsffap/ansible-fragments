@@ -1,0 +1,14 @@
+---
+- name: INIT-OPTIONAL-TERMINAL - Optional terminal tools
+  ansible.builtin.apt:
+    name:
+      - cowsay
+      - figlet
+      - fortune
+      - fortunes-de
+      - cmatrix
+      - kitty
+      - tmux
+      - tmuxinator
+    state: present
+  become: true

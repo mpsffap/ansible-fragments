@@ -1,0 +1,114 @@
+- name: TERMINAL-OPTIONAL-NVIM - Install nvim
+  ansible.builtin.apt:
+    name:
+      - lazygit
+      - npm
+      - git
+      - make
+      - gcc
+      - gdb
+      - wget
+      - bzip2
+      - curl
+      - build-essential
+      - lldb
+      - libncurses-dev
+      - ruby
+      - npm
+      - fzf
+      - fd-find
+      - rr
+      - ripgrep
+      - shellcheck
+      - xclip
+      - xsel
+      - luarocks
+      - chktex
+      - python3
+      - python3-venv
+      - python3-pip
+      - black
+      - flake8
+      - pylint
+      - mypy
+      - python3-neovim
+      - python3-pynvim
+  become: true
+- name: TERMINAL-OPTIONAL-NVIM - Create venv (if missing)
+  command: "python3 -m venv {{ dst_venv_neovim }}"
+  args:
+    creates: "{{ dst_venv_neovim }}/bin/activate"
+
+- name: TERMINAL-OPTIONAL-NVIM - Install pip packages
+  ansible.builtin.pip:
+    name:
+      - ruff-lsp
+      - debugpy
+      - pynvim
+    state: present
+    virtualenv: "{{ dst_venv_neovim }}"
+
+- name: TERMINAL-OPTIONAL-NVIM - Install npm packages globally
+  ansible.builtin.shell:
+    cmd: "npm install -g neovim vint luacheck"
+  become: true
+
+- name: TERMINAL-OPTIONAL-NVIM - Create directory for Neovim installation
+  ansible.builtin.file:
+    path: "{{ dst_neovim }}"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: TERMINAL-OPTIONAL-NVIM - Check if Neovim tarball exists
+  ansible.builtin.stat:
+    path: "{{ dst_neovim }}/nvim-linux-x86_64.tar.gz"
+  register: nvim_tarball
+
+- name: TERMINAL-OPTIONAL-NVIM - Download Neovim tarball
+  ansible.builtin.get_url:
+    url: "{{ url_neovim }}"
+    dest: "{{ dst_neovim }}/nvim-linux-x86_64.tar.gz"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  when: not nvim_tarball.stat.exists
+
+- name: TERMINAL-OPTIONAL-NVIM - Extract Neovim tarball
+  ansible.builtin.unarchive:
+    src: "{{ dst_neovim }}/nvim-linux-x86_64.tar.gz"
+    dest: "{{ dst_neovim }}/"
+    remote_src: true
+    creates: "{{ dst_neovim }}/nvim-linux-x86_64/bin/nvim"
+
+- name: TERMINAL-OPTIONAL-NVIM - Remove nvim package binary
+  ansible.builtin.file:
+    path: "/usr/bin/nvim"
+    state: absent
+
+- name: TERMINAL-OPTIONAL-NVIM - Create symlink for nvim
+  ansible.builtin.file:
+    src: "{{ dst_neovim }}/nvim-linux-x86_64/bin/nvim"
+    dest: "/usr/local/bin/nvim"
+    state: link
+
+- name: TERMINAL-OPTIONAL-NVIM - Copy bash config if needed
+  when: user != {}
+  block:
+    - name: TERMINAL-OPTIONAL-NVIM - Sync config files
+      ansible.posix.synchronize:
+        src: "{{ src_dotfiles }}/.config/nvim"
+        dest: "{{ user.home }}/.config"
+        recursive: true
+        delete: false
+      become: true
+      become_user: "{{ user.name }}"
+
+    - name: TERMINAL-OPTIONAL-NVIM - Create session folder
+      ansible.builtin.file:
+        path: "{{ user.home }}/.config/nvim-session"
+        state: directory
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: "0700"

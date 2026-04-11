@@ -1,0 +1,12 @@
+---
+- name: DESKTOP-OPTIONAL-GNOMETOOLS - Install Gnome tools
+  ansible.builtin.apt:
+    name:
+      - gnome-system-monitor
+      - network-manager-gnome
+      - gnome-screenshot
+      - gnome-extra-icons
+      - gedit
+      - gedit-plugins
+    state: present
+  become: true

@@ -1,0 +1,6 @@
+---
+- name: USER-MANAGE-DEL-ENTITY - delete user
+  ansible.builtin.include_tasks: user-manage-del-entity.yml
+
+- name: USER-MANAGE-DEL-SUDO - delete user in sudo config
+  ansible.builtin.include_tasks: user-manage-del-sudo.yml

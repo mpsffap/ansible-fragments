@@ -1,0 +1,90 @@
+---
+- name: SERVICES-COMMON-DOCKER - Ensure Docker keyring directory exists
+  ansible.builtin.file:
+    path: "{{ dst_docker_keyring_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: SERVICES-COMMON-DOCKER - Download Docker GPG key
+  ansible.builtin.get_url:
+    url: "{{ url_docker_gpg }}"
+    dest: "{{ dst_docker_key }}"
+    mode: "0644"
+    force: true
+
+- name: SERVICES-COMMON-DOCKER - Add Docker APT repository
+  ansible.builtin.apt_repository:
+    repo: >
+      deb [arch=amd64 signed-by={{ dst_docker_key }}]
+      {{ url_docker_repo }}
+      {{ ansible_lsb.codename }}
+      stable
+    filename: docker
+    state: present
+    update_cache: true
+
+- name: SERVICES-COMMON-DOCKER - Install Docker packages
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    autoremove: true
+    update_cache: true
+
+- name: SERVICES-COMMON-DOCKER - Configure Docker daemon with overlay storage
+  ansible.builtin.copy:
+    dest: "{{ dst_docker_config }}/daemon.json"
+    content: |
+      {
+        "data-root": "{{ dst_docker_root }}/overlays"
+      }
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: SERVICES-COMMON-DOCKER - Configure Docker daemon with overlay storage
+  template:
+    src: "{{ src_templates }}/docker.j2"
+    dest: "{{ dst_docker_config }}/daemon.json"
+    owner: root
+    group: root
+    mode: "0440"
+  vars:
+    docker_root: "{{ dst_docker_root }}"
+
+- name: SERVICES-COMMON-DOCKER - Create Docker volumes directory
+  ansible.builtin.file:
+    path: "{{ dst_docker_root }}/volumes"
+    state: directory
+    mode: "0755"
+    owner: root
+    group: docker
+    recurse: true
+
+- name: SERVICES-COMMON-DOCKER - Create Docker overlays directory
+  ansible.builtin.file:
+    path: "{{ dst_docker_root }}/overlays"
+    state: directory
+    mode: "0755"
+    owner: root
+    group: docker
+    recurse: true
+
+- name: SERVICES-COMMON-DOCKER - Ensure ownership of Docker root directory
+  ansible.builtin.file:
+    path: "{{ dst_docker_root }}"
+    state: directory
+    recurse: true
+    owner: root
+    group: docker
+    mode: "0755"
+
+- name: SERVICES-COMMON-DOCKER - Restart Docker to apply daemon changes
+  ansible.builtin.systemd:
+    name: docker
+    state: restarted
+    enabled: true

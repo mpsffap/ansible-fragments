@@ -1,0 +1,9 @@
+---
+- name: USER-MANAGE-ADD-ENTITY - Add user
+  ansible.builtin.include_tasks: user-manage-add-entity.yml
+
+- name: USER-MANAGE-ADD-SSH - Add SSH keys and authorization
+  ansible.builtin.include_tasks: user-manage-add-ssh.yml
+
+- name: USER-MANAGE-ADD-SUDO - Manage sudo permissions
+  ansible.builtin.include_tasks: user-manage-add-sudo.yml

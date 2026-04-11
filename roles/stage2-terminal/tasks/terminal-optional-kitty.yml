@@ -1,0 +1,19 @@
+---
+- name: TERMINAL-OPTIONAL-KITTY - vim essential packages
+  ansible.builtin.apt:
+    name:
+      - kitty
+    state: present
+  become: true
+
+- name: TERMINAL-OPTIONAL-KITTY - Copy bash config if needed
+  ansible.builtin.copy:
+    src: "{{ src_dotfiles }}/.config/kitty"
+    dest: "{{ user.home }}/.config"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"
+
+- name: TERMINAL-OPTIONAL-KITTY - Set kitty as default terminal
+  ansible.builtin.shell:
+    cmd: "update-alternatives --set x-terminal-emulator /usr/bin/kitty"

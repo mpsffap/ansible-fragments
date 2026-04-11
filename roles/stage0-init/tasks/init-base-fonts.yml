@@ -1,0 +1,58 @@
+---
+- name: INIT-BASE-FONTS - Ensure font directory exists
+  ansible.builtin.file:
+    path: "{{ dst_fontdir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-BASE-FONTS - Install fonts
+  block:
+    - name: INIT-BASE-FONTS - Download font zip or font file
+      ansible.builtin.get_url:
+        url: "{{ item.url }}"
+        dest: "{{ dst_fontdir }}/{{ item.name }}.zip"
+        owner: "root"
+        group: "root"
+        mode: "0755"
+      loop: "{{ fonts }}"
+
+    - name: INIT-BASE-FONTS - Ensure the destination directory for the font is present
+      ansible.builtin.file:
+        path: "{{ item.dst_unzip_path }}"
+        state: directory
+        mode: "0755"
+      loop: "{{ fonts }}"
+
+    - name: INIT-BASE-FONTS - Unzip font if necessary
+      ansible.builtin.unarchive:
+        src: "{{ dst_fontdir }}/{{ item.name }}.zip"
+        dest: "{{ item.dst_unzip_path }}"
+        owner: "root"
+        group: "root"
+        mode: "0755"
+        remote_src: true
+      loop: "{{ fonts }}"
+      when: item.file_only is not defined or not item.file_only
+
+    - name: INIT-BASE-FONTS - Copy font if necessary
+      ansible.builtin.copy:
+        src: "{{ dst_fontdir }}/{{ item.name }}.zip"
+        dest: "{{ item.dst_unzip_path }}/{{ item.name }}.ttf"
+        owner: "root"
+        group: "root"
+        mode: "0755"
+        remote_src: true
+      loop: "{{ fonts }}"
+      when: item.file_only is defined and item.file_only
+
+    - name: INIT-BASE-FONTS - Cleanup after unzipping (optional)
+      ansible.builtin.file:
+        path: "{{ dst_fontdir }}/{{ item.name }}.zip"
+        state: absent
+      when: item.cleanup is defined
+      loop: "{{ fonts }}"
+
+    - name: INIT-BASE-FONTS - Rebuild font cache
+      ansible.builtin.command:
+        cmd: fc-cache -f -v
+      become: true

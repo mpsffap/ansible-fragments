@@ -1,0 +1,12 @@
+---
+- name: SERVICES-COMMON - Install base packages
+  ansible.builtin.include_tasks: services-base.yml
+  when: enable_services_base
+
+- name: SERVICES-COMMON - Install common packages
+  ansible.builtin.include_tasks: services-common.yml
+  when: enable_services_common
+
+- name: SERVICES-COMMON - Install optional packages
+  ansible.builtin.include_tasks: services-optional.yml
+  when: enable_services_optional

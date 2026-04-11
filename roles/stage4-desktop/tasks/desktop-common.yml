@@ -1,0 +1,12 @@
+---
+- name: DESKTOP-COMMON-X11 - Install x11 tools
+  ansible.builtin.include_tasks: desktop-common-x11.yml
+  when: enable_desktop_common_x11
+
+- name: DESKTOP-COMMON-ROFI - Install rofi tools
+  ansible.builtin.include_tasks: desktop-common-rofi.yml
+  when: enable_desktop_common_rofi
+
+- name: DESKTOP-COMMON-QTILE - Install qtile window manager
+  ansible.builtin.include_tasks: desktop-common-qtile.yml
+  when: enable_desktop_common_qtile

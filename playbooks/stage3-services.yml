@@ -1,0 +1,8 @@
+---
+- name: Manage installers-services (Debian)
+  hosts: target_hosts
+  become: true
+  vars_files:
+    - "../roles/stage3-services/vars/vars_installer_services.yml"
+  roles:
+    - stage3-services

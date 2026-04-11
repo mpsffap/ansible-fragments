@@ -1,0 +1,8 @@
+---
+- name: TERMINAL-COMMON-PYTHON3 - Install python3
+  ansible.builtin.include_tasks: terminal-common-python.yml
+  when: enable_terminal_common_python
+
+- name: TERMINAL-COMMON-RUST - Install rust
+  ansible.builtin.include_tasks: terminal-common-rust.yml
+  when: enable_terminal_common_rust

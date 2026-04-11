@@ -1,0 +1,12 @@
+---
+- name: TERMINAL-BASE-BASH - Install bash
+  ansible.builtin.include_tasks: terminal-base-bash.yml
+  when: enable_terminal_base_bash
+
+- name: TERMINAL-BASE-VIM - Install vim
+  ansible.builtin.include_tasks: terminal-base-vim.yml
+  when: enable_terminal_base_vim
+
+- name: TERMINAL-BASE-SCRIPTS - Copy scripts
+  ansible.builtin.include_tasks: terminal-base-scripts.yml
+  when: enable_terminal_base_scripts

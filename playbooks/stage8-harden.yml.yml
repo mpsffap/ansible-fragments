@@ -1,0 +1,8 @@
+---
+- name: Manage installers-desktop (Debian)
+  hosts: target_hosts
+  become: true
+  vars_files:
+    - "../roles/stage8-harden/vars/vars_harden.yml"
+  roles:
+    - stage8-harden

@@ -1,0 +1,4 @@
+---
+- name: SERVICES-COMMON-DOCKER - Install docker
+  ansible.builtin.include_tasks: services-common-docker.yml
+  when: enable_services_common_docker

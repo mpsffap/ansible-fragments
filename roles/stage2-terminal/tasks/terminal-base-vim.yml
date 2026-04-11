@@ -1,0 +1,39 @@
+---
+- name: TERMINAL-BASE-VIM - vim essential packages
+  ansible.builtin.apt:
+    name:
+      - liblua5.3-dev
+      - liblua5.1-dev
+      - lua5.1
+      - lua5.3
+      - vim-nox
+      - vim-addon-manager
+      - vim-airline
+      - vim-gruvbox
+      - vim-ale
+      - vim-autopep8
+      - vim-ctrlp
+      - vim-fugitive
+      - vim-gitgutter
+      - vim-snippets
+      - vim-syntastic
+      - vim-youcompleteme
+      - xclip
+    state: present
+  become: true
+
+- name: TERMINAL-BASE-VIM - Copy bash config if needed
+  ansible.builtin.copy:
+    src: "{{ src_dotfiles }}/.vimrc"
+    dest: "{{ user.home }}/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"
+
+- name: TERMINAL-BASE-VIM - Copy bash config if needed
+  ansible.builtin.copy:
+    src: "{{ src_dotfiles }}/.NERDTreeBookmarks"
+    dest: "{{ user.home }}/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"

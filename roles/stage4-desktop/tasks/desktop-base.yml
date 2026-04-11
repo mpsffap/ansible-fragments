@@ -1,0 +1,4 @@
+---
+- name: DESKTOP-BASE-ESSENTIALS - Include desktop base installers
+  ansible.builtin.include_tasks: desktop-base-essentials.yml
+  when: enable_desktop_base_essentials  is true

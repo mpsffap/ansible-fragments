@@ -1,0 +1,33 @@
+---
+- name: USER-MANAGE-ADD-SSH - Ensure .ssh directory exists
+  file:
+    path: "{{ entity.home }}/.ssh"
+    state: directory
+    owner: "{{ entity.name }}"
+    group: "{{ entity.group | default(entity.name) }}"
+    mode: "0700"
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ entity.name }}"
+    loop_var: "entity"
+- name: USER-MANAGE-ADD-SSH - Deploy SSH key files
+  copy:
+    dest: "{{ entity.0.home }}/.ssh/{{ entity.1.name }}"
+    content: "{{ entity.1.content if entity.1.content is defined else lookup('file', entity.1.path) }}"
+    owner: "{{ entity.0.name }}"
+    group: "{{ entity.0.group | default(entity.0.name) }}"
+    mode: "0600"
+  loop: "{{ users_present | subelements('ssh_keys', skip_missing=True) }}"
+  loop_control:
+    loop_var: "entity"
+
+- name: USER-MANAGE-ADD-SSH - Deploy authorized_keys
+  copy:
+    dest: "{{ entity.0.home }}/.ssh/authorized_keys"
+    content: "{{ entity.1.content | default(lookup('file', entity.1.path)) }}"
+    owner: "{{ entity.0.name }}"
+    group: "{{ entity.0.group | default(entity.0.name) }}"
+    mode: "0600"
+  loop: "{{ users_present | subelements('authorized_keys', skip_missing=True) }}"
+  loop_control:
+    loop_var: "entity"

@@ -1,0 +1,19 @@
+---
+- name: TERMINAL-OPTIONAL-YAZI Check if yazi is installed
+  ansible.builtin.stat:
+    path: "{{ user.home }}/.cargo/bin/yazi"
+  register: cargo_yazi
+
+- name: TERMINAL-OPTIONAL-YAZI Install yazi
+  ansible.builtin.shell: |
+    source {{ user.home }}/.cargo/env
+    cargo install cargo-binstall
+    cargo binstall yazi-fm yazi-cli --no-confirm
+  args:
+    executable: /bin/bash
+  environment:
+    CARGO_HOME: "{{ user.home }}/.cargo"
+    PATH: "{{ user.home }}/.cargo/bin:{{ ansible_env.PATH }}"
+  when: not cargo_yazi.stat.exists
+  become: true
+  become_user: "{{ user.name }}"

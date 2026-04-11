@@ -1,0 +1,44 @@
+# -- Component Configuration
+# Hardening
+enable_harden_base: true
+enable_harden_base_firewall: true
+# Common
+enable_harden_common: true
+enable_harden_common_apparmor: true
+enable_harden_common_auditing: true
+# Optional
+enable_harden_optional: true
+enable_harden_optional_lockdown: true
+
+# -- Source files
+src_etcfiles: "../files/etc"
+src_templates: "../files/templates/"
+
+# -- Target directoories
+dst_systemd_dir: /etc/systemd/system
+
+# -- Auditd
+audit_repo: "https://github.com/linux-audit/audit-userspace.git"
+audit_src_dir: "/usr/local/src/audit-userspace"
+audit_run_dir: /var/run/audit
+audit_log_file: /var/log/audit/audit.log
+localstatedir: "/var"
+
+# -- firewall
+firewall_policies:
+  input: DROP
+  output: ACCEPT
+  forward: DROP
+
+firewall_tcp_ports: ["22"]
+firewall_udp_ports: []
+firewall_allow_icmp: true
+firewall_rules_path: /etc/iptables/rules.v4
+firewall_rules_dir: /etc/iptables
+firewall_service_name: iptables
+firewall_with_docker: true
+
+nat_enable_ip_forwarding: true
+nat_out_interface: enp0s5
+nat_source_network: "10.10.100.0/24"
+nat_persist_rules: true

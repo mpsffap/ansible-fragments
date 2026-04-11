@@ -1,0 +1,9 @@
+---
+- name: Copy Snippets
+  ansible.posix.synchronize:
+    src: "{{ src_scripts }}/"
+    dest: "{{ user.home }}/.local/bin/"
+    recursive: true
+    delete: false
+  become: true
+  become_user: "{{ user.name }}"

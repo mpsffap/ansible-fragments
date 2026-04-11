@@ -1,0 +1,22 @@
+---
+- name: INIT-BASE-SSHSERVER - Essentials os packages
+  ansible.builtin.apt:
+    name:
+      - openssh-server
+    state: present
+  become: true
+
+- name: INIT-BASE-SSHSERVER - Copy sshd config
+  ansible.builtin.template:
+    src: "{{ src_etcfiles }}/ssh/sshd_config"
+    dest: "/etc/ssh/sshd_config"
+    owner: "root"
+    group: "root"
+    mode: "0744"
+
+- name: Ensure SSH service is running
+  ansible.builtin.service:
+    name: sshd
+    state: started
+    enabled: true
+  become: true

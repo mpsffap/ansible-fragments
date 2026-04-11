@@ -1,0 +1,9 @@
+---
+- name: USER-MANAGE-ADD-GROUPS - Gather all groups from users list
+  set_fact:
+    all_groups: "{{ all_groups | default([]) + (item.groups | default([]) + [item.group] | default([])) }}"
+  loop: "{{ users_present }}"
+
+- name: USER-MANAGE-ADD-GROUPS - Deduplicate groups
+  set_fact:
+    all_groups: "{{ all_groups | unique }}"

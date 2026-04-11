@@ -1,0 +1,16 @@
+---
+- name: TERMINAL-OPTIONAL-TMUX Tmux essential packages
+  ansible.builtin.apt:
+    name:
+      - tmux
+      - tmuxinator
+    state: present
+  become: true
+
+- name: TERMINAL-OPTIONAL-TMUX Copy tmux config
+  ansible.builtin.copy:
+    src: "{{ src_dotfiles }}/.config/tmux"
+    dest: "{{ user.home }}/.config"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"

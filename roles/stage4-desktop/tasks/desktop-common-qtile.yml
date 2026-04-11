@@ -1,0 +1,91 @@
+---
+- name: DESKTOP-COMMON-QTILE - Install essentials qtile
+  ansible.builtin.apt:
+    name:
+      - python3-psutil
+      - python3-pip
+      - python-dbus-dev
+      - python3-pulsectl
+      - git
+      - libpangocairo-1.0-0
+      - lightdm
+      - lightdm-gtk-greeter
+    state: present
+  become: true
+
+- name: DESKTOP-COMMON-QTILE - Clone qtile repo
+  ansible.builtin.git:
+    repo: "{{ url_qtile }}"
+    dest: "{{ dst_qtile_repo }}"
+    bare: false
+    update: false
+    clone: true
+    single_branch: true
+    version: "master"
+
+- name: DESKTOP-COMMON-QTILE - TERMINAL-COMMON-PYTHON3 - Create venv (if missing)
+  command: "python3 -m venv {{ dst_venv_qtile }}"
+  args:
+    creates: "{{ dst_venv_qtile }}/bin/activate"
+
+- name: DESKTOP-COMMON-QTILE - Install qtile
+  ansible.builtin.pip:
+    name: qtile
+    # extra_args: "--break-system-packages --upgrade --ignore-installed"
+    extra_args: "--upgrade --ignore-installed"
+    state: present
+    virtualenv: "{{ dst_venv_qtile }}"
+    chdir: "{{ dst_qtile_repo }}"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: DESKTOP-COMMON-QTILE - Create folders
+  block:
+    - name: DESKTOP-COMMON-QTILE - Create xsessions folders
+      ansible.builtin.file:
+        path: "/usr/share/xsessions"
+        state: "directory"
+        owner: "root"
+        group: "root"
+        mode: "0755"
+
+    - name: DESKTOP-COMMON-QTILE - Copy xsession file
+      ansible.builtin.copy:
+        src: "{{ src_dotfiles }}/.config/qtile/qtile.desktop"
+        dest: "/usr/share/xsessions/qtile.desktop"
+        owner: "root"
+        group: "root"
+        mode: "0755"
+
+    - name: DESKTOP-COMMON-QTILE - Create runner
+      ansible.builtin.copy:
+        src: "{{ src_scripts }}/qtilerun.bash"
+        dest: "/usr/local/bin/qtilerun.bash"
+        owner: "root"
+        group: "root"
+        mode: "0755"
+
+    - name: DESKTOP-COMMON-QTILE - Copy qtile config
+      ansible.builtin.copy:
+        src: "{{ src_dotfiles }}/.config/qtile"
+        dest: "{{ user.home }}/.config/"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: "0700"
+
+    - name: DESKTOP-COMMON-QTILE - Copy picom config
+      ansible.builtin.copy:
+        src: "{{ src_dotfiles }}/.config/picom.conf"
+        dest: "{{ user.home }}/.config/"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: "0700"
+
+    - name: DESKTOP-COMMON-QTILE - Copy desktop config files
+      ansible.posix.synchronize:
+        src: "{{ src_dotfiles }}/.config/qtile/"
+        dest: "{{ user.home }}/.config/"
+        recursive: true
+        delete: false
+      become: true
+      become_user: "{{ user.name }}"

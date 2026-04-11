@@ -1,0 +1,9 @@
+---
+- name: USER-MANAGE-DEL-ENTITY - Remove users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: "absent"
+    remove: true
+  loop: "{{ users }}"
+  loop_control:
+    label: "{{ item.name }}"

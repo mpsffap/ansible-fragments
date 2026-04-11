@@ -1,0 +1,53 @@
+---
+# -- Component Configuration
+# Base
+enable_base: "true"
+enable_base_apt: "true"
+enable_base_autoupgrades: "true"
+enable_base_locale: "true"
+enable_base_time: "true"
+enable_base_fonts: "true"
+enable_base_essentials: "true"
+enable_base_fm: "true"
+enable_base_sshclient: "true"
+enable_base_sshserver: "true"
+# Common
+enable_optional: "true"
+enable_optional_archives: "true"
+enable_optional_fm: "true"
+enable_optional_networking: "true"
+# Optionals
+enable_common: "true"
+enable_common_build: "true"
+enable_common_stats: "true"
+enable_common_terminal: "true"
+
+# -- Source files
+src_etcfiles: "../files/etc"
+src_templates: "../files/templates/"
+
+# -- Target directoories
+dst_fontdir: /usr/share/fonts
+
+# -- Defaults
+default_locale: "en_US.UTF-8"
+default_timezone: "Europe/Berlin"
+default_kbd_model: "pc105"
+default_kbd_layout: "de"
+default_kbd_variant: "nodeadkeys"
+default_kbd_options: "compose:menu"
+default_console_charset: "UTF-8"
+default_console_codeset: "Lat15"
+default_console_fontface: "Terminus"
+default_console_fontsize: "8x16"
+
+# -- Fonts
+fonts:
+  - name: JetBrainsMono
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+    dst_unzip_path: "{{ dst_fontdir }}/JetBrainsMono"
+
+  - name: codicon
+    url: https://github.com/microsoft/vscode-codicons/releases/download/0.0.36/codicon.ttf
+    dst_unzip_path: "{{ dst_fontdir }}/codicon"
+    file_only: true

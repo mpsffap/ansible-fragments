@@ -1,0 +1,68 @@
+---
+- name: TERMINAL-COMMON-RUST - rust essential packages
+  ansible.builtin.apt:
+    name:
+      - clang
+    state: present
+  become: true
+
+- name: TERMINAL-COMMON-RUST - Ensure Rustup directory exists
+  ansible.builtin.file:
+    path: "{{ dst_tools }}/rustup"
+    state: directory
+    mode: "0755"
+
+- name: TERMINAL-COMMON-RUST - Download rustup installation script
+  ansible.builtin.get_url:
+    url: "{{ url_rustup }}"
+    dest: "{{ dst_rustup_sh }}"
+    mode: "0755"
+
+- name: TERMINAL-COMMON-RUST - Enlarge tmpfs
+  ansible.builtin.shell:
+    cmd: "sudo mount -o size=10G,remount /tmp"
+    creates: "/tmp"
+
+- name: TERMINAL-COMMON-RUST - Run rustup installation script
+  ansible.builtin.shell:
+    cmd: "{{ dst_rustup_sh }} -y"
+    creates: "{{ user.home }}/.cargo/env"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: TERMINAL-COMMON-RUST - Add Rust to PATH in .bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ user.home }}/.bashrc"
+    line: 'export PATH="$PATH:$HOME/.cargo/bin"'
+    state: present
+    insertafter: EOF
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: TERMINAL-COMMON-RUST - Source Rust env in .bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ user.home }}/.bashrc"
+    line: 'source "$HOME"/.cargo/env'
+    state: present
+    insertafter: EOF
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: TERMINAL-COMMON-RUST - Check if cargo tools are installed
+  ansible.builtin.stat:
+    path: "{{ user.home }}/.cargo/bin/fd"
+  register: cargo_fd
+
+- name: TERMINAL-COMMON-RUST - Install Cargo tools
+  ansible.builtin.shell: |
+    source {{ user.home }}/.cargo/env
+    cargo install fd-find tree-sitter-cli
+  # creates: "{{ user.home }}/.cargo/bin/tree-sitter"
+  args:
+    executable: /bin/bash
+  environment:
+    CARGO_HOME: "{{ user.home }}/.cargo"
+    PATH: "{{ user.home }}/.cargo/bin:{{ ansible_env.PATH }}"
+  when: not cargo_fd.stat.exists
+  become: true
+  become_user: "{{ user.name }}"

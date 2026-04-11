@@ -1,0 +1,24 @@
+---
+- name: USER-MANAGE-ADD-SUDO - Create sudo macros file
+  template:
+    src: ../files/templates/macro.j2
+    dest: "/etc/sudoers.d/00_macros"
+    owner: root
+    group: root
+    mode: "0440"
+  vars:
+    macros: "{{ sudo_macros }}"
+
+- name: USER-MANAGE-ADD-SUDO - Ensure sudoers file for each user
+  template:
+    src: ../files/templates/sudoers.j2
+    dest: "/etc/sudoers.d/{{ item.name }}"
+    owner: root
+    group: root
+    mode: "0440"
+  when: item.sudo is defined
+  loop: "{{ users_present }}"
+  loop_control:
+    loop_var: "entity"
+  vars:
+    user: "{{ entity }}"

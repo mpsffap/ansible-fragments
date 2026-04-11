@@ -1,0 +1,33 @@
+---
+- name: USER-MANAGE-ADD-ENTITY - Print passwords and hashes if needed
+  debug:
+    msg: |
+      User {{ entity.name }}
+        Original  : '{{ entity.password }}'
+        Plaintext : '{{ entity.password_plain }}'
+        Hash      : '{{ entity.password_hash }}'
+  loop: "{{ users_with_passwords }}"
+  when: "{{ user_print_passwords_plaintext }}"
+  loop_control:
+    label: "{{ entity.name }}"
+    loop_var: "entity"
+
+- name: USER-MANAGE-ADD-ENTITY - Create users with cleaned hashed passwords
+  ansible.builtin.user:
+    name: "{{ entity.name }}"
+    uid: "{{ entity.uid | default(omit) }}"
+    group: "{{ entity.group | default(omit) }}"
+    groups: "{{ entity.groups | default(omit) }}"
+    append: "{{ entity.append_groups | default(omit) }}"
+    comment: "{{ entity.comment | default(omit) }}"
+    shell: "{{ entity.shell | default(omit) }}"
+    home: "{{ entity.home | default(omit) }}"
+    create_home: "{{ entity.create_home | default(omit) }}"
+    system: "{{ entity.system | default(omit) }}"
+    expires: "{{ entity.expires | default(omit) }}"
+    password: "{{ entity.password_hash }}"
+    state: "{{ entity.state | default('present') }}"
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ item.name }}"
+    loop_var: "entity"

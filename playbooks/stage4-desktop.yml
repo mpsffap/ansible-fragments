@@ -1,0 +1,8 @@
+---
+- name: Manage installers-desktop (Debian)
+  hosts: target_hosts
+  become: true
+  vars_files:
+    - "../roles/stage4-desktop/vars/vars_installer_desktop.yml"
+  roles:
+    - stage4-desktop

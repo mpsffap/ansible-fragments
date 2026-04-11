@@ -1,0 +1,12 @@
+---
+- name: INIT-OPTIONAL-BUILD - Include optional build tool packages
+  ansible.builtin.include_tasks: init-optional-build.yml
+  when: enable_optionals_build == "true"
+
+- name: INIT-OPTIONAL-STATS - Include optional networking packages
+  ansible.builtin.include_tasks: init-optional-stats.yml
+  when: enable_optionals_stats == "true"
+
+- name: INIT-OPTIONAL-TERMINAL - Include optional terminal tools
+  ansible.builtin.include_tasks: init-optional-terminal.yml
+  when: enable_optionals_terminal == "true"

@@ -1,0 +1,31 @@
+---
+- name: USER-MANAGE-MAIN - Prepare user facts
+  ansible.builtin.include_tasks: facts-user-read.yml
+
+- name: USER-MANAGE-MAIN - Prepare user group facts
+  ansible.builtin.include_tasks: facts-user-groups.yml
+
+- name: USER-MANAGE-MAIN - Prepare password facts
+  ansible.builtin.include_tasks: facts-user-passwords.yml
+
+- name: USER-MANAGE-MAIN - Persist Groups
+  ansible.builtin.include_tasks: user-manage-groups.yml
+  when: enable_users_add is true
+
+- name: USER-MANAGE-MAIN - Persist Users
+  ansible.builtin.include_tasks: user-manage-add.yml
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    user_data: "{{ item }}"
+  when: enable_users_add is true
+
+- name: USER-MANAGE-MAIN - Delete Users
+  ansible.builtin.include_tasks: user-manage-del.yml
+  loop: "{{ users_absent }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    user_data: "{{ item }}"
+  when: enable_users_del is true

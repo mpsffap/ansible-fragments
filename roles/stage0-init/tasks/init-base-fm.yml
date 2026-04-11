@@ -1,0 +1,12 @@
+- name: INIT-BASE-FM - Essential file managers
+  ansible.builtin.apt:
+    name:
+      - bat
+      - eza
+      - tree
+      - ncdu
+      - entr
+      - ripgrep
+      - jq
+    state: present
+  become: true

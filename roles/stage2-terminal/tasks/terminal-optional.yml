@@ -1,0 +1,16 @@
+---
+- name: TERMINAL-OPTIONAL-KITTY - Install kitty
+  ansible.builtin.include_tasks: terminal-optional-kitty.yml
+  when: enable_terminal_optional_kitty
+
+- name: TERMINAL-OPTIONAL-YAZI - Install yazi
+  ansible.builtin.include_tasks: terminal-optional-yazi.yml
+  when: enable_terminal_optional_yazi
+
+- name: TERMINAL-OPTIONAL-TMUX - Install tmux
+  ansible.builtin.include_tasks: terminal-optional-tmux.yml
+  when: enable_terminal_optional_tmux
+
+- name: TERMINAL-OPTIONAL-NVIM - Install nvim
+  ansible.builtin.include_tasks: terminal-optional-nvim.yml
+  when: enable_terminal_optional_nvim
