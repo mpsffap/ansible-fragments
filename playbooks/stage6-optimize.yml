@@ -1,0 +1,8 @@
+---
+- name: Manage Optimizations (Debian)
+  hosts: target_hosts
+  become: true
+  vars_files:
+    - "../roles/stage6-optimize/vars/vars_optimize.yml"
+  roles:
+    - stage6-optimize

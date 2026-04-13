@@ -1,4 +1,4 @@
 ---
 - name: HARDEN-OPTIONAL-LOCKDOWN - Include hardening with lockdown
   ansible.builtin.include_tasks: harden-optional-lockdown.yml
-  when: enable_harden_optional_lockdown is true
+  when: enable_harden_optional_lockdown

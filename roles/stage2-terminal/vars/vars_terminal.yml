@@ -1,0 +1,43 @@
+---
+# -- Component Configuration
+# Base
+enable_terminal_base: true
+enable_terminal_base_essentials: true
+enable_terminal_base_bash: true
+enable_terminal_base_vim: true
+enable_terminal_base_scripts: true
+# Common
+enable_terminal_common: true
+enable_terminal_common_python: true
+enable_terminal_common_rust: true
+# Optional
+enable_terminal_optional: true
+enable_terminal_optional_kitty: true
+enable_terminal_optional_nvim: true
+enable_terminal_optional_tmux: true
+enable_terminal_optional_yazi: true
+
+# -- Source files
+src_dotfiles: "../files/dotfiles"
+src_etcfiles: "../files/etc"
+src_scripts: "../files/scripts"
+
+# -- Destination files
+dst_tools: "/usr/share/mps/tools"
+dst_rustup_sh: "/usr/share/mps/tools/rustup/rustup.sh"
+dst_neovim: "/usr/share/mps/tools/nvim"
+dst_venv: "~/.venvs"
+dst_venv_default: "~/.venvs/default"
+dst_venv_neovim: "~/.venvs/nvim"
+
+# -- Urls
+url_rustup: "https://sh.rustup.rs"
+url_neovim: "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz"
+
+# -- Other
+rust_tmpfs_size: "10G"
+python_venv_packages:
+  - pip
+  - black
+  - ruff
+  - pylint

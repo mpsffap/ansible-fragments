@@ -1,0 +1,11 @@
+---
+- name: THEMES-MAIN-FACTS - Prepare user facts
+  ansible.builtin.include_tasks: facts-themes-user.yml
+
+- name: THEMES-MAIN - Include themes base installers
+  ansible.builtin.include_tasks: themes.yml
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    user: "{{ item }}"

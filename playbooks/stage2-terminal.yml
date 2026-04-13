@@ -1,8 +1,8 @@
 ---
-- name: Manage installers-terminal (Debian)
+- name: Manage terminal installations (Debian)
   hosts: target_hosts
   become: true
   vars_files:
-    - "../roles/stage2-terminal/vars/vars_installer_terminal.yml"
+    - "../roles/stage2-terminal/vars/vars_terminal.yml"
   roles:
     - stage2-terminal

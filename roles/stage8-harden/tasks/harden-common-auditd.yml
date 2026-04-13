@@ -1,5 +1,5 @@
 ---
-- name: INIT-HARDEN-AUDITD - Essentials OS
+- name: HARDEN-COMMON-AUDITD - INIT-HARDEN-AUDITD - Essentials OS
   ansible.builtin.apt:
     name:
       - build-essential
@@ -16,39 +16,39 @@
     state: present
   become: true
 
-- name: Clone audit-userspace repository
+- name: HARDEN-COMMON-AUDITD - Clone audit-userspace repository
   git:
     repo: "{{ audit_repo }}"
     dest: "{{ audit_src_dir }}"
     version: master
     force: true
 
-- name: Run autoreconf
+- name: HARDEN-COMMON-AUDITD - Run autoreconf
   command: autoreconf -i
   args:
     chdir: "{{ audit_src_dir }}"
 
-- name: Configure audit-userspace (zos remote)
+- name: HARDEN-COMMON-AUDITD - Configure audit-userspace (zos remote)
   command: ./configure --prefix=/usr --localstatedir=/var --disable-zos-remote
   args:
     chdir: "{{ audit_src_dir }}"
 
-- name: Build audit-userspace
+- name: HARDEN-COMMON-AUDITD - Build audit-userspace
   command: make
   args:
     chdir: "{{ audit_src_dir }}"
 
-- name: Install audit-userspace
+- name: HARDEN-COMMON-AUDITD - Install audit-userspace
   command: make install
   args:
     chdir: "{{ audit_src_dir }}"
 
-- name: Ensure autrace is available in PATH
+- name: HARDEN-COMMON-AUDITD - Ensure autrace is available in PATH
   stat:
     path: /usr/bin/autrace
   register: autrace_bin
 
-- name: Ensure autrace rules path
+- name: HARDEN-COMMON-AUDITD - Ensure autrace rules path
   file:
     path: /etc/audit/rules.d
     state: "directory"
@@ -58,7 +58,7 @@
 
   register: autrace_bin
 
-- name: Ensure auditd run directory exists
+- name: HARDEN-COMMON-AUDITD - Ensure auditd run directory exists
   file:
     path: "{{ audit_run_dir }}"
     state: directory
@@ -66,7 +66,7 @@
     group: root
     mode: "0755"
 
-- name: Create minimal auditd configuration
+- name: HARDEN-COMMON-AUDITD - Create minimal auditd configuration
   copy:
     dest: /etc/audit/auditd.conf
     content: |
@@ -86,14 +86,14 @@
     group: root
     mode: "0755"
 
-- name: Create audit runtime directory
+- name: HARDEN-COMMON-AUDITD - Create audit runtime directory
   file:
     path: "/var/run/audit"
     state: directory
     owner: root
     group: root
     mode: "0755"
-- name: Ensure audit runtime directory exists
+- name: HARDEN-COMMON-AUDITD - Ensure audit runtime directory exists
   file:
     path: "/usr/lib/systemd/system/auditd.service.d/"
     state: directory
@@ -101,7 +101,7 @@
     group: root
     mode: "0755"
 
-- name: Create systemd override for auditd
+- name: HARDEN-COMMON-AUDITD - Create systemd override for auditd
   copy:
     dest: /usr/lib/systemd/system/auditd.service.d/override.conf
     content: |

@@ -1,0 +1,12 @@
+---
+- name: THEMES-OPTIONAL-GRUBMENU - Install and configure grubmenu usage
+  ansible.builtin.include_tasks: themes-optional-grubmenu.yml
+  when: enable_themes_optional_grubmenu
+
+- name: THEMES-OPTIONAL-PLYMOUTH - Install and configure plymouth usage
+  ansible.builtin.include_tasks: themes-optional-plymouth.yml
+  when: enable_themes_optional_plymouth
+
+- name: THEMES-OPTIONAL-LIGHTDM - Install and configure lightdm usage
+  ansible.builtin.include_tasks: themes-optional-lightdm.yml
+  when: enable_themes_optional_lightdm

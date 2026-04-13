@@ -1,0 +1,4 @@
+---
+- name: EXTRAS-BASE-ESSENTIALS - Install base essentials
+  ansible.builtin.include_tasks: extras-base-essentials.yml
+  when: enable_extras_base_essentials

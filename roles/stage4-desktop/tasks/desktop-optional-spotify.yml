@@ -1,0 +1,19 @@
+---
+- name: DESKTOP-OPTIONAL-SPOTIFY - Install Spotify apt key
+  become: true
+  ansible.builtin.shell: "curl -sS {{ url_spotify_key }} | gpg --dearmor --yes -o {{ dst_spotify_key }}"
+
+- name: DESKTOP-OPTIONAL-SPOTIFY - Add Spotify repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by={{ dst_spotify_key }}] {{ url_spotify_repo }} stable non-free"
+    filename: spotify
+    state: present
+    update_cache: true
+
+- name: DESKTOP-OPTIONAL-SPOTIFY - Install spotify
+  ansible.builtin.apt:
+    name: spotify-client
+    update_cache: true
+    state: present
+  become: true

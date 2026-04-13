@@ -2,3 +2,17 @@
 - name: DESKTOP-BASE-ESSENTIALS - Include desktop base installers
   ansible.builtin.include_tasks: desktop-base-essentials.yml
   when: enable_desktop_base_essentials  is true
+  vars:
+    user: "{{ item }}"
+
+- name: DESKTOP-BASE-THUNAR - Include desktop thunar installers
+  ansible.builtin.include_tasks: desktop-base-thunar.yml
+  when: enable_desktop_base_thunar  is true
+  vars:
+    user: "{{ item }}"
+
+- name: DESKTOP-BASE-WM - Include desktop wm installers
+  ansible.builtin.include_tasks: desktop-base-wm.yml
+  when: enable_desktop_base_wm  is true
+  vars:
+    user: "{{ item }}"

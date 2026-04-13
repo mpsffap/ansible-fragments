@@ -1,0 +1,70 @@
+---
+- name: EXTRAS-COMMON-BACKUP - Copy ssh keys
+  when: backup_persist_sshkeys
+  block:
+    - name: EXTRAS-COMMON-BACKUP - Create ssh folder
+      become: true
+      become_user: "{{ user.name }}"
+      ansible.builtin.file:
+        path: "{{ user.home }}/.ssh/"
+        state: directory
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: "0700"
+
+    - name: EXTRAS-COMMON-BACKUP - Sync config files
+      ansible.posix.synchronize:
+        src: "{{ src_backup_sshkeys }}/"
+        dest: "{{ user.home }}/.ssh/"
+        recursive: true
+        delete: false
+      become: true
+      become_user: "{{ user.name }}"
+
+- name: EXTRAS-COMMON-BACKUP - Copy user settings
+  when: backup_persist_firefox
+  block:
+    - name: EXTRAS-COMMON-BACKUP - Find Firefox profile directory
+      become: true
+      become_user: "{{ user.name }}"
+      ansible.builtin.find:
+        paths: "{{ user.home }}/.mozilla/firefox"
+        patterns: "*.default*"
+        file_type: directory
+      register: firefox_profiles
+
+    - name: EXTRAS-COMMON-BACKUP - Set profile dir (first match)
+      set_fact:
+        firefox_profile_dir: "{{ firefox_profiles.files[0].path }}"
+      when: firefox_profiles.matched > 0
+
+    - name: EXTRAS-COMMON-BACKUP - Copy bookmarks file into profile
+      become: true
+      become_user: "{{ user.name }}"
+      when: firefox_profiles.matched > 0
+      ansible.builtin.copy:
+        src: "{{ src_backup }}/firefox/places.sqlite"
+        dest: "{{ firefox_profile_dir }}/places.sqlite"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: "0600"
+
+- name: EXTRAS-COMMON-BACKUP - Backup Brave bookmarks
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.copy:
+    src: "{{ src_backup }}/brave/Bookmarks"
+    dest: "{{ user.home }}/.config/BraveSoftware/Brave-Browser/Default/Bookmarks"
+    mode: "0600"
+  when: backup_persist_brave
+
+- name: EXTRAS-COMMON-BACKUP - Copy nerdtree bookmarks file (nvim)
+  ansible.builtin.copy:
+    src: "{{ src_backup }}/home/.NERDTreeBookmarks"
+    dest: "{{ user.home }}/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0600"
+  become: true
+  become_user: "{{ user.name }}"
+  when: backup_persist_nerdtree

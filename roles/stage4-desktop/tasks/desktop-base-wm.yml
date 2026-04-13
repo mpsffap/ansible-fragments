@@ -1,0 +1,28 @@
+---
+- name: DESKTOP-BASE-WM - Install essentials for window manager
+  ansible.builtin.apt:
+    name:
+      - feh
+      - lxappearance
+      - lightdm
+      - picom
+      - xbacklight
+      - numlockx
+      - xclip
+      - dconf-cli
+      - dconf-editor
+      - dunst
+    state: present
+  become: true
+
+- name: DESKTOP-BASE-WM - Copy Config
+  ansible.builtin.copy:
+    src: "{{ src_dotfiles }}/{{ file }}"
+    dest: "{{ user.home }}/{{ file }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"
+  loop: "{{ desktop_dotfiles_wm }}"
+  loop_control:
+    loop_var: "file"
+  when: desktop_dotfiles_wm is defined

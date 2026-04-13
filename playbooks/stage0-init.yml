@@ -1,5 +1,5 @@
 ---
-- name: Setup base os (Debian)
+- name: Manage os initialization (Debian)
   hosts: target_hosts
   become: true
   vars_files:

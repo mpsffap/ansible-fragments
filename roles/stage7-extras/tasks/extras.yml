@@ -1,0 +1,12 @@
+---
+- name: EXTRAS-BASE - Include base optimizations
+  ansible.builtin.include_tasks: extras-base.yml
+  when: enable_extras_base
+
+- name: EXTRAS-COMMON - Include common optimizations
+  ansible.builtin.include_tasks: extras-common.yml
+  when: enable_extras_common
+
+- name: EXTRAS-OPTIONAL - Include optimizations
+  ansible.builtin.include_tasks: extras-optional.yml
+  when: enable_extras_optional

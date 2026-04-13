@@ -1,0 +1,64 @@
+---
+# -- Component Configuration
+# Base
+enable_desktop_base: true
+enable_desktop_base_essentials: true
+enable_desktop_base_thunar: true
+enable_desktop_base_wm: true
+# Common
+enable_desktop_common: true
+enable_desktop_common_x11: true
+enable_desktop_common_rofi: true
+enable_desktop_common_qtile: true
+# Optional
+enable_desktop_optional: true
+enable_desktop_optional_gnometools: true
+enable_desktop_optional_brave: true
+enable_desktop_optional_spotify: true
+enable_desktop_optional_kanata: true
+
+# -- Source files
+src_dotfiles: "../files/dotfiles"
+src_etcfiles: "../files/etc"
+src_scripts: "../files/scripts"
+src_images: "../files/templates/images/wallpaper"
+
+# --Destination files
+dst_qtile_repo: "/usr/share/mps/tools/qtile"
+dst_rofi_snippets: "/usr/share/rofi"
+dst_brave_keyring: "/usr/share/keyrings/brave-browser-archive-keyring.gpg"
+dst_images: "/usr/share/images/mps"
+dst_spotify_key: "/etc/apt/trusted.gpg.d/spotify.gpg"
+dst_spotify_aptfile: "/etc/apt/sources.list.d/spotify.list"
+
+# -- Urls
+url_qtile: "https://github.com/qtile/qtile"
+url_brave_repo: "https://brave-browser-apt-release.s3.brave.com/"
+url_spotify_key: "https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc"
+url_spotify_repo: "http://repository.spotify.com"
+
+# -- qtile
+dst_venv_qtile: "~/.venvs/default"
+
+# -- Desktop
+desktop_dotfiles_essentials:
+  - ".gtkrc-2.0"
+  - ".config/xfce4"
+  - ".config/gtk-2.0"
+  - ".config/gtk-3.0"
+  - ".config/gedit"
+desktop_dotfiles_thunar:
+  - ".config/Thunar"
+desktop_dotfiles_wm:
+  - ".config/dconf"
+  - ".config/dunst"
+  - ".config/picom.conf"
+desktop_scripts_autostart:
+  - "autostart.sh"
+  - "autostart_clean.sh"
+
+# -- Rofi
+rofi_snippets:
+  - "rofi-boot-dwmswitch.sh"
+  - "rofi-boot-launcher.sh"
+  - "rofi-boot-powermenu.sh"

@@ -2,11 +2,17 @@
 - name: DESKTOP-BASE - Include desktop base installers
   ansible.builtin.include_tasks: desktop-base.yml
   when: enable_desktop_base
+  vars:
+    user: "{{ item }}"
 
 - name: DESKTOP-COMMON - Include desktop common installers
   ansible.builtin.include_tasks: desktop-common.yml
   when: enable_desktop_common
+  vars:
+    user: "{{ item }}"
 
 - name: DESKTOP-OPTIONAL - Include desktop optional installers
   ansible.builtin.include_tasks: desktop-optional.yml
   when: enable_desktop_optional
+  vars:
+    user: "{{ item }}"

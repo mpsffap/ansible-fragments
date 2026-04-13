@@ -3,50 +3,56 @@
   ansible.builtin.apt:
     name:
       - galculator
-      - numlockx
-      - xclip
       - arandr
-      - lxappearance
-      - psutils
       - iw
       - xcwd
-      - zoxide
-      - kitty
-      - tilda
+      - lxde-icon-theme
       - thunderbird
       - firefox-esr
       - evince
-      - thunar
-      - thunar-archive-plugin
-      - thunar-media-tags-plugin
-      - thunar-volman
-      - thunar-gtkhash
-      - xfce4-goodies
-      - xfce4-places-plugin
-      - thunar-font-manager
-      - thunarx-python
-      - ssh-askpass
-      - plymouth
-      - plymouth-themes
     state: present
   become: true
 
-- name: DESKTOP-BASE-ESSENTIALS - Install essentials for window manager
+- name: DESKTOP-BASE-ESSENTIALS-SOUND - Install desktop sound essentials
   ansible.builtin.apt:
     name:
-      - feh
-      - lightdm
-      - picom
-      - xbacklight
       - pulseaudio
       - pavucontrol
       - volumeicon-alsa
       - libmpg123-dev
-      - lxde-icon-theme
-      - dconf-cli
-      - dconf-editor
-      - dunst
-
     state: present
   become: true
 
+- name: DESKTOP-BASE-ESSENTIALS - Copy Config
+  ansible.posix.synchronize:
+    src: "{{ src_dotfiles }}/{{ file }}"
+    dest: "{{ user.home }}/{{ file }}"
+    recursive: true
+    delete: false
+  loop: "{{ desktop_dotfiles_essentials }}"
+  loop_control:
+    loop_var: "file"
+  when: desktop_dotfiles_essentials is defined
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: DESKTOP-BASE-ESSENTIALS - Copy scripts
+  ansible.posix.synchronize:
+    src: "{{ src_scripts }}/{{ file }}"
+    dest: "{{ user.home }}/.local/bin/{{ file }}"
+    recursive: true
+    delete: false
+  loop: "{{ desktop_scripts_autostart }}"
+  loop_control:
+    loop_var: "file"
+  when: desktop_scripts_autostart is defined
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: DESKTOP-BASE-ESSENTIALS - Copy Images
+  ansible.posix.synchronize:
+    src: "{{ src_images }}"
+    dest: "{{ dst_images }}"
+    recursive: true
+    delete: false
+  become: true

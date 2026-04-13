@@ -3,6 +3,7 @@
   ansible.builtin.apt:
     name:
       - openssh-client
+      - ssh-askpass
     state: present
   become: true
 
@@ -14,7 +15,7 @@
     group: "root"
     mode: "0744"
 
-- name: Ensure SSH service is running
+- name: INIT-BASE-SSHCLIENT - Ensure SSH service is running
   ansible.builtin.service:
     name: ssh
     state: started

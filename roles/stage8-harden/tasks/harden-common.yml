@@ -1,8 +1,8 @@
 ---
 - name: HARDEN-COMMON-APPARMOR - Include hardening with apparmor
   ansible.builtin.include_tasks: harden-common-apparmor.yml
-  when: enable_harden_common_apparmor is true
+  when: enable_harden_common_apparmor
 
 - name: HARDEN-COMMON-AUDITD - Include hardening with auditd packages
   ansible.builtin.include_tasks: harden-common-auditd.yml
-  when: enable_harden_common_auditing is true
+  when: enable_harden_common_auditing

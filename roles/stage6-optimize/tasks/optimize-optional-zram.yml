@@ -1,0 +1,19 @@
+---
+- name: OPTIMIZE-OPTIONAL-ZRAM - Install packages
+  ansible.builtin.apt:
+    name:
+      - zram-tools
+    state: present
+  become: true
+
+- name: OPTIMIZE-OPTIONAL-ZRAM - Add log entry to fstab
+  ansible.builtin.blockinfile:
+    path: /etc/default/zramswap
+    marker: "# zramswap"
+    block: "ALGO=zstd\nPERCENT={{ optimize_zram_percentage }}"
+    insertafter: EOF
+
+- name: OPTIMIZE-OPTIONAL-ZRAM - Restart zramswap service
+  ansible.builtin.systemd:
+    name: zramswap
+    state: restarted

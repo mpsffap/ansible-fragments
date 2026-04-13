@@ -1,6 +1,7 @@
 # -- Component Configuration
 # Hardening
 enable_harden_base: true
+enable_harden_base_essentials: true
 enable_harden_base_firewall: true
 # Common
 enable_harden_common: true

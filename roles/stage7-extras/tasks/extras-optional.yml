@@ -1,0 +1,4 @@
+---
+- name: EXTRAS-OPTIONAL-DEV - Install dev tools
+  ansible.builtin.include_tasks: extras-optional-dev.yml
+  when: enable_extras_optional_dev

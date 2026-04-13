@@ -1,0 +1,45 @@
+---
+# Stage0
+enable_base: true
+enable_common: true
+enable_optional: true
+
+# Stage1
+enable_groups_add: true
+enable_users_add: true
+enable_users_del: true
+
+# Stage2
+enable_terminal_base: true
+enable_terminal_common: true
+enable_terminal_optional: true
+
+# Stage3
+enable_services_base: true
+enable_services_common: true
+enable_services_optional: true
+
+# Stage4
+enable_desktop_base: true
+enable_desktop_common: true
+enable_desktop_optional: true
+
+# Stage5
+enable_themes_base: true
+enable_themes_common: true
+enable_themes_optional: true
+
+# Stage6
+enable_optimize_base: true
+enable_optimize_common: true
+enable_optimize_optional: true
+
+# Stage7
+enable_extras_base: true
+enable_extras_common: true
+enable_extras_optional: true
+
+# Stage8
+enable_harden_base: true
+enable_harden_common: true
+enable_harden_optional: true

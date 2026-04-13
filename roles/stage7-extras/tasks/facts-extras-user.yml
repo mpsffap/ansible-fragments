@@ -1,0 +1,5 @@
+---
+- name: OPTIMIZE-FACTS-USER - OPTIMIZE-MAIN-FACTS - Separate users into present and not present
+  set_fact:
+    users_present: "{{ users | selectattr('state', 'equalto', 'present') | list }}"
+    users_absent: "{{ users | selectattr('state', 'equalto', 'absent') | list }}"

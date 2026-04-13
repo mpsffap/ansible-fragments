@@ -1,5 +1,5 @@
 ---
-- name: INIT-BASE-AÜT - Include essential apt packages
+- name: INIT-BASE-APT - Include essential apt packages
   ansible.builtin.include_tasks: init-base-apt.yml
   when: enable_base_apt == "true"
 

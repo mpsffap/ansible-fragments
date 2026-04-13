@@ -1,0 +1,25 @@
+---
+- name: Setup base os (Debian)
+  hosts: target_hosts
+  become: true
+  vars_files:
+    - "../roles/stage0-init/vars/vars_init.yml"
+    - "../roles/stage1-users/vars/vars_user.yml"
+    - "../roles/stage2-terminal/vars/vars_terminal.yml"
+    - "../roles/stage3-services/vars/vars_services.yml"
+    - "../roles/stage4-desktop/vars/vars_desktop.yml"
+    - "../roles/stage5-themes/vars/vars_themes.yml"
+    - "../roles/stage6-optimize/vars/vars_optimize.yml"
+    - "../roles/stage7-extras/vars/vars_extras.yml"
+    - "../roles/stage8-harden/vars/vars_harden.yml"
+    - "../vars/vars_full.yml"
+  roles:
+    - stage0-init
+    - stage1-users
+    - stage2-terminal
+    - stage3-services
+    - stage4-desktop
+    - stage5-themes
+    - stage6-optimize
+    - stage7-extras
+    - stage8-harden

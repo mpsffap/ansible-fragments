@@ -1,4 +1,8 @@
 ---
+- name: TERMINAL-BASE-ESSENTIALS - Install essentials
+  ansible.builtin.include_tasks: terminal-base-essentials.yml
+  when: enable_terminal_base_essentials
+
 - name: TERMINAL-BASE-BASH - Install bash
   ansible.builtin.include_tasks: terminal-base-bash.yml
   when: enable_terminal_base_bash

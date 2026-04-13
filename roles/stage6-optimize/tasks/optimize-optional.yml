@@ -1,0 +1,12 @@
+---
+- name: OPTIMIZE-OPTIONAL-ZRAM - Install and configure zram usage
+  ansible.builtin.include_tasks: optimize-optional-zram.yml
+  when: enable_optimize_optional_zram
+
+- name: OPTIMIZE-OPTIONAL-RAMDISKS - Install and configure ramdisk usage
+  ansible.builtin.include_tasks: optimize-optional-ramdisks.yml
+  when: enable_optimize_optional_ramdisks
+
+- name: OPTIMIZE-OPTIONAL-KMSCON - Install and configure kmscon usage
+  ansible.builtin.include_tasks: optimize-optional-kmscon.yml
+  when: enable_optimize_optional_kmscon

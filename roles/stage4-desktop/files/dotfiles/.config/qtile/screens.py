@@ -1,16 +1,19 @@
 from libqtile import bar, widget
 from libqtile.config import Screen
 from libqtile.lazy import lazy
-from helpers import normalize_window_title
+from widget_forticlient import WidgetFortinet
+from widget_kanata import WidgetKanata
+
+# from helpers import normalize_window_title
 from globals import (
     tm,
+    bb,
     ff,
     ev,
     ge,
-    gp,
+    gi,
     nv,
     fm,
-    mux,
     update,
     barBorderWidth,
     opacityBar,
@@ -28,15 +31,74 @@ from colors import (
     barBorderColor,
 )
 
-icons_static = {
+FONTSIZE = 20
+FONTSIZE_SMALL = 20
+BAR_HEIGHT = 30
+SECOND_SCREEN = False
+NAME_NA = "N/A"
+NAME_ADM = "bks-adm"
+NAME_SSL_ADM = f"SSL {NAME_ADM}"
+NAME_SSO_ADM = f"{NAME_ADM} SSO"
+NAME_PUB = "pub-all"
+
+widgetconf = dict(
+    font="JetBrainsMono Nerd Font",
+    fontsize=FONTSIZE,
+    padding=7,
+)
+extconf = widgetconf.copy()
+widget_config_top_primary: dict[str,bool] = {
+    "widgets_top_primary_window_name": True,
+}
+widget_config_bottom_primary: dict[str,bool] = {
+    "widgets_bottom_primary_layout_icon": True,
+    "widgets_bottom_primary_window_count": True,
+    "widgets_bottom_primary_groupbox": True,
+    "widgets_bottom_primary_prompt": True,
+    "widgets_bottom_primary_widgetbox_buttons": True,
+    "widgets_bottom_primary_clipboard": True,
+    "widgets_bottom_primary_net": True,
+    "widgets_bottom_primary_systray": True,
+    "widgets_bottom_primary_battery": False,
+    "widgets_bottom_primary_forticlient": True,
+    "widgets_bottom_primary_kanata": True,
+    "widgets_bottom_primary_updater": True,
+    "widgets_bottom_primary_clock": True,
+}
+widget_config_top_secondary: dict[str,bool] = {
+    "widgets_top_secondary_window_name": True,
+}
+widget_config_bottom_secondary: dict[str,bool] = {
+    "widgets_bottom_secondary_layout_icon": True,
+    "widgets_bottom_secondary_window_count": True,
+    "widgets_bottom_secondary_groupbox": True,
+    "widgets_bottom_secondary_prompt": True,
+    "widgets_bottom_secondary_widgetbox_buttons": True,
+    "widgets_bottom_secondary_clipboard": True,
+    "widgets_bottom_secondary_net": True,
+    "widgets_bottom_secondary_systray": True,
+    "widgets_bottom_secondary_battery": False,
+    "widgets_bottom_secondary_forticlient": True,
+    "widgets_bottom_secondary_kanata": True,
+    "widgets_bottom_secondary_updater": True,
+    "widgets_bottom_secondary_clock": True,
+}
+widgets_top_primary: list = []
+widgets_bottom_primary: list = []
+widgets_top_secondary: list = []
+widgets_bottom_secondary: list = []
+icons_static: dict[str,str] = {
+    "brave": "/usr/share/icons/hicolor/128x128/apps/brave-browser.png",
     "firefox": "/usr/share/icons/hicolor/128x128/apps/firefox-esr.png",
     "kitty": "/usr/share/icons/hicolor/256x256/apps/kitty.png",
-    "tmux": "/usr/share/icons/gnome/256x256/apps/terminal.png",
     "gedit": "/usr/share/icons/gnome/256x256/apps/accessories-text-editor.png",
-    "nvim": "/usr/share/icons/locolor/32x32/apps/gvim.png",
+    "nvim": "/usr/share/icons/hicolor/128x128/apps/nvim.png",
     "thunar": "/usr/share/icons/hicolor/128x128/apps/org.xfce.thunar.png",
+    "mumble": "/usr/share/icons/hicolor/scalable/apps/mumble.svg",
+    "gimp": "/usr/share/icons/hicolor/256x256/apps/gimp.png",
     "evince": "/usr/share/icons/hicolor/scalable/apps/org.gnome.Evince.svg",
     "gparted": "/usr/share/icons/hicolor/scalable/apps/gparted.svg",
+    "zoom": "/usr/share/pixmaps/application-x-zoom.png",
 }
 
 
@@ -54,7 +116,7 @@ def create_widget_groupbox():
         urgent_border=lightRed,
         urgent_alert_method="block",
         font="JetBrainsMono Nerd Font",
-        fontsize=20,
+        fontsize=FONTSIZE,
         highlight_method="line",
         highlight_color=lightBlue,
         this_current_screen_border=darkBlue,
@@ -71,14 +133,13 @@ def create_widget_updater():
         colour_no_updates="00ff00",
         display_format="({updates})",
         no_update_string="(0)",
-        execute=f"kitty {update}",
+        execute=f"{tm} --title Update --hold {update}",
     )
 
 
 def create_widget_clock():
     return widget.Clock(
-        font="JetBrainsMono Nerd Font",
-        fontsize=20,
+        **widgetconf,
         mouse_callbacks={
             "Button1": lazy.spawn("gsimplecal"),
         },
@@ -86,49 +147,33 @@ def create_widget_clock():
     )
 
 
-###############################################################################
-# Widget boxes
-###############################################################################
-def create_widgetbox_graphs():
-    return widget.WidgetBox(
-        text_open="[g]",
-        text_closed="[G]",
-        close_button_location="right",
-        widgets=[
-            widget.CPU(format="CPU:{load_percent}%"),
-            widget.CPUGraph(type="line", line_width=1),
-            widget.DF(
-                visible_on_warn=False,
-                format="Disk {p}: {uf}{m}/{s}{m}",
-            ),
-            widget.HDDBusyGraph(path="/", type="line", line_width=1),
-            widget.SwapGraph(type="line", line_width=1),
-            widget.Memory(
-                measure_mem="M",
-                format="RAM: {MemUsed:.0f}{ms}/{MemTotal:.0f}{ms}",
-            ),
-            widget.MemoryGraph(type="line", line_width=1),
-        ],
+def create_widget_battery():
+    upower = "upower -i $(upower -e | grep BAT) "
+    grep = 'grep --color=never -E "state|to\\ full|to\\ empty|percentage"'
+    cmd = f"kitty bash -c '{upower} | {grep} ; sleep 2'"
+    return widget.Battery(
+        **widgetconf,
+        notify_below=0.2,
+        low_percentage=0.1,
+        low_foreground="#FF0000",
+        low_background="#FFFFFF",
+        foreground="#FFFFFF",
+        charge_char="C",
+        discharge_char="D",
+        scale=1,
+        battery=0,
+        background="#175229",
+        update_interval=1,
+        show_short_text=True,
+        format="{char} {percent:2.0%} {watt:.2f} W",
+        mouse_callbacks={"Button1": lazy.spawn(cmd)},
     )
 
 
-def create_widgetbox_tasklist():
-    return widget.WidgetBox(
-        text_open="[t]",
-        text_closed="[T]",
-        close_button_location="right",
-        widgets=[
-            widget.Sep(),
-            widget.TaskList(
-                parse_text=normalize_window_title,
-                margin_x=5,
-                title_width_method="uniform",
-                padding=1,
-                margin=1,
-                markup=True,
-            ),
-        ],
-    )
+def create_widgetImage(icon: str, app: str):
+    cb = {"Button1": lazy.spawn(app)}
+    filename = icons_static[icon]
+    return widget.Image(scale=True, filename=filename, mouse_callbacks=cb)
 
 
 def create_widgetbox_buttons():
@@ -140,62 +185,14 @@ def create_widgetbox_buttons():
         widgets=[
             widget.Spacer(),
             widget.Sep(padding=10, linewidth=5, size_percent=50),
-            widget.Image(
-                scale=True,
-                filename=icons_static["firefox"],
-                mouse_callbacks={
-                    "Button1": lazy.spawn(ff),
-                },
-            ),
-            widget.Image(
-                scale=True,
-                filename=icons_static["tmux"],
-                mouse_callbacks={
-                    "Button1": lazy.spawn(mux),
-                },
-            ),
-            widget.Image(
-                scale=True,
-                filename=icons_static["kitty"],
-                mouse_callbacks={
-                    "Button1": lazy.spawn(tm),
-                },
-            ),
-            widget.Image(
-                scale=True,
-                filename=icons_static["thunar"],
-                mouse_callbacks={
-                    "Button1": lazy.spawn(fm),
-                },
-            ),
-            widget.Image(
-                scale=True,
-                filename=icons_static["nvim"],
-                mouse_callbacks={
-                    "Button1": lazy.spawn(nv),
-                },
-            ),
-            widget.Image(
-                scale=True,
-                filename=icons_static["gedit"],
-                mouse_callbacks={
-                    "Button1": lazy.spawn(ge),
-                },
-            ),
-            widget.Image(
-                scale=True,
-                filename=icons_static["evince"],
-                mouse_callbacks={
-                    "Button1": lazy.spawn(ev),
-                },
-            ),
-            widget.Image(
-                scale=True,
-                filename=icons_static["gparted"],
-                mouse_callbacks={
-                    "Button1": lazy.spawn(gp),
-                },
-            ),
+            create_widgetImage("brave", bb),
+            create_widgetImage("firefox", ff),
+            create_widgetImage("kitty", tm),
+            create_widgetImage("thunar", fm),
+            create_widgetImage("nvim", nv),
+            create_widgetImage("gedit", ge),
+            create_widgetImage("evince", ev),
+            create_widgetImage("gimp", gi),
             widget.Sep(padding=10, linewidth=5, size_percent=50),
         ],
     )
@@ -210,49 +207,156 @@ def create_widgetbox_clipboard():
     )
 
 
+def create_widgetbox_net():
+    return widget.WidgetBox(
+        text_open="[n]",
+        text_closed="[N]",
+        start_opened=False,
+        close_button_location="right",
+        widgets=[
+            widget.Net(),
+            widget.ThermalZone(),
+        ],
+    )
+
+def create_widgetbox_forticlient():
+    return WidgetFortinet(
+        update_interval=1,
+        fmt="{}",
+        mouse_callbacks={
+            "Button1": lazy.spawn("forticlient gui"),
+            "Button3": lazy.spawn(
+                (
+                    f"forticlient vpn disconnect {NAME_SSO_ADM} & "
+                    f"forticlient vpn disconnect {NAME_SSL_ADM} & "
+                    f"forticlient vpn disconnect {NAME_PUB} & "
+                )
+            ),
+        },
+    )
+
+
+def create_widgetbox_kanata():
+    return WidgetKanata(
+            command="", modes=[], max_chars=64,fontsize=11, 
+            update_interval=1, fmt="{}", mouse_callbacks={
+            "Button1": lazy.spawn("forticlient gui"),
+            "Button3": lazy.spawn(
+                (
+                    f"forticlient vpn disconnect {NAME_SSO_ADM} & "
+                    f"forticlient vpn disconnect {NAME_SSL_ADM} & "
+                    f"forticlient vpn disconnect {NAME_PUB} & "
+                )
+            ),
+        },
+    )
+
+def create_widget_layout_icon():
+    return widget.CurrentLayoutIcon(**widgetconf, background=darkGray)
+
+
+def create_widget_window_name():
+    return widget.WindowName(width=bar.CALCULATED)
+
+
+def create_widget_prompt():
+    return widget.Prompt(prompt="Spawn: ")
+
+
 ###############################################################################
-# Top bar
+# Bars
 ###############################################################################
-def create_topbar():
-    return [
-        widget.Sep(),
-        widget.Spacer(),
-        widget.WindowName(width=bar.CALCULATED),
-        widget.Spacer(),
-        widget.Sep(),
-        widget.WidgetBox(
-            text_open="[n]",
-            text_closed="[N]",
-            start_opened=False,
-            close_button_location="right",
-            widgets=[
-                widget.Net(),
-                widget.ThermalZone(),
-            ],
-        ),
-        create_widgetbox_graphs(),
+def build_widgetlist(cfg, widget_map: list[tuple]) -> list:
+    widgets = []
+    for key, factory in widget_map:
+        if key.endswith("_sep"):
+            widgets.append(factory())
+        elif key.endswith("_spacer"):
+            widgets.append(factory())
+        elif cfg.get(key):
+            widgets.append(factory())
+    return widgets
+
+
+def create_bar_top_primary(cfg):
+    widgets_top_primary = [
+        ("widgets_top_primary_sep", widget.Sep),
+        ("widgets_top_primary_spacer", widget.Spacer),
+        ("widgets_top_primary_window_name", create_widget_window_name),
+        ("widgets_top_primary_spacer", widget.Spacer),
+        ("widgets_top_primary_sep", widget.Sep),
     ]
+    return build_widgetlist(cfg, widgets_top_primary)
+
+
+def create_bar_bottom_primary(cfg):
+    widgets_bottom_primary = [
+        # ("widgets_bottom_primary_layout_icon", create_widget_layout_icon),
+        ("widgets_bottom_primary_window_count", widget.WindowCount),
+        ("widgets_bottom_primary_groupbox", create_widget_groupbox),
+        ("widgets_bottom_primary_sep", widget.Sep),
+        ("widgets_bottom_primary_prompt", create_widget_prompt),
+        ("widgets_bottom_primary_widgetbox_buttons", create_widgetbox_buttons),
+        ("widgets_bottom_primary_spacer", widget.Spacer),
+        ("widgets_bottom_primary_sep", widget.Sep),
+        ("widgets_bottom_primary_clipboard", create_widgetbox_clipboard),
+        ("widgets_bottom_primary_net", create_widgetbox_net),
+        ("widgets_bottom_primary_sep", widget.Sep),
+        ("widgets_bottom_primary_systray", widget.Systray),
+        ("widgets_bottom_primary_battery", create_widget_battery),
+        ("widgets_bottom_primary_sep", widget.Sep),
+        ("widgets_bottom_primary_forticlient", create_widgetbox_forticlient),
+        ("widgets_bottom_primary_kanata", create_widgetbox_kanata),
+        ("widgets_bottom_primary_updater", create_widget_updater),
+        ("widgets_bottom_primary_clock", create_widget_clock),
+    ]
+
+    return build_widgetlist(cfg, widgets_bottom_primary)
+
+
+def create_bar_top_secondary(cfg):
+    widgets_top_secondary = [
+        ("widgets_top_secondary_sep", widget.Sep),
+        ("widgets_top_secondary_spacer", widget.Spacer),
+        ("widgets_top_secondary_window_name", create_widget_window_name),
+        ("widgets_top_secondary_spacer", widget.Spacer),
+        ("widgets_top_secondary_sep", widget.Sep),
+    ]
+    return build_widgetlist(cfg, widgets_top_secondary)
+
+
+def create_bar_bottom_secondary(cfg):
+    widgets_bottom_secondary = [
+        # ("widgets_bottom_secondary_layout_icon", create_widget_layout_icon),
+        ("widgets_bottom_secondary_groupbox", create_widget_groupbox),
+        ("widgets_bottom_secondary_sep", widget.Sep),
+        ("widgets_bottom_secondary_widgetbox_buttons", create_widgetbox_buttons),
+        ("widgets_bottom_secondary_spacer", widget.Spacer),
+        ("widgets_bottom_secondary_sep", widget.Sep),
+        ("widgets_bottom_secondary_clipboard", create_widgetbox_clipboard),
+        ("widgets_bottom_secondary_net", create_widgetbox_net),
+        ("widgets_bottom_secondary_sep", widget.Sep),
+        ("widgets_bottom_secondary_battery", create_widget_battery),
+        ("widgets_bottom_secondary_sep", widget.Sep),
+        # ("widgets_bottom_secondary_forticlient", create_widgetbox_forticlient),
+        # ("widgets_bottom_secondary_kanata", create_widgetbox_kanata),
+        ("widgets_bottom_secondary_clock", create_widget_clock),
+    ]
+    return build_widgetlist(cfg, widgets_bottom_secondary)
 
 
 ###############################################################################
 # Screens
 ###############################################################################
-widget_defaults = dict(
-    font="JetBrainsMono Nerd Font",
-    fontsize=20,
-    padding=7,
-)
-extension_defaults = widget_defaults.copy()
 
 
 class MpsScreens(object):
     def init_screens(self):
-        return [
-            # Primary Screen
+        screenlist = [
             Screen(
                 top=bar.Bar(
-                    create_topbar(),
-                    40,
+                    create_bar_top_primary(widget_config_top_primary),
+                    BAR_HEIGHT,
                     border_color=barBorderColor,
                     border_width=barBorderWidth,
                     background=barColor,
@@ -260,62 +364,8 @@ class MpsScreens(object):
                     opacity=opacityBar,
                 ),
                 bottom=bar.Bar(
-                    [
-                        # widget.CurrentLayoutIcon(
-                        #     scale=1, fontsize=18, background=darkGray
-                        # ),
-                        widget.WindowCount(),
-                        create_widget_groupbox(),
-                        widget.Sep(),
-                        widget.Prompt(prompt="Spawn: "),
-                        create_widgetbox_buttons(),
-                        widget.Spacer(),
-                        widget.Sep(),
-                        create_widgetbox_tasklist(),
-                        create_widgetbox_clipboard(),
-                        widget.Sep(),
-                        widget.Systray(),
-                        widget.Sep(),
-                        create_widget_updater(),
-                        create_widget_clock(),
-                    ],
-                    40,
-                    border_color=barBorderColor,
-                    border_width=barBorderWidth,
-                    background=barColor,
-                    margin=marginBar,
-                    opacity=opacityBar,
-                ),
-            ),
-            # Secondary Screen
-            Screen(
-                top=bar.Bar(
-                    create_topbar(),
-                    40,
-                    border_color=barBorderColor,
-                    border_width=barBorderWidth,
-                    background=barColor,
-                    margin=marginBar,
-                    opacity=opacityBar,
-                ),
-                bottom=bar.Bar(
-                    [
-                        # widget.CurrentLayoutIcon(
-                        #     scale=1, fontsize=20, background=darkGray
-                        # ),
-                        widget.WindowCount(),
-                        create_widget_groupbox(),
-                        widget.Sep(),
-                        create_widgetbox_buttons(),
-                        widget.Spacer(),
-                        widget.Sep(),
-                        create_widgetbox_tasklist(),
-                        create_widgetbox_clipboard(),
-                        widget.Sep(),
-                        create_widget_updater(),
-                        create_widget_clock(),
-                    ],
-                    40,
+                    create_bar_bottom_primary(widget_config_bottom_primary),
+                    BAR_HEIGHT,
                     border_color=barBorderColor,
                     border_width=barBorderWidth,
                     background=barColor,
@@ -324,3 +374,28 @@ class MpsScreens(object):
                 ),
             ),
         ]
+        if SECOND_SCREEN:
+            screenlist.append(
+                Screen(
+                    top=bar.Bar(
+                        create_bar_top_secondary(widget_config_top_secondary),
+                        BAR_HEIGHT,
+                        border_color=barBorderColor,
+                        border_width=barBorderWidth,
+                        background=barColor,
+                        margin=marginBar,
+                        opacity=opacityBar,
+                    ),
+                    bottom=bar.Bar(
+                        create_bar_bottom_secondary(widget_config_bottom_secondary),
+                        BAR_HEIGHT,
+                        border_color=barBorderColor,
+                        border_width=barBorderWidth,
+                        background=barColor,
+                        margin=marginBar,
+                        opacity=opacityBar,
+                    ),
+                ),
+            )
+
+        return screenlist

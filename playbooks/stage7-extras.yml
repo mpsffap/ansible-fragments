@@ -1,0 +1,8 @@
+---
+- name: Manage Extras (Debian)
+  hosts: target_hosts
+  become: true
+  vars_files:
+    - "../roles/stage7-extras/vars/vars_extras.yml"
+  roles:
+    - stage7-extras

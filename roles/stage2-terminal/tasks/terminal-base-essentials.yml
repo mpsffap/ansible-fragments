@@ -1,0 +1,7 @@
+# ---
+# - name: TERMINAL-BASE-ESSENTIALS - Install terminal essentials
+#   ansible.builtin.apt:
+#     name:
+#       - ssh-askpass
+#     state: present
+#   become: true

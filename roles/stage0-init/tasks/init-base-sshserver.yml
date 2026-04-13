@@ -14,7 +14,7 @@
     group: "root"
     mode: "0744"
 
-- name: Ensure SSH service is running
+- name: INIT-BASE-SSHSERVER - Ensure SSHD service is running
   ansible.builtin.service:
     name: sshd
     state: started

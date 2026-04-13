@@ -162,7 +162,7 @@
     mode: "0755"
 
 - name: INIT-HARDEN-FIREWALL - Ensure IP forwarding is configured via sysctl
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: net.ipv4.ip_forward
     value: "{{ 1 if nat_enable_ip_forwarding else 0 }}"
     state: present

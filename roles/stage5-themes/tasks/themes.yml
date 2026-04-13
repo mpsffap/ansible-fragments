@@ -1,0 +1,12 @@
+---
+- name: THEMES-BASE - Include base optimizations
+  ansible.builtin.include_tasks: themes-base.yml
+  when: enable_themes_base
+
+- name: THEMES-COMMON - Include common optimizations
+  ansible.builtin.include_tasks: themes-common.yml
+  when: enable_themes_common
+
+- name: THEMES-OPTIONAL - Include optimizations
+  ansible.builtin.include_tasks: themes-optional.yml
+  when: enable_themes_optional

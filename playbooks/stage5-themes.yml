@@ -1,0 +1,8 @@
+---
+- name: Manage Themes (Debian)
+  hosts: target_hosts
+  become: true
+  vars_files:
+    - "../roles/stage5-themes/vars/vars_themes.yml"
+  roles:
+    - stage5-themes

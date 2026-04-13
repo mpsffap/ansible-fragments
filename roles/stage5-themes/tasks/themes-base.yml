@@ -1,0 +1,3 @@
+- name: THEMES-BASE-ESSENTIALS - Include base essentials
+  ansible.builtin.include_tasks: themes-base-essentials.yml
+  when: enable_themes_base_essentials

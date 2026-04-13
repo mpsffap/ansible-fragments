@@ -1,0 +1,4 @@
+---
+- name: OPTIMIZE-BASE-ESSENTIALS - Install base essentials
+  ansible.builtin.include_tasks: optimize-base-essentials.yml
+  when: enable_optimize_base_essentials

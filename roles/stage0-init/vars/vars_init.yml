@@ -1,26 +1,26 @@
 ---
 # -- Component Configuration
 # Base
-enable_base: "true"
-enable_base_apt: "true"
-enable_base_autoupgrades: "true"
-enable_base_locale: "true"
-enable_base_time: "true"
-enable_base_fonts: "true"
-enable_base_essentials: "true"
-enable_base_fm: "true"
-enable_base_sshclient: "true"
-enable_base_sshserver: "true"
+enable_base: true
+enable_base_apt: true
+enable_base_autoupgrades: true
+enable_base_locale: true
+enable_base_time: true
+enable_base_fonts: true
+enable_base_essentials: true
+enable_base_fm: true
+enable_base_sshclient: true
+enable_base_sshserver: true
 # Common
-enable_optional: "true"
-enable_optional_archives: "true"
-enable_optional_fm: "true"
-enable_optional_networking: "true"
+enable_optional: true
+enable_optional_archives: true
+enable_optional_fm: true
+enable_optional_networking: true
 # Optionals
-enable_common: "true"
-enable_common_build: "true"
-enable_common_stats: "true"
-enable_common_terminal: "true"
+enable_common: true
+enable_common_build: true
+enable_common_stats: true
+enable_common_terminal: true
 
 # -- Source files
 src_etcfiles: "../files/etc"

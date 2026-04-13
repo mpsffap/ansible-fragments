@@ -1,0 +1,80 @@
+- name: EXTRAS-COMMON-GAMING-DXVK - Install mingw compiler
+  become: true
+  ansible.builtin.apt:
+    name:
+      - mingw-w64
+    state: present
+
+- name: EXTRAS-COMMON-DXVK - Configure compiler alternatives
+  become: true
+  ansible.builtin.shell: |
+    update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
+    update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
+    update-alternatives --set i686-w64-mingw32-gcc /usr/bin/i686-w64-mingw32-gcc-posix
+    update-alternatives --set i686-w64-mingw32-g++ /usr/bin/i686-w64-mingw32-g++-posix
+
+- name: EXTRAS-COMMON-DXVK - Clone DXVK repository
+  ansible.builtin.git:
+    repo: "{{ url_dxvk_repo }}"
+    dest: "{{ dst_dxvk_repo }}"
+    recursive: true
+    update: true
+    force: true
+    version: master
+  register: dxvk_git
+
+- name: EXTRAS-COMMON-DXVK - Check existing build
+  ansible.builtin.stat:
+    path: "{{ dst_dxvk_repo }}/build/dxvk-master"
+  register: dxvk_build
+
+- name: EXTRAS-COMMON-DXVK - Decide if rebuild is needed
+  ansible.builtin.set_fact:
+    dxvk_rebuild_needed: "{{ dxvk_git.changed or dxvk_build.stat.exists }}"
+
+- name: EXTRAS-COMMON-DXVK - Ensure build directory exists
+  ansible.builtin.file:
+    path: "{{ dst_dxvk_repo }}/build"
+    state: directory
+    mode: "0755"
+  when: dxvk_rebuild_needed
+
+- name: EXTRAS-COMMON-DXVK - Clean build directory
+  ansible.builtin.file:
+    path: "{{ dst_dxvk_repo }}/build"
+    state: absent
+  when: dxvk_rebuild_needed
+
+- name: EXTRAS-COMMON-DXVK - Build DXVK
+  ansible.builtin.command: "./package-release.sh master build --no-package"
+  args:
+    chdir: "{{ dst_dxvk_repo }}"
+  when: dxvk_rebuild_needed
+
+- name: EXTRAS-COMMON-DXVK - Ensure Lutris runtime directory exists
+  become: true
+  ansible.builtin.file:
+    path: "{{ user.home }}/.local/share/lutris/runtime"
+    state: directory
+    recurse: true
+    mode: "0755"
+
+- name: EXTRAS-COMMON-DXVK - Copy DXVK build to runtime
+  ansible.builtin.copy:
+    src: "{{ dst_dxvk_repo }}/build/dxvk-master"
+    dest: "{{ user.home }}/.local/share/lutris/runtime"
+    remote_src: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: preserve
+  when: dxvk_rebuild_needed
+
+- name: EXTRAS-COMMON-DXVK - Fix ownership
+  become: true
+  ansible.builtin.file:
+    path: "{{ user.home }}/.local/share/lutris"
+    state: directory
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0755"

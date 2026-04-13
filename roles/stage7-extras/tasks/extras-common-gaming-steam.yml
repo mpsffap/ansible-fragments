@@ -1,0 +1,7 @@
+---
+- name: EXTRAS-COMMON-GAMING-STEAM - Install steam
+  ansible.builtin.apt:
+    name:
+      - steam
+    state: present
+  become: true

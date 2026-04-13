@@ -1,5 +1,5 @@
 ---
-- name: Copy Snippets
+- name: TERMINAL-BASE-SCRIPTS - Copy Snippets
   ansible.posix.synchronize:
     src: "{{ src_scripts }}/"
     dest: "{{ user.home }}/.local/bin/"

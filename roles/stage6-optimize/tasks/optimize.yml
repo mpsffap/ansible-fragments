@@ -1,0 +1,12 @@
+---
+- name: OPTIMIZE-BASE - Include base optimizations
+  ansible.builtin.include_tasks: optimize-base.yml
+  when: enable_optimize_base
+
+- name: OPTIMIZE-COMMON - Include common optimizations
+  ansible.builtin.include_tasks: optimize-common.yml
+  when: enable_optimize_common
+
+- name: OPTIMIZE-OPTIONAL - Include optimizations
+  ansible.builtin.include_tasks: optimize-optional.yml
+  when: enable_optimize_optional

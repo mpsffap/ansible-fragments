@@ -1,4 +1,8 @@
 ---
+- name: HARDEN-BASE-ESSENTIALS - Include essential packages
+  ansible.builtin.include_tasks: harden-base-essentials.yml
+  when: enable_harden_base_essentials
+
 - name: HARDEN-BASE-FIREWALL - Include default rules via iptables
   ansible.builtin.include_tasks: harden-base-firewall.yml
-  when: enable_harden_base_firewall is true
+  when: enable_harden_base_firewall

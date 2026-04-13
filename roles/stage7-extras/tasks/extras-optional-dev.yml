@@ -1,0 +1,16 @@
+---
+- name: EXTRAS-OPTIONAL-DEV-JAVA - Install java tools
+  ansible.builtin.include_tasks: extras-optional-dev-java.yml
+  when: enable_extras_optional_dev_java
+
+- name: EXTRAS-OPTIONAL-DEV-LATEX - Install latex tools
+  ansible.builtin.include_tasks: extras-optional-dev-latex.yml
+  when: enable_extras_optional_dev_latex
+
+- name: EXTRAS-OPTIONAL-DEV-DOTNET - Install dotnet tools
+  ansible.builtin.include_tasks: extras-optional-dev-dotnet.yml
+  when: enable_extras_optional_dev_dotnet
+
+- name: EXTRAS-OPTIONAL-DEV-UNITY - Install unity tools
+  ansible.builtin.include_tasks: extras-optional-dev-unity.yml
+  when: enable_extras_optional_dev_unity

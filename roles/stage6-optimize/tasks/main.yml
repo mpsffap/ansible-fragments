@@ -1,0 +1,11 @@
+---
+- name: OPTIMIZE-MAIN-FACTS - Prepare user facts
+  ansible.builtin.include_tasks: facts-optimize-user.yml
+
+- name: OPTIMIZE-MAIN - Include optimization base installers
+  ansible.builtin.include_tasks: optimize.yml
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    user: "{{ item }}"

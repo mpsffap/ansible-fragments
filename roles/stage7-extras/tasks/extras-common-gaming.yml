@@ -1,0 +1,16 @@
+---
+- name: EXTRAS-COMMON-GAMING-ESSENTIALS - Install essentials
+  ansible.builtin.include_tasks: extras-common-gaming-essentials.yml
+  when: enable_extras_common_gaming_essentials
+
+- name: EXTRAS-COMMON-GAMING-STEAM - Install steam
+  ansible.builtin.include_tasks: extras-common-gaming-steam.yml
+  when: enable_extras_common_gaming_steam
+
+- name: EXTRAS-COMMON-GAMING-LUTRIS - Install lutris
+  ansible.builtin.include_tasks: extras-common-gaming-lutris.yml
+  when: enable_extras_common_gaming_lutris
+
+- name: EXTRAS-COMMON-GAMING-DXVK - Install dxvk tools
+  ansible.builtin.include_tasks: extras-common-gaming-dxvk.yml
+  when: enable_extras_common_gaming_dxvk

@@ -1,5 +1,5 @@
 ---
-- name: Manage installers-desktop (Debian)
+- name: Manage Hardening (Debian)
   hosts: target_hosts
   become: true
   vars_files:

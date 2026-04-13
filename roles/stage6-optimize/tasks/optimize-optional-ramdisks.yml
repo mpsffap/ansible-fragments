@@ -1,0 +1,90 @@
+---
+- name: OPTIMIZE-OPTIONAL-RAMDISKS - Check current mount state of /var/log
+  ansible.builtin.command: findmnt -n -o FSTYPE /var/log
+  register: var_log_fstype
+  changed_when: false
+  failed_when: false
+
+- name: OPTIMIZE-OPTIONAL-RAMDISKS - Set tmpfs flag
+  ansible.builtin.set_fact:
+    var_log_is_tmpfs: "{{ var_log_fstype.stdout == 'tmpfs' }}"
+
+- name: OPTIMIZE-OPTIONAL-RAMDISKS - Use tmpfs for /var/log with backup/restore
+  become: true
+  when:
+    - not var_log_is_tmpfs
+  block:
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Ensure backup dir exists
+      ansible.builtin.file:
+        path: /tmp/var-log-backup
+        state: directory
+        mode: "0700"
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Check if backup marker exists
+      ansible.builtin.stat:
+        path: /tmp/var-log-backup/.backup_done
+      register: backup_done
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Backup /var/log
+      ansible.builtin.copy:
+        src: /var/log/
+        dest: /tmp/var-log-backup/
+        remote_src: true
+        mode: preserve
+      when: not backup_done.stat.exists
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Mark backup as done
+      ansible.builtin.file:
+        path: /tmp/var-log-backup/.backup_done
+        state: touch
+        mode: "0700"
+      when: not backup_done.stat.exists
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Unmount /var/log if mounted
+      ansible.posix.mount:
+        path: /var/log
+        state: unmounted
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Ensure tmpfs entry in fstab
+      ansible.builtin.blockinfile:
+        path: /etc/fstab
+        marker: "# {mark} ANSIBLE MANAGED: tmpfs /var/log"
+        block: |
+          # Mount /var/log as tmpfs (volatile logs)
+          tmpfs /var/log tmpfs mode=1777,nosuid,nodev 0 0
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Recreate /var/log directory
+      ansible.builtin.file:
+        path: /var/log
+        state: directory
+        owner: root
+        group: root
+        mode: "1777"
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Mount tmpfs
+      ansible.posix.mount:
+        path: /var/log
+        src: tmpfs
+        fstype: tmpfs
+        opts: mode=1777,nosuid,nodev
+        state: mounted
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Restore logs
+      ansible.builtin.copy:
+        src: /tmp/var-log-backup/
+        dest: /var/log/
+        remote_src: true
+        mode: preserve
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Ensure correct ownership
+      ansible.builtin.file:
+        path: /var/log
+        state: directory
+        recurse: true
+        owner: root
+        group: root
+
+    - name: OPTIMIZE-OPTIONAL-RAMDISKS - Restart journald
+      ansible.builtin.systemd:
+        name: systemd-journald
+        state: restarted

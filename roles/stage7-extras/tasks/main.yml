@@ -1,0 +1,11 @@
+---
+- name: EXTRAS-MAIN-FACTS - Prepare user facts
+  ansible.builtin.include_tasks: facts-extras-user.yml
+
+- name: EXTRAS-MAIN - Include optimization base installers
+  ansible.builtin.include_tasks: extras.yml
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    user: "{{ item }}"

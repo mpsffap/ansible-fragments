@@ -1,0 +1,8 @@
+---
+- name: EXTRAS-COMMON-BACKUP - Copy backup data
+  ansible.builtin.include_tasks: extras-common-backup.yml
+  when: enable_extras_common_backup
+
+- name: EXTRAS-COMMON-GAMING - Install gaming tools
+  ansible.builtin.include_tasks: extras-common-gaming.yml
+  when: enable_extras_common_gaming

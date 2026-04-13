@@ -6,3 +6,11 @@
 - name: DESKTOP-OPTIONAL-GNOMETOOLS - Install gnome tools
   ansible.builtin.include_tasks: desktop-optional-gnometools.yml
   when: enable_desktop_optional_gnometools
+
+- name: DESKTOP-OPTIONAL-SPOTIFY - Install and configure spotify usage
+  ansible.builtin.include_tasks: desktop-optional-spotify.yml
+  when: enable_desktop_optional_spotify
+
+- name: DESKTOP-OPTIONAL-KANATA - Install kanata keyboard remapper
+  ansible.builtin.include_tasks: desktop-optional-kanata.yml
+  when: enable_desktop_optional_kanata

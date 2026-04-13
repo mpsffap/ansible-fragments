@@ -1,0 +1,61 @@
+---
+- name: DESKTOP-BASE-ESSENTIALS - Install desktop essentials
+  ansible.builtin.apt:
+    name:
+      - plymouth
+      - plymouth-themes
+    state: present
+  become: true
+- name: THEMES-OPTIONAL-PLYMOUTH - Ensure Version
+  copy:
+    src: "/usr/share/plymouth/themes/joy/"
+    dest: "/usr/share/plymouth/themes/{{ grub_theme }}/"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: THEMES-OPTIONAL-PLYMOUTH - Ensure plymouth script
+  copy:
+    src: "/usr/share/plymouth/themes/joy/joy.plymouth"
+    dest: "/usr/share/plymouth/themes/{{ grub_theme }}/{{ grub_theme }}.plymouth"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: THEMES-OPTIONAL-PLYMOUTH - Ensure theme script
+  copy:
+    src: "/usr/share/plymouth/themes/joy/joy.script"
+    dest: "/usr/share/plymouth/themes/{{ grub_theme }}/{{ grub_theme }}.script"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: THEMES-OPTIONAL-PLYMOUTH - Replace string in a file
+  ansible.builtin.replace:
+    path: "/usr/share/plymouth/themes/{{ grub_theme }}/{{ grub_theme }}.script"
+    regexp: "joy"
+    replace: "{{ grub_theme }}"
+
+- name: THEMES-OPTIONAL-PLYMOUTH - Replace string in a file
+  ansible.builtin.replace:
+    path: "/usr/share/plymouth/themes/{{ grub_theme }}/{{ grub_theme }}.plymouth"
+    regexp: "joy"
+    replace: "{{ grub_theme }}"
+
+- name: THEMES-OPTIONAL-PLYMOUTH - Ensure Version
+  copy:
+    src: "/boot/grub/themes/{{ grub_theme }}/background.png"
+    dest: "/usr/share/plymouth/themes/{{ grub_theme }}/"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: THEMES-OPTIONAL-PLYMOUTH - Set theme {{ grub_theme }}
+  ansible.builtin.command:
+    cmd: "plymouth-set-default-theme {{ grub_theme }}"
+  become: true
+
+- name: THEMES-OPTIONAL-PLYMOUTH - Rebuild initrd
+  ansible.builtin.command:
+    cmd: "plymouth-set-default-theme -R"
+  become: true

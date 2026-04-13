@@ -1,4 +1,4 @@
-- name: INIT-HARDEN-APPARMOR - Essentials Apparmor
+- name: HARDEN-COMMON-APPARMOR - Essentials Apparmor
   ansible.builtin.apt:
     name:
       - apparmor-utils
@@ -7,7 +7,7 @@
     state: present
   become: true
 
-- name: INIT-HARDEN-APPARMOR - Copy runc profile for apparmor
+- name: HARDEN-COMMON-APPARMOR - Copy runc profile for apparmor
   ansible.builtin.template:
     src: "{{ src_etcfiles }}/apparmor.d/runc"
     dest: "/etc/apparmor.d/runc"

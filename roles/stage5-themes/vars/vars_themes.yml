@@ -1,0 +1,36 @@
+---
+# -- Component Configuration
+# Base
+enable_themes_base: true
+enable_themes_base_essentials: true
+# Common
+enable_themes_common: true
+# Optional
+enable_themes_optional: true
+enable_themes_optional_grubmenu: true
+enable_themes_optional_plymouth: true
+enable_themes_optional_lightdm: true
+
+# -- Source files
+src_etcfiles: "../files/etc"
+src_grubfiles: "../files/templates/grub"
+src_iconfiles: "../files/templates/grub/icons"
+src_themefiles: "../files/templates/grub/themes"
+src_images: "../files/templates/images/wallpaper"
+
+# -- Destination files
+dst_themefiles: "/boot/grub/themes"
+dst_iconfiles: "/boot/grub/icons"
+dst_images: "/usr/share/images/mps"
+
+# -- Grubtheme
+grub_theme: "anon"
+grub_icon: "light"
+grub_icons:
+  - "light"
+grub_themes:
+  - "anon"
+  - "showroom"
+
+# -- Lightdm
+lightdm_wallpaper: "wormhole.jpg"

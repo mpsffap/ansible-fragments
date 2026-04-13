@@ -39,16 +39,16 @@
     group: root
     mode: "0644"
 
-- name: Reconfigure keyboard-configuration
+- name: INIT-BASE-LOCALE - Reconfigure keyboard-configuration
   ansible.builtin.command: dpkg-reconfigure -f noninteractive keyboard-configuration
   changed_when: false
 
-- name: Install console-setup package
+- name: INIT-BASE-LOCALE - Install console-setup package
   ansible.builtin.apt:
     name: console-setup
     state: present
 
-- name: Configure console
+- name: INIT-BASE-LOCALE - Configure console
   ansible.builtin.copy:
     dest: /etc/default/console-setup
     content: |
@@ -62,11 +62,11 @@
     group: root
     mode: "0644"
 
-- name: Reconfigure console-setup
+- name: INIT-BASE-LOCALE - Reconfigure console-setup
   ansible.builtin.command: dpkg-reconfigure -f noninteractive console-setup
   changed_when: false
 
-- name: Enable and restart console-setup service
+- name: INIT-BASE-LOCALE - Enable and restart console-setup service
   ansible.builtin.systemd:
     name: console-setup.service
     enabled: true

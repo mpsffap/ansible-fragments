@@ -1,0 +1,10 @@
+---
+- name: OPTIMIZE-FACTS-RAMDISKS - Check current mount state of /var/log
+  ansible.builtin.command: findmnt -n -o FSTYPE /var/log
+  register: var_log_fstype
+  changed_when: false
+  failed_when: false
+
+- name: OPTIMIZE-FACTS-RAMDISKS - Set tmpfs flag
+  ansible.builtin.set_fact:
+    var_log_is_tmpfs: "{{ var_log_fstype.stdout == 'tmpfs' }}"
