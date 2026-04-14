@@ -65,14 +65,6 @@
         group: "root"
         mode: "0755"
 
-    - name: DESKTOP-COMMON-QTILE - Copy qtile config
-      ansible.builtin.copy:
-        src: "{{ src_dotfiles }}/.config/qtile"
-        dest: "{{ user.home }}/.config/"
-        owner: "{{ user.name }}"
-        group: "{{ user.name }}"
-        mode: "0700"
-
     - name: DESKTOP-COMMON-QTILE - Copy picom config
       ansible.builtin.copy:
         src: "{{ src_dotfiles }}/.config/picom.conf"
@@ -84,7 +76,7 @@
     - name: DESKTOP-COMMON-QTILE - Copy desktop config files
       ansible.posix.synchronize:
         src: "{{ src_dotfiles }}/.config/qtile/"
-        dest: "{{ user.home }}/.config/"
+        dest: "{{ user.home }}/.config/qtile/"
         recursive: true
         delete: false
       become: true

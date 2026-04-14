@@ -1,4 +1,11 @@
 ---
+- name: INIT-BASE-FONTS - Install unzip
+  ansible.builtin.apt:
+    name:
+      - unzip
+    state: present
+  become: true
+
 - name: INIT-BASE-FONTS - Ensure font directory exists
   ansible.builtin.file:
     path: "{{ dst_fontdir }}"

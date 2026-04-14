@@ -6,7 +6,7 @@ enable_extras_base_essentials: true
 # Common
 enable_extras_common: true
 enable_extras_common_backup: true
-enable_extras_common_gaming: true
+enable_extras_common_gaming: false
 enable_extras_common_gaming_essentials: true
 enable_extras_common_gaming_dxvk: true
 enable_extras_common_gaming_gaming: true
@@ -14,7 +14,7 @@ enable_extras_common_gaming_steam: true
 enable_extras_common_gaming_lutris: true
 
 # Optional
-enable_extras_optional: true
+enable_extras_optional: false
 enable_extras_optional_dev: true
 enable_extras_optional_dev_java: true
 enable_extras_optional_dev_latex: false
@@ -23,8 +23,8 @@ enable_extras_optional_dev_unity: true
 
 # -- Source files
 src_etcfiles: "../files/etc"
-src_backup: "/media/disks/backup/backup/backup_ansible"
-src_backup_sshkeys: "/media/disks/backup/backup/backup_ansible/ssh/keys"
+src_backup: "/media/disks/backup/backup/backup_otr"
+src_backup_sshkeys: "/media/disks/backup/backup/backup_otr/ssh/keys"
 
 # -- Destination files
 dst_unity_key: "/usr/share/keyrings/Unity_Technologies_ApS.gpg"

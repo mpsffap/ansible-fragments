@@ -238,16 +238,16 @@ def create_widgetbox_forticlient():
 
 def create_widgetbox_kanata():
     return WidgetKanata(
-            command="", modes=[], max_chars=64,fontsize=11, 
+            command="echo Base", modes=[], max_chars=64,fontsize=11, 
             update_interval=1, fmt="{}", mouse_callbacks={
-            "Button1": lazy.spawn("forticlient gui"),
-            "Button3": lazy.spawn(
-                (
-                    f"forticlient vpn disconnect {NAME_SSO_ADM} & "
-                    f"forticlient vpn disconnect {NAME_SSL_ADM} & "
-                    f"forticlient vpn disconnect {NAME_PUB} & "
-                )
-            ),
+            # "Button1": lazy.spawn("forticlient gui"),
+            # "Button3": lazy.spawn(
+            #     (
+            #         f"forticlient vpn disconnect {NAME_SSO_ADM} & "
+            #         f"forticlient vpn disconnect {NAME_SSL_ADM} & "
+            #         f"forticlient vpn disconnect {NAME_PUB} & "
+            #     )
+            # ),
         },
     )
 
@@ -338,8 +338,8 @@ def create_bar_bottom_secondary(cfg):
         ("widgets_bottom_secondary_sep", widget.Sep),
         ("widgets_bottom_secondary_battery", create_widget_battery),
         ("widgets_bottom_secondary_sep", widget.Sep),
-        # ("widgets_bottom_secondary_forticlient", create_widgetbox_forticlient),
-        # ("widgets_bottom_secondary_kanata", create_widgetbox_kanata),
+        ("widgets_bottom_secondary_forticlient", create_widgetbox_forticlient),
+        ("widgets_bottom_secondary_kanata", create_widgetbox_kanata),
         ("widgets_bottom_secondary_clock", create_widget_clock),
     ]
     return build_widgetlist(cfg, widgets_bottom_secondary)

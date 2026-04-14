@@ -1,12 +1,12 @@
 ---
 - name: INIT-COMMON-ARCHIVES - Include optional archive packages
   ansible.builtin.include_tasks: init-common-archives.yml
-  when: enable_optional_archives == "true"
+  when: enable_optional_archives
 
 - name: INIT-COMMON-PACKAGES - Include optional filemanager packages
   ansible.builtin.include_tasks: init-common-fm.yml
-  when: enable_optional_fm == "true"
+  when: enable_optional_fm
 
 - name: INIT-COMMON-NETWORKING - Include optional networking packages
   ansible.builtin.include_tasks: init-common-networking.yml
-  when: enable_optional_networking == "true"
+  when: enable_optional_networking

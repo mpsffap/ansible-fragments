@@ -7,7 +7,7 @@ enable_optimize_base_essentials: true
 enable_optimize_common: true
 # Optional
 enable_optimize_optional: true
-enable_optimize_optional_zram: true
+enable_optimize_optional_zram: false
 enable_optimize_optional_ramdisks: true
 enable_optimize_optional_kmscon: true
 
@@ -21,4 +21,3 @@ create_ramdisk_varlog: true
 src_etcfiles: "../files/etc"
 
 # -- Destination files
-

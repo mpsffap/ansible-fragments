@@ -1,36 +1,36 @@
 ---
 - name: INIT-BASE-APT - Include essential apt packages
   ansible.builtin.include_tasks: init-base-apt.yml
-  when: enable_base_apt == "true"
+  when: enable_base_apt
 
 - name: INIT-BASE-AUTOUPGRADES - Include essential auto-upgrade configurations
   ansible.builtin.include_tasks: init-base-autoupgrades.yml
-  when: enable_base_autoupgrades == "true"
+  when: enable_base_autoupgrades
 
 - name: INIT-BASE-ESSENTIALS - Include essential packages
   ansible.builtin.include_tasks: init-base-essentials.yml
-  when: enable_base_essentials == "true"
+  when: enable_base_essentials
 
 - name: INIT-BASE-FM - Include essential filemanager packages
   ansible.builtin.include_tasks: init-base-fm.yml
-  when: enable_base_fm == "true"
+  when: enable_base_fm
 
 - name: INIT-BASE-FONTS - Include essential fonts configurations
   ansible.builtin.include_tasks: init-base-fonts.yml
-  when: enable_base_fonts == "true"
+  when: enable_base_fonts
 
 - name: INIT-BASE-LOCALE - Include essential locale configurations
   ansible.builtin.include_tasks: init-base-locale.yml
-  when: enable_base_locale == "true"
+  when: enable_base_locale
 
 - name: INIT-BASE-SSHCLIENT - Include default ssh config
   ansible.builtin.include_tasks: init-base-sshclient.yml
-  when: enable_base_sshclient == "true"
+  when: enable_base_sshclient
 
 - name: INIT-BASE-SSHSERVER - Include default sshd config
   ansible.builtin.include_tasks: init-base-sshserver.yml
-  when: enable_base_sshserver == "true"
+  when: enable_base_sshserver
 
 - name: INIT-BASE-TIME - Include essential time server configurations
   ansible.builtin.include_tasks: init-base-time.yml
-  when: enable_base_time == "true"
+  when: enable_base_time

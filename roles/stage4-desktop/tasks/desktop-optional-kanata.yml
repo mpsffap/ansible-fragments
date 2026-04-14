@@ -1,1 +1,21 @@
 ---
+- name: DESKTOP-OPTIONAL-KANATA - Install Cargo tools
+  ansible.builtin.command: cargo install kanata --features cmd --force
+  args:
+    creates: "{{ user.home }}/.cargo/bin/kanata"
+  environment:
+    CARGO_HOME: "{{ user.home }}/.cargo"
+    PATH: "{{ user.home }}/.cargo/bin:{{ ansible_env.PATH }}"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: DESKTOP-OPTIONAL-KANATA - Copy kanata config
+  when: user != {}
+  ansible.posix.synchronize:
+    src: "{{ src_dotfiles }}/.config/kanata"
+    dest: "{{ user.home }}/.config"
+    recursive: true
+    delete: false
+  become: true
+  become_user: "{{ user.name }}"
+

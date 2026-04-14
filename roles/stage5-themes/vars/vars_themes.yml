@@ -21,7 +21,7 @@ src_images: "../files/templates/images/wallpaper"
 # -- Destination files
 dst_themefiles: "/boot/grub/themes"
 dst_iconfiles: "/boot/grub/icons"
-dst_images: "/usr/share/images/mps"
+dst_images: "/usr/share/images/"
 
 # -- Grubtheme
 grub_theme: "anon"

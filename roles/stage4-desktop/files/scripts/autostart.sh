@@ -21,6 +21,7 @@ setxkbmap de &
 dconf load / <~/.config/dconf/config.ini
 
 # Tray apps and daemons
+KBDMAPPER=kanata
 COMPOSITOR=picom
 NETMON=nm-applet
 DUNST=dunst
@@ -37,6 +38,7 @@ $(sleep 3 && "$COMPOSITOR" --backend xrender) &
 "$NETMON" &
 "$VOLMON" &
 "$DUNST" &
+"$KANATA" &
 # "$SCRATCHTERM" &
 "$SYSMON" "$POLKIT" &
 # "$MAILTRAY" &

@@ -9,6 +9,7 @@
 # dconf settings
 dconf dump / | tee ~/.config/dconf/config.ini
 
+KBDMAPPER=kanata
 COMPOSITOR=picom
 NETMON=nm-applet
 VOLMON=volumeicon

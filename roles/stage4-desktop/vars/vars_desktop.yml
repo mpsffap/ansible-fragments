@@ -27,7 +27,7 @@ src_images: "../files/templates/images/wallpaper"
 dst_qtile_repo: "/usr/share/mps/tools/qtile"
 dst_rofi_snippets: "/usr/share/rofi"
 dst_brave_keyring: "/usr/share/keyrings/brave-browser-archive-keyring.gpg"
-dst_images: "/usr/share/images/mps"
+dst_images: "/usr/share/images/"
 dst_spotify_key: "/etc/apt/trusted.gpg.d/spotify.gpg"
 dst_spotify_aptfile: "/etc/apt/sources.list.d/spotify.list"
 

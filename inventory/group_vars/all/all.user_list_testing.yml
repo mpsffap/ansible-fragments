@@ -1,19 +1,19 @@
 ---
 users:
-  - name: alice
+  - name: jb
     # uid: 1000
     # gid: 1000
-    group: "alice"
-    home: /home/alice
+    group: "jb"
+    home: /home/jb
     groups: ["admin", "config", "foobar"]
     append_groups: true
-    comment: "Alice Admin"
+    comment: "JB Admin"
     shell: /bin/bash
     create_home: true
     system: false
     expires: -1
     # password: ""
-    password: "alicepass"
+    password: "jbpass"
     # password: "$6$rounds=656000$TyhD0QYWPJgvbaOz$D6N9XwQNhlmUi2h4.Fp7CMBvAqr1b/uTBzCn2fO9Pd1aeFxdeDUSO2y.o./CHqD5sLUBW.veBRVLNGl7n2OLG1"
     state: present
     # state: absent

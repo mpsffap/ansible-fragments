@@ -19,9 +19,11 @@
       - pulseaudio
       - pavucontrol
       - volumeicon-alsa
+      - vorbis-tools
       - libmpg123-dev
     state: present
   become: true
+
 
 - name: DESKTOP-BASE-ESSENTIALS - Copy Config
   ansible.posix.synchronize:
@@ -48,6 +50,14 @@
   when: desktop_scripts_autostart is defined
   become: true
   become_user: "{{ user.name }}"
+
+- name: DESKTOP-BASE-ESSENTIALS - Create folders
+  ansible.builtin.file:
+    path: "{{ dst_images }}"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "0755"
 
 - name: DESKTOP-BASE-ESSENTIALS - Copy Images
   ansible.posix.synchronize:

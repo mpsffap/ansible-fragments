@@ -1,4 +1,12 @@
 ---
+- name: TERMINAL-BASE-SCRIPTS - Create folders
+  ansible.builtin.file:
+    path: "{{ user.home }}/.local/bin"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"
+
 - name: TERMINAL-BASE-SCRIPTS - Copy Snippets
   ansible.posix.synchronize:
     src: "{{ src_scripts }}/"

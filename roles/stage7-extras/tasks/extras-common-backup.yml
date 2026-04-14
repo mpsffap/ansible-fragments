@@ -38,10 +38,28 @@
         firefox_profile_dir: "{{ firefox_profiles.files[0].path }}"
       when: firefox_profiles.matched > 0
 
+    # Check if Firefox profile dir exists
+    - name: EXTRAS-COMMON-BACKUP - Check Firefox profile dir
+      ansible.builtin.stat:
+        path: "{{ firefox_profile_dir }}"
+      register: firefox_profile_dir_stat
+      become: true
+      become_user: "{{ user.name }}"
+
+    # Check if backup file exists
+    - name: EXTRAS-COMMON-BACKUP - Check backup places.sqlite
+      ansible.builtin.stat:
+        path: "{{ src_backup }}/firefox/places.sqlite"
+      register: firefox_backup_stat
+
+    # Copy only if BOTH exist
     - name: EXTRAS-COMMON-BACKUP - Copy bookmarks file into profile
       become: true
       become_user: "{{ user.name }}"
-      when: firefox_profiles.matched > 0
+      when:
+        - firefox_profiles.matched > 0
+        - firefox_profile_dir_stat.stat.exists
+        - firefox_backup_stat.stat.exists
       ansible.builtin.copy:
         src: "{{ src_backup }}/firefox/places.sqlite"
         dest: "{{ firefox_profile_dir }}/places.sqlite"
@@ -49,7 +67,7 @@
         group: "{{ user.name }}"
         mode: "0600"
 
-- name: EXTRAS-COMMON-BACKUP - Backup Brave bookmarks
+- name: Backup Brave bookmarks
   become: true
   become_user: "{{ user.name }}"
   ansible.builtin.copy:
@@ -58,13 +76,20 @@
     mode: "0600"
   when: backup_persist_brave
 
-- name: EXTRAS-COMMON-BACKUP - Copy nerdtree bookmarks file (nvim)
-  ansible.builtin.copy:
-    src: "{{ src_backup }}/home/.NERDTreeBookmarks"
-    dest: "{{ user.home }}/"
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
-    mode: "0600"
+- name: EXTRAS-COMMON-BACKUP - Sync config files
+  ansible.posix.synchronize:
+    src: "{{ src_dotfiles }}/.config/nvim"
+    dest: "{{ user.home }}/.config"
+    recursive: true
+    delete: false
   become: true
   become_user: "{{ user.name }}"
-  when: backup_persist_nerdtree
+
+- name: EXTRAS-COMMON-BACKUP - Copy homedir
+  ansible.posix.synchronize:
+    src: "{{ src_backup }}/home/"
+    dest: "{{ user.home }}/"
+    recursive: true
+    delete: false
+  become: true
+  become_user: "{{ user.name }}"

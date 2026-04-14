@@ -1,0 +1,3 @@
+[target_hosts]
+otr ansible_user=deploy ansible_port=22
+

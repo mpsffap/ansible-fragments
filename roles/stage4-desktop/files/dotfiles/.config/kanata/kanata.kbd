@@ -1,0 +1,208 @@
+;; Kanata configuration: arrows and mouse layer for v1.12
+
+
+;; =====================================================
+;; Config
+;; =====================================================
+(defcfg
+  danger-enable-cmd yes
+)
+
+;; =====================================================
+;; Layout
+;; =====================================================
+(defsrc
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl     lmet lalt           spc                 rmet rctl
+)
+
+(deflocalkeys-linux
+  ö 246
+)
+;; =====================================================
+;; Vars
+;; =====================================================
+(defvar
+  mm-amount-time 2
+  mm-amount-pixels 1
+  tap-time 75
+  hold-time 200
+)
+
+;; =====================================================
+;; Mouse aliases
+;; =====================================================
+(defalias
+  mwu      (mwheel-up $tap-time $hold-time)
+  mwd      (mwheel-down $tap-time $hold-time)
+  mwl      (mwheel-left $tap-time $hold-time)
+  mwr      (mwheel-right $tap-time $hold-time)
+  mm-up (movemouse-up $mm-amount-time $mm-amount-pixels)
+  mm-left (movemouse-left $mm-amount-time $mm-amount-pixels)
+  mm-down (movemouse-down $mm-amount-time $mm-amount-pixels)
+  mm-right (movemouse-right $mm-amount-time $mm-amount-pixels)
+)
+;; =====================================================
+;; Alias (Switch Layer)
+;; =====================================================
+(defalias
+  nbase (layer-switch base)
+  nmse (layer-switch nav-mouse)
+  narr (layer-switch nav-arrows)
+  nlay (layer-switch nav-layers)
+  napp (layer-switch nav-app)
+  nmac (layer-switch nav-macro)
+  nina (layer-switch nav-inactive)
+)
+;; =====================================================
+;; Alias (Notify State)
+;; =====================================================
+(defalias
+    cmbase (cmd bash -c "/usr/bin/notify-send 'Switching to Base'")
+    cmlay  (cmd bash -c "/usr/bin/notify-send 'Switching to Layers'")
+    cmarr  (cmd bash -c "/usr/bin/notify-send 'Switching to Arrows'")
+    cmmse  (cmd bash -c "/usr/bin/notify-send 'Switching to Mouse'")
+    cmapp  (cmd bash -c "/usr/bin/notify-send 'Switching to App'")
+    cmmac  (cmd bash -c "/usr/bin/notify-send 'Switching to Macro'")
+    cmina  (cmd bash -c "/usr/bin/notify-send 'Switching to Inactive'")
+    cmapp-browser  (cmd bash -c "/usr/bin/notify-send 'Invoked Browser App'")
+    cmapp-mail  (cmd bash -c "/usr/bin/notify-send 'Invoked Mail App'")
+    cmapp-xset  (cmd bash -c "/usr/bin/notify-send 'Invoked xset'")
+)
+;; =====================================================
+;; Alias (Update State)
+;; =====================================================
+(defalias
+    csbase (cmd bash -c "echo Base > /tmp/kanata.state")
+    cslay  (cmd bash -c "echo Layers > /tmp/kanata.state")
+    csarr  (cmd bash -c "echo Arrows > /tmp/kanata.state")
+    csmse  (cmd bash -c "echo Mouse > /tmp/kanata.state")
+    csapp  (cmd bash -c "echo App > /tmp/kanata.state")
+    csmac  (cmd bash -c "echo Macro > /tmp/kanata.state")
+    csina  (cmd bash -c "echo Inactive > /tmp/kanata.state")
+)
+;; =====================================================
+;; Alias (Full switch)
+;; =====================================================
+(defalias
+    fsbase (multi @cmbase @csbase @nbase)
+    fslay (multi @cmlay @cslay @nlay)
+    fsarr (multi @cmarr @csarr @narr)
+    fsmse (multi @cmmse @csmse @nmse)
+    fsapp (multi @cmapp @csapp @napp)
+    fsmac (multi @cmmac @csmac @nmac)
+    fsina (multi @cmina @csina @nina)
+)
+;; =====================================================
+;; Alias (Apps)
+;; =====================================================
+(defalias
+    app-browser (multi @cmapp-browser (cmd brave-browser))
+    app-mail (multi @cmapp-mail (cmd thunderbird))
+    app-xset (multi @cmapp-xset (cmd xset r rate 250 50))
+)
+
+;; =====================================================
+;; Alias (Macros)
+;; =====================================================
+(defalias
+  mac-email (macro
+    S-b e s t spc r e g a r d s , ret ret
+    S-j S-b ret
+  )
+)
+;; =====================================================
+;; Layers (Base)
+;; =====================================================
+(deflayermap (base)
+  caps  (tap-hold $tap-time $hold-time esc (layer-while-held nav-arrows))
+  spc  (tap-hold $tap-time $hold-time spc (layer-while-held nav-app))
+  grv (tap-hold $tap-time $hold-time grv @fslay)
+  r (tap-hold $tap-time $hold-time r lrld)
+
+  1  (tap-hold $tap-time $hold-time 1 (layer-while-held base))
+  2  (tap-hold $tap-time $hold-time 2 (layer-while-held nav-arrows))
+  3  (tap-hold $tap-time $hold-time 3 (layer-while-held nav-mouse))
+  4  (tap-hold $tap-time $hold-time 4 (layer-while-held nav-app))
+  5  (tap-hold $tap-time $hold-time 5 (layer-while-held nav-macro))
+  a  (tap-hold $tap-time $hold-time a lalt)
+  ;  (tap-hold $tap-time $hold-time ; ralt)
+  s  (tap-hold $tap-time $hold-time s lmet)
+  l  (tap-hold $tap-time $hold-time l rmet)
+  d  (tap-hold $tap-time $hold-time d lctl)
+  k  (tap-hold $tap-time $hold-time k rctl)
+  f  (tap-hold $tap-time $hold-time f lsft)
+  j  (tap-hold $tap-time $hold-time j rsft)
+)
+
+;; =====================================================
+;; Layers (Layers)
+;; =====================================================
+(deflayermap (nav-layers)
+  grv @fsbase
+  1 @fsbase
+  2 @fsarr
+  3 @fsmse
+  4 @fsapp
+  5 @fsmac
+  6 @fsina
+)
+
+;; =====================================================
+;; Layers (Arrows)
+;; =====================================================
+(deflayermap (nav-arrows)
+  h left
+  j down
+  k up
+  l right
+  i mwu
+  m mwd
+  u pgup
+  n pgdn
+  grv (tap-hold $tap-time $hold-time grv @fslay)
+)
+
+;; =====================================================
+;; Layers (Mouse)
+;; =====================================================
+(deflayermap (nav-mouse)
+  h @mm-left
+  j @mm-down
+  k @mm-up
+  l @mm-right
+  i @mwu
+  m @mwd
+  a mlft
+  s mmid
+  d mmid
+  f mrgt
+  grv (tap-hold $tap-time $hold-time grv @fslay)
+)
+;; =====================================================
+;; Layers (App)
+;; =====================================================
+(deflayermap (nav-app)
+  b @app-browser
+  m @app-mail
+  x @app-xset
+  grv (tap-hold $tap-time $hold-time grv @fslay)
+)
+;; =====================================================
+;; Layers (Macros)
+;; =====================================================
+(deflayermap (nav-macro)
+  m @mac-email
+  grv (tap-hold $tap-time $hold-time grv @fslay)
+)
+;; =====================================================
+;; Layers (Inactive)
+;; =====================================================
+(deflayermap (nav-inactive)
+  grv (tap-hold $tap-time $hold-time grv @fsbase)
+  ; (cmd bash -c "notify-send ÖÖÖÖ")
+)
+
