@@ -15,7 +15,8 @@ from globals import (
     spotifystop,
     tm,
     fm,
-    ff,
+    xset,
+    bb,
     ap,
     pc,
     lu,
@@ -24,6 +25,7 @@ from globals import (
     a,
     m,
     mux,
+    slh,
     modctrl,
     modshift,
     mcs,
@@ -34,7 +36,7 @@ keys_f = [
     # Applications + Movement
     Key(a, "F1", spawn_once(mux), lazy.group["1"].toscreen(), desc="Tmux"),
     Key(a, "F2", spawn_once(fm), lazy.group["2"].toscreen(), desc="Files"),
-    Key(a, "F3", spawn_once(ff), lazy.group["3"].toscreen(), desc="Browser"),
+    Key(a, "F3", spawn_once(bb), lazy.group["3"].toscreen(), desc="Browser"),
     Key(a, "F4", spawn_once(pc), lazy.group["9"].toscreen(), desc="Sound"),
     Key(a, "F5", spawn_once(lu), lazy.group["8"].toscreen(), desc="Lutris"),
     Key(a, "F6", spawn_once(st), lazy.group["8"].toscreen(), desc="Steam"),
@@ -108,10 +110,9 @@ keys_static = [
     Key(m, "Next", lazy.group.next_window(), desc="Focus next"),
     # Applications
     Key(a, "Tab", lazy.spawn(rofiwindows), desc="Launcher widget"),
-    Key(m, "p", lazy.spawn(keepasslauncher), desc="Keepass"),
     Key(m, "Print", lazy.spawn(screenshot), desc="Screenshot"),
     Key(m, "t", lazy.spawn(randomwp), desc="Randomize wallpaper"),
-    Key(m, "v", lazy.spawn(nv), desc="neovim"),
+    Key(m, "v", lazy.spawn(slh), desc="screenlayout hive"),
     Key(m, "Return", lazy.spawn(tm), desc="Launch terminal"),
     Key(modshift, "Return", lazy.spawn(mux), desc="Launch terminal"),
     Key(m, "space", lazy.spawn(rofilaunch), desc="Start rofi"),
@@ -122,6 +123,7 @@ keys_static = [
     Key([], "XF86AudioStop", lazy.spawn(spotifystop), desc="Stop song"),
     Key(m, "i", lazy.reload_config(), desc="Enable keybinds"),
     Key(m, "o", lazy.function(toggle_gaming_mode, keys_f), desc="Toggle gaming mode"),
+    Key(m, "p", lazy.spawn(xset), desc="Set Key rate"),
 ]
 
 

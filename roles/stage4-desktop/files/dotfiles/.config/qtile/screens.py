@@ -34,7 +34,7 @@ from colors import (
 FONTSIZE = 20
 FONTSIZE_SMALL = 20
 BAR_HEIGHT = 30
-SECOND_SCREEN = False
+SECOND_SCREEN = True
 NAME_NA = "N/A"
 NAME_ADM = "bks-adm"
 NAME_SSL_ADM = f"SSL {NAME_ADM}"
@@ -47,10 +47,10 @@ widgetconf = dict(
     padding=7,
 )
 extconf = widgetconf.copy()
-widget_config_top_primary: dict[str,bool] = {
+widget_config_top_primary: dict[str, bool] = {
     "widgets_top_primary_window_name": True,
 }
-widget_config_bottom_primary: dict[str,bool] = {
+widget_config_bottom_primary: dict[str, bool] = {
     "widgets_bottom_primary_layout_icon": True,
     "widgets_bottom_primary_window_count": True,
     "widgets_bottom_primary_groupbox": True,
@@ -65,10 +65,10 @@ widget_config_bottom_primary: dict[str,bool] = {
     "widgets_bottom_primary_updater": True,
     "widgets_bottom_primary_clock": True,
 }
-widget_config_top_secondary: dict[str,bool] = {
+widget_config_top_secondary: dict[str, bool] = {
     "widgets_top_secondary_window_name": True,
 }
-widget_config_bottom_secondary: dict[str,bool] = {
+widget_config_bottom_secondary: dict[str, bool] = {
     "widgets_bottom_secondary_layout_icon": True,
     "widgets_bottom_secondary_window_count": True,
     "widgets_bottom_secondary_groupbox": True,
@@ -87,7 +87,7 @@ widgets_top_primary: list = []
 widgets_bottom_primary: list = []
 widgets_top_secondary: list = []
 widgets_bottom_secondary: list = []
-icons_static: dict[str,str] = {
+icons_static: dict[str, str] = {
     "brave": "/usr/share/icons/hicolor/128x128/apps/brave-browser.png",
     "firefox": "/usr/share/icons/hicolor/128x128/apps/firefox-esr.png",
     "kitty": "/usr/share/icons/hicolor/256x256/apps/kitty.png",
@@ -219,6 +219,7 @@ def create_widgetbox_net():
         ],
     )
 
+
 def create_widgetbox_forticlient():
     return WidgetFortinet(
         update_interval=1,
@@ -238,8 +239,13 @@ def create_widgetbox_forticlient():
 
 def create_widgetbox_kanata():
     return WidgetKanata(
-            command="echo Base", modes=[], max_chars=64,fontsize=11, 
-            update_interval=1, fmt="{}", mouse_callbacks={
+        command="echo Base",
+        modes=[],
+        max_chars=64,
+        fontsize=11,
+        update_interval=1,
+        fmt="{}",
+        mouse_callbacks={
             # "Button1": lazy.spawn("forticlient gui"),
             # "Button3": lazy.spawn(
             #     (
@@ -250,6 +256,7 @@ def create_widgetbox_kanata():
             # ),
         },
     )
+
 
 def create_widget_layout_icon():
     return widget.CurrentLayoutIcon(**widgetconf, background=darkGray)

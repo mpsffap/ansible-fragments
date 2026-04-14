@@ -73,12 +73,12 @@ dashboard.button = function(sc, txt, keybind, keybind_opts)
 end
 -- Set menu
 dashboard.section.buttons.val = {
-	dashboard.button("n", "  >                            New file", ":ene <BAR> startinsert <CR>", {}),
-	dashboard.button("r", "  >                            Recent", ":Telescope oldfiles<CR>", {}),
-	dashboard.button("t", "  >                            Terminal", ":ToggleTerm<CR>", {}),
-	dashboard.button("l", "😴 >                            Lazy", ":Lazy! sync<CR>", {}),
-	dashboard.button("m", "󱌣  >                            Mason", ":Mason<CR>", {}),
-	dashboard.button("q", "❌ >                            Quit", ":qa<CR>", {}),
+	dashboard.button("n", "  >                         New file", ":ene <BAR> startinsert <CR>", {}),
+	dashboard.button("r", "  >                         Recent", ":Telescope oldfiles<CR>", {}),
+	dashboard.button("t", "  >                         Terminal", ":ToggleTerm<CR>", {}),
+	dashboard.button("l", "😴 >                         Lazy", ":Lazy! sync<CR>", {}),
+	dashboard.button("m", "󱌣  >                         Mason", ":Mason<CR>", {}),
+	dashboard.button("q", "󰩈  >                         Quit", ":qa<CR>", {}),
 }
 dashboard.section.buttons.opts = { spacing = 0 }
 
