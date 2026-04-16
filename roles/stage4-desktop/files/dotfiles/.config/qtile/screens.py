@@ -1,8 +1,10 @@
 from libqtile import bar, widget
 from libqtile.config import Screen
 from libqtile.lazy import lazy
+
 from widget_forticlient import WidgetFortinet
 from widget_kanata import WidgetKanata
+from widget_polltext import Mode, WidgetPollText
 
 # from helpers import normalize_window_title
 from globals import (
@@ -40,7 +42,7 @@ NAME_ADM = "bks-adm"
 NAME_SSL_ADM = f"SSL {NAME_ADM}"
 NAME_SSO_ADM = f"{NAME_ADM} SSO"
 NAME_PUB = "pub-all"
-
+FILE_KANATA_STATE = "/tmp/kanata.state"
 widgetconf = dict(
     font="JetBrainsMono Nerd Font",
     fontsize=FONTSIZE,
@@ -59,10 +61,10 @@ widget_config_bottom_primary: dict[str, bool] = {
     "widgets_bottom_primary_clipboard": True,
     "widgets_bottom_primary_net": True,
     "widgets_bottom_primary_systray": True,
-    "widgets_bottom_primary_battery": False,
-    "widgets_bottom_primary_forticlient": True,
+    "widgets_bottom_primary_battery": True,
+    "widgets_bottom_primary_forticlient": False,
     "widgets_bottom_primary_kanata": True,
-    "widgets_bottom_primary_updater": True,
+    "widgets_bottom_primary_updater": False,
     "widgets_bottom_primary_clock": True,
 }
 widget_config_top_secondary: dict[str, bool] = {
@@ -77,8 +79,8 @@ widget_config_bottom_secondary: dict[str, bool] = {
     "widgets_bottom_secondary_clipboard": True,
     "widgets_bottom_secondary_net": True,
     "widgets_bottom_secondary_systray": True,
-    "widgets_bottom_secondary_battery": False,
-    "widgets_bottom_secondary_forticlient": True,
+    "widgets_bottom_secondary_battery": True,
+    "widgets_bottom_secondary_forticlient": False,
     "widgets_bottom_secondary_kanata": True,
     "widgets_bottom_secondary_updater": True,
     "widgets_bottom_secondary_clock": True,
@@ -152,7 +154,8 @@ def create_widget_battery():
     grep = 'grep --color=never -E "state|to\\ full|to\\ empty|percentage"'
     cmd = f"kitty bash -c '{upower} | {grep} ; sleep 2'"
     return widget.Battery(
-        **widgetconf,
+        font="JetBrainsMono Nerd Font",
+        fontsize=10,
         notify_below=0.2,
         low_percentage=0.1,
         low_foreground="#FF0000",
@@ -165,7 +168,7 @@ def create_widget_battery():
         background="#175229",
         update_interval=1,
         show_short_text=True,
-        format="{char} {percent:2.0%} {watt:.2f} W",
+        format="{percent:2.0%}\n{watt:.2f} W",
         mouse_callbacks={"Button1": lazy.spawn(cmd)},
     )
 
@@ -220,46 +223,37 @@ def create_widgetbox_net():
     )
 
 
-def create_widgetbox_forticlient():
-    return WidgetFortinet(
-        update_interval=1,
-        fmt="{}",
-        mouse_callbacks={
-            "Button1": lazy.spawn("forticlient gui"),
-            "Button3": lazy.spawn(
-                (
-                    f"forticlient vpn disconnect {NAME_SSO_ADM} & "
-                    f"forticlient vpn disconnect {NAME_SSL_ADM} & "
-                    f"forticlient vpn disconnect {NAME_PUB} & "
-                )
-            ),
-        },
-    )
+# def create_widgetbox_forticlient():
+#     return WidgetFortinet(
+#         update_interval=2,
+#         fmt="{}",
+#         mouse_callbacks={
+#             "Button1": lazy.spawn("forticlient gui"),
+#             "Button3": lazy.spawn(
+#                 (
+#                     f"forticlient vpn disconnect {NAME_SSO_ADM} & "
+#                     f"forticlient vpn disconnect {NAME_SSL_ADM} & "
+#                     f"forticlient vpn disconnect {NAME_PUB} & "
+#                 )
+#             ),
+#         },
+#     )
 
 
 def create_widgetbox_kanata():
     return WidgetKanata(
-        command="echo Base",
-        modes=[],
+        name="aaa",
+        file=FILE_KANATA_STATE,
         max_chars=64,
         fontsize=11,
-        update_interval=1,
+        update_interval=0.5,
         fmt="{}",
-        mouse_callbacks={
-            # "Button1": lazy.spawn("forticlient gui"),
-            # "Button3": lazy.spawn(
-            #     (
-            #         f"forticlient vpn disconnect {NAME_SSO_ADM} & "
-            #         f"forticlient vpn disconnect {NAME_SSL_ADM} & "
-            #         f"forticlient vpn disconnect {NAME_PUB} & "
-            #     )
-            # ),
-        },
+        mouse_callbacks={},
     )
 
 
 def create_widget_layout_icon():
-    return widget.CurrentLayoutIcon(**widgetconf, background=darkGray)
+    return widget.CurrentLayout(**widgetconf, background=darkGray)
 
 
 def create_widget_window_name():
@@ -312,9 +306,12 @@ def create_bar_bottom_primary(cfg):
         ("widgets_bottom_primary_systray", widget.Systray),
         ("widgets_bottom_primary_battery", create_widget_battery),
         ("widgets_bottom_primary_sep", widget.Sep),
-        ("widgets_bottom_primary_forticlient", create_widgetbox_forticlient),
+        # ("widgets_bottom_primary_forticlient", create_widgetbox_forticlient),
+        ("widgets_bottom_secondary_sep", widget.Sep),
         ("widgets_bottom_primary_kanata", create_widgetbox_kanata),
+        ("widgets_bottom_secondary_sep", widget.Sep),
         ("widgets_bottom_primary_updater", create_widget_updater),
+        ("widgets_bottom_secondary_sep", widget.Sep),
         ("widgets_bottom_primary_clock", create_widget_clock),
     ]
 
@@ -334,7 +331,7 @@ def create_bar_top_secondary(cfg):
 
 def create_bar_bottom_secondary(cfg):
     widgets_bottom_secondary = [
-        # ("widgets_bottom_secondary_layout_icon", create_widget_layout_icon),
+        ("widgets_bottom_secondary_layout_icon", create_widget_layout_icon),
         ("widgets_bottom_secondary_groupbox", create_widget_groupbox),
         ("widgets_bottom_secondary_sep", widget.Sep),
         ("widgets_bottom_secondary_widgetbox_buttons", create_widgetbox_buttons),
@@ -345,8 +342,10 @@ def create_bar_bottom_secondary(cfg):
         ("widgets_bottom_secondary_sep", widget.Sep),
         ("widgets_bottom_secondary_battery", create_widget_battery),
         ("widgets_bottom_secondary_sep", widget.Sep),
-        ("widgets_bottom_secondary_forticlient", create_widgetbox_forticlient),
+        # ("widgets_bottom_secondary_forticlient", create_widgetbox_forticlient),
+        ("widgets_bottom_secondary_sep", widget.Sep),
         ("widgets_bottom_secondary_kanata", create_widgetbox_kanata),
+        ("widgets_bottom_secondary_sep", widget.Sep),
         ("widgets_bottom_secondary_clock", create_widget_clock),
     ]
     return build_widgetlist(cfg, widgets_bottom_secondary)

@@ -55,7 +55,7 @@ alias avc='ansible-vault create --vault-pass-file vault/vault_pass.txt'
 alias apb='ansible-playbook --become --vault-pass-file vault/vault_pass.txt -i inventory/hosts'
 
 # vim
-alias edit='vim'
+alias edit='nvim'
 alias v='vim'
 alias vi='vim'
 alias sv='sudo vim'

@@ -17,3 +17,5 @@ alias sysup='systemctl start'
 alias sysdown='systemctl stop'
 alias sysre='systemctl restart'
 
+# xset keyboard rate
+alias xx='xset r rate 250 50'

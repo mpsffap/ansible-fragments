@@ -29,9 +29,9 @@ mcs = [mod, "control", "shift"]
 ###############################################################################
 home = os.path.expanduser("~")
 terminal = "kitty"
-ap = "spotify"
+ap = "spotify --disable-gpu"
 ev = "evince"
-bb = "brave-browser"
+bb = "LIBVA_DRIVER_NAME=iHD  brave-browser --ignore-gpu-blocklist       --enable-gpu-rasterization       --enable-zero-copy       --enable-features=VaapiVideoDecoder,CanvasOopRasterization,OverlayScrollbar,UseSkiaRenderer       --disable-features=UseChromeOSDirectVideoDecoder       --use-gl=desktop       --use-angle=d3d11 --disable-gpu-sandbox"
 ff = "firefox-esr"
 fm = "thunar"
 ge = "gedit"

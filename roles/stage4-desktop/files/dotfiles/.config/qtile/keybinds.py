@@ -7,7 +7,6 @@ from globals import (
     rofipower,
     rofilaunch,
     rofiwindows,
-    keepasslauncher,
     screenshot,
     spotifynext,
     spotifyprev,
@@ -21,7 +20,6 @@ from globals import (
     pc,
     lu,
     st,
-    nv,
     a,
     m,
     mux,
@@ -30,7 +28,6 @@ from globals import (
     modshift,
     mcs,
 )
-
 
 keys_f = [
     # Applications + Movement
