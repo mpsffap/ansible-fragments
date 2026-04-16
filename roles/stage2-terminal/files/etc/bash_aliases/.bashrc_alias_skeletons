@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# Skeletons
+alias skel='new-skeleton.bash'

@@ -19,3 +19,90 @@
   become: true
   become_user: "{{ user.name }}"
 
+- name: DESKTOP-OPTIONAL-KANATA - Ensure required packages for Kanata
+  ansible.builtin.package:
+    name:
+      - udev
+    state: present
+
+- name: DESKTOP-OPTIONAL-KANATA - Ensure uinput group exists
+  ansible.builtin.group:
+    name: uinput
+    state: present
+
+- name: Add user to input and uinput groups
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    groups:
+      - input
+      - uinput
+    append: true
+
+- name: DESKTOP-OPTIONAL-KANATA - Load uinput kernel module now
+  community.general.modprobe:
+    name: uinput
+    state: present
+
+- name: DESKTOP-OPTIONAL-KANATA - Ensure uinput module loads on boot
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/uinput.conf
+    content: |
+      uinput
+    mode: "0644"
+
+- name: DESKTOP-OPTIONAL-KANATA - Install udev rule for Kanata
+  ansible.builtin.copy:
+    dest: /etc/udev/rules.d/99-kanata-uinput.rules
+    mode: "0644"
+    content: |
+      KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+
+- name: DESKTOP-OPTIONAL-KANATA - Reload udev rules
+  ansible.builtin.command: udevadm control --reload-rules
+
+- name: DESKTOP-OPTIONAL-KANATA - Trigger udev to apply rules immediately
+  ansible.builtin.command: udevadm trigger
+
+- name: DESKTOP-OPTIONAL-KANATA - Ensure user systemd directory exists
+  ansible.builtin.file:
+    path: "{{ user.home }}/.config/systemd/user"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0755"
+
+- name: DESKTOP-OPTIONAL-KANATA - Install Kanata systemd service
+  ansible.builtin.copy:
+    dest: "{{ user.home }}/.config/systemd/user/kanata.service"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Kanata Keyboard Remapper (User)
+      Documentation=https://github.com/jtroo/kanata
+      After=default.target
+
+      [Service]
+      Type=simple
+      ExecStart=/bin/bash -c "{{ user.home }}/.cargo/bin/kanata -c {{ user.home }}/.config/kanata/kanata.kbd"
+      Restart=on-failure
+
+      [Install]
+      WantedBy=default.target
+
+- name: DESKTOP-OPTIONAL-KANATA - Reload user systemd daemon
+  ansible.builtin.systemd:
+    scope: user
+    daemon_reload: true
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: DESKTOP-OPTIONAL-KANATA - Restart kanata service
+  ansible.builtin.systemd:
+    scope: user
+    name: kanata.service
+    enabled: true
+    state: started
+  become: true
+  become_user: "{{ user.name }}"

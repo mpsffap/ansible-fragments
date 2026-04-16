@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# Alias config: File manipulation
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# behaves like cp, just with rsync and with progressbar
+alias rp='rsync -arvP --info=progress2'

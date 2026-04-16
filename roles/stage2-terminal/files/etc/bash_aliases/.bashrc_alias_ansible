@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# Ansible
+alias ave='ansible-vault edit --vault-pass-file vault/vault_pass.txt'
+alias avc='ansible-vault create --vault-pass-file vault/vault_pass.txt'
+alias apb='ansible-playbook --become --vault-pass-file vault/vault_pass.txt -i inventory/hosts'
+ansible_playbook() {
+    ansible-playbook "$1" | grep --line-buffered -Ev '^include*|^ |^}|^- '
+}
+

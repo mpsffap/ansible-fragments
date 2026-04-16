@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# exa
+alias e='exa --icons=always'
+alias et='exa --long --tree --icons=always'
+alias ee='exa -abghHlS --icons=always'
+alias eet='exa --long --tree -abghHlS --icons=always'
+alias see='sudo exa -abghHlS --icons=always'
+alias stree='sudo exa --long --tree --icons=always'
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# zoxide
+alias zz='z -'
+alias zi='zoxide init'
+alias ze='zoxide edit'
+alias za='zoxide add'
+alias zr='zoxide remove'
+alias zq='zoxide query'
+alias zh='zoxide -h'

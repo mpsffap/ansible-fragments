@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# vim
+alias edit='nvim'
+alias v='vim'
+alias vi='vim'
+alias sv='sudo vim'
+alias svim='sudo vim'
+
+# nvim
+alias nv='nvim'
+alias snv='sudo nvim'
+
+# nano? :-D
