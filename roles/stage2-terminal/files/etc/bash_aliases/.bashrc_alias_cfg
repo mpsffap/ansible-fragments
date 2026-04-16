@@ -17,4 +17,3 @@ alias cfg-fstab="sudo edit /etc/fstab"
 alias cfg-crypt="sudo edit /etc/crypttab"
 alias cfg-net="sudo edit /etc/network/interfaces"
 alias cfg-apt='sudo edit /etc/apt/sources.list'
-

@@ -1,39 +1,131 @@
 #!/bin/bash
-# Construct Prompt
+#shellcheck disable=SC2034
 
-HOMEHOST=hive
-HOST=$(hostname)
+# Guards for evaluation
+CPref='\001'
+CSuf='\002'
+# RAW COLORS
+__BLACK=$(tput setaf 0)
+__RED=$(tput setaf 1)
+__YELLOW=$(tput setaf 2)
+__BROWN=$(tput setaf 3)
+__BLUE=$(tput setaf 4)
+__DARKRED=$(tput setaf 5)
+__LIGHTBLUE=$(tput setaf 6)
+__WHITE=$(tput setaf 7)
+__RESET=$(tput sgr0)
+# Guarded Colors
+_BLACK=${CPref}${__BLACK}${CSuf}
+_RED=${CPref}${__RED}${CSuf}
+_YELLOW=${CPref}${__YELLOW}${CSuf}
+_BROWN=${CPref}${__BROWN}${CSuf}
+_BLUE=${CPref}${__BLUE}${CSuf}
+_DARKRED=${CPref}${__DARKRED}${CSuf}
+_LIGHTBLUE=${CPref}${__LIGHTBLUE}${CSuf}
+_WHITE=${CPref}${__WHITE}${CSuf}
+_RESET=${CPref}${__RESET}${CSuf} 
+RET=0
 
-PS1="\
-\$(RET=\$? ; if [[ \$RET -gt 0 ]]; then\
-    printf \"\\${CPref}\\${BIRed}\\${CSuf}[\$RET]\"; else \
-    printf \"\\${CPref}\\${BIGreen}\\${CSuf}[\$RET]\"; fi) \
-\$(if [[ \$DISTRO == "Arch" ]]; then \
-    printf \"\\${CPref}\\${BIRed}\\${CSuf} \"; \
-elif [[ \$DISTRO == "Debian" ]]; then \
-    printf \"\\${CPref}\\${BIRed}\\${CSuf} \"; fi)\
-\$(if [[ \$USER == "root" ]]; then \
-    printf \"\\${CPref}\\${BIRed}\\${CSuf}\"; else\
-    printf \"\\${CPref}\\${BGreen}\\${CSuf}\"; fi)\
-\u\
-\$(if [[ \$USER == "root" ]] ; then \
-    printf \"\\${CPref}\\${BIYellow}\\${CSuf}@\"; else\
-    printf \"\\${CPref}\\${BIPurple}\\${CSuf}@\"; fi)\
-\$(if [[ \$HOST != \$HOMEHOST ]]; then \
-    printf \"\\${CPref}\\${BIRed}\\${CSuf}\h\"; else\
-    printf \"\\${CPref}\\${BIGreen}\\${CSuf}\h\"; fi)\
-\001${BIWhite}\002:\
-\001${BIBlue}\002\W\
-\$(if [[ \$USER == "root" ]]; then \
-    printf \"\\${CPref}\\${BIRed}\\${CSuf}\"; else\
-    printf \"\\${CPref}\\${BIGreen}\\${CSuf}\"; fi)\
- >\
-\001${Color_Off}\002 "
+get_git() {
+    OUT="\$(git rev-parse --is-inside-work-tree 1>/dev/null 2>&1;"
+    OUT="${OUT} if [[ \$? -eq 0 ]]; then"
+    OUT="${OUT} BRANCH=\$(git rev-parse --abbrev-ref HEAD);"
+    OUT="${OUT} STATUS=\$(git status --porcelain);"
+    OUT="${OUT} COLOR='${_LIGHTBLUE}';"
+    OUT="${OUT} [[ \"\$STATUS\" != '' ]] && COLOR=${_RED};"
+    OUT="${OUT} printf '%s (%s) %s' \${COLOR} \${BRANCH} '${_RESET}';"
+    OUT="${OUT} fi)"
+    echo -n "$OUT"
+}
+get_venv() {
+    OUT="\$(git rev-parse --is-inside-work-tree 1>/dev/null 2>&1;"
+    OUT="${OUT} if [[ -n \$VIRTUALENV ]]; then"
+    OUT="${OUT} printf '%s(%s)%s' \${_YELLOW} \${VIRTUALENV} '${_RESET}';"
+    OUT="${OUT} fi)"
+    echo -n "$OUT"
+}
+get_error() {
+    OUT="\$(RET=\$? ; if [[ \$RET -eq 0 ]]; then"
+    OUT="${OUT} printf '%s[%s]%s' '${_YELLOW}'  \$RET '${_RESET}'; else"
+    OUT="${OUT} printf '%s[%s]%s' '${_RED}' \$RET '${_RESET}'; fi)"
+    # OUT="${OUT}[\$RET]${_RESET}"
+    echo -n "$OUT"
+}
+get_distro() {
+    if [[ "$DISTRO" == "Arch" ]]; then
+        echo -n "${_RED}${_RESET}"
+    else
+        echo -n "${_RED}${_RESET}"
+    fi
+}
+get_user() {
+    if [[ "$USER" == "root" ]]; then
+        echo -n "${_RED}\\u${_LIGHTBLUE}@${_RESET}"
+    else
+        echo -n "${_YELLOW}\\u${_DARKRED}@${_RESET}"
+    fi
+}
+get_host() {
+    HOST=$(hostname)
+    PREFIX="${HOST:0:4}"
+    if [[ "$PREFIX" == "loc-" ]]; then
+        echo -n "${_YELLOW}\\h${_RESET}"
+    elif [[ "$PREFIX" == "tst-" ]]; then
+        echo -n "${_BLUE}\\h${_RESET}"
+    else
+        echo -n "${_RED}\\h${_RESET}"
+    fi
+}
+get_file() {
+    echo -n ":${_BLUE}\\W${_RESET}"
+}
+get_trailer() {
+    if [[ "$USER" == "root" ]]; then
+        echo -n "${_RED}>${_RESET} "
+    else
+        echo -n "${_WHITE}>${_RESET} "
+    fi
+}
+
+# Hardcoded value for testing!
+PS1_TYPE="PS1_ALL"
+
+# All types
+PS1_ERR="$(get_error)"
+PS1_COM="$(get_user)$(get_host)$(get_file) $(get_trailer)"
+PS1_STD="$(get_error) $(get_user)$(get_host)$(get_file) $(get_trailer)"
+PS1_DEV="$(get_error) $(get_git)$(get_user)$(get_host)$(get_file) $(get_trailer)"
+PS1_ALL="$(get_distro) $(get_error) $(get_venv)$(get_git)$(get_user)$(get_host)$(get_file) $(get_trailer)"
+
+# Choose Prompt type
+case "$PS1_TYPE" in
+    "PS1_ERR")
+        PS1=$PS1_ERR
+        ;;
+    "PS1_COM")
+        PS1=$PS1_COM
+        ;;
+    "PS1_STD")
+        PS1=$PS1_STD
+        ;;
+    "PS1_DEV")
+        PS1=$PS1_DEV
+        ;;
+    "PS1_ALL")
+        PS1=$PS1_ALL
+        ;;
+    *)
+        PS1=$PS1_COM
+        ;;
+esac
+
+
 # Check color prompt
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    export PS1=$PS1
+    export PS1="$PS1"
 else
     export PS1='[\$?] \u@\h:\W\$ '
 fi
-unset color_prompt force_color_prompt
+# unset color_prompt force_color_prompt
+
 
