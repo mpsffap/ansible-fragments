@@ -13,6 +13,7 @@ fontYellow = "ffff00"
 lightRed = "984040"
 lightGreen = "409840"
 lightBlue = "464098"
+lightViolet = "#7f00ff"
 lightGray = "#474747ff"
 ###############################################################################
 # Fonts (MEDIUM)
@@ -26,22 +27,22 @@ darkGray = "#202020ff"
 ###############################################################################
 # Layout
 ###############################################################################
-layoutColorGreen = '00ff00'
-layoutColorBlack = '000000'
-layoutColorLightRed = '984040'
+layoutColorGreen = "00ff00"
+layoutColorBlack = "000000"
+layoutColorLightRed = "984040"
 ###############################################################################
 # Bar
 ###############################################################################
-borderColor = '#101010ff'
+borderColor = "#101010ff"
 barColor = [
     darkGray,
-    '#303030ff',
+    "#303030ff",
     mediumGray,
     mediumGray,
     lightGray,
     mediumGray,
     mediumGray,
-    '#303030ff',
+    "#303030ff",
     darkGray,
 ]
 barBorderColor = [borderColor, borderColor, borderColor, borderColor]

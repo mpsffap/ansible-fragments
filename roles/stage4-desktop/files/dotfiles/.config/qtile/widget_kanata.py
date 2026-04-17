@@ -2,11 +2,11 @@
 
 from widget_polltext import Mode
 from widget_pollfile import WidgetPollFile
-from colors import lightRed, lightGreen, lightBlue, lightGray, fontBlack
+from colors import lightRed, lightGreen, lightBlue, lightViolet, lightGray, fontBlack
 
 DEFAULT_KANATA_MODES = [
     Mode("Base", "󰦑", lightGreen, fontBlack),
-    Mode("Layers", "󰒿", lightGreen, fontBlack),
+    Mode("Layers", "󰒿", lightViolet, fontBlack),
     Mode("Arrows", "󰁌", lightBlue, fontBlack),
     Mode("Mouse", "󰍽", lightBlue, fontBlack),
     Mode("App", "󰀻", lightRed, fontBlack),
