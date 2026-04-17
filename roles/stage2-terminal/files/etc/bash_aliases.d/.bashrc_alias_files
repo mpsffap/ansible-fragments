@@ -9,3 +9,25 @@ alias mv='mv -i'
 
 # behaves like cp, just with rsync and with progressbar
 alias rp='rsync -arvP --info=progress2'
+
+# find with ripgrep and fzf preview
+tsearch() {
+    [[ $# -eq 0 ]] && echo "Need at least one argument!" 
+    [[ $# -gt 2 ]] && echo "Only two arguments allowed!" 
+    SEARCHTERM="$1"
+    SEARCHDIR="."
+    [[ $# -eq 2 ]] && SEARCHDIR="$2"
+    FZFPREVIEW="batcat --style=numbers --color=always {}"
+    rg -l "$SEARCHTERM" "$SEARCHDIR" \
+        | fzf --preview "$FZFPREVIEW"
+}
+fsearch() {
+    [[ $# -eq 0 ]] && echo "Need at least one argument!" 
+    [[ $# -gt 2 ]] && echo "Only two arguments allowed!" 
+    SEARCHTERM="$1"
+    SEARCHDIR="."
+    [[ $# -eq 2 ]] && SEARCHDIR="$2"
+    rg --files "$SEARCHDIR" \
+        | rg "$SEARCHTERM" \
+        | fzf --preview "$FZFPREVIEW"
+}
