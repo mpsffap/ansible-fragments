@@ -23,8 +23,10 @@ enable_extras_optional_dev_unity: true
 
 # -- Source files
 src_etcfiles: "../files/etc"
-src_backup: "/media/disks/backup/backup/backup_otr"
-src_backup_sshkeys: "/media/disks/backup/backup/backup_otr/ssh/keys"
+# src_backup: "/media/disks/backup/backup/backup_otr"
+# src_backup_sshkeys: "/media/disks/backup/backup/backup_otr/ssh/keys"
+src_backup: "~/backup/backup_otr"
+src_backup_ssh: "~/backup/backup_otr/ssh"
 
 # -- Destination files
 dst_unity_key: "/usr/share/keyrings/Unity_Technologies_ApS.gpg"
@@ -43,7 +45,9 @@ url_lutris_key_url: "https://download.opensuse.org/repositories/home:/strycore/D
 url_lutris_key_path: "/etc/apt/keyrings/lutris.gpg"
 
 # -- Backup options
-backup_persist_sshkeys: true
+backup_persist_ssh_keys: true
+backup_persist_ssh_config: true
+backup_persist_ssh_authorized: true
 backup_persist_firefox: true
 backup_persist_brave: true
 backup_persist_nerdtree: true

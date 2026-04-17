@@ -12,6 +12,9 @@ users:
   #   expires: -1
   #   password: "rootpass"
   #   state: present
+  #   sudo:
+  #     nopasswd: false
+  #     macros: []
   #   ssh_keys:
   #     - name: id_rsa
   #       path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa"

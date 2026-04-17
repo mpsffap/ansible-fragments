@@ -1,25 +1,40 @@
 ---
-- name: EXTRAS-COMMON-BACKUP - Copy ssh keys
-  when: backup_persist_sshkeys
-  block:
-    - name: EXTRAS-COMMON-BACKUP - Create ssh folder
-      become: true
-      become_user: "{{ user.name }}"
-      ansible.builtin.file:
-        path: "{{ user.home }}/.ssh/"
-        state: directory
-        owner: "{{ user.name }}"
-        group: "{{ user.name }}"
-        mode: "0700"
+- name: EXTRAS-COMMON-BACKUP - Create ssh folder
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.file:
+    path: "{{ user.home }}/.ssh/"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"
 
-    - name: EXTRAS-COMMON-BACKUP - Sync config files
-      ansible.posix.synchronize:
-        src: "{{ src_backup_sshkeys }}/"
-        dest: "{{ user.home }}/.ssh/"
-        recursive: true
-        delete: false
-      become: true
-      become_user: "{{ user.name }}"
+- name: EXTRAS-COMMON-BACKUP - Sync ssh keys
+  ansible.posix.synchronize:
+    src: "{{ src_backup_ssh }}/keys/"
+    dest: "{{ user.home }}/.ssh/"
+    recursive: true
+    delete: false
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: EXTRAS-COMMON-BACKUP - Sync ssh config
+  ansible.posix.synchronize:
+    src: "{{ src_backup_ssh }}/config/"
+    dest: "{{ user.home }}/.ssh/"
+    recursive: true
+    delete: false
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: EXTRAS-COMMON-BACKUP - Sync ssh authorized keys
+  ansible.posix.synchronize:
+    src: "{{ src_backup_ssh }}/authorized/"
+    dest: "{{ user.home }}/.ssh/"
+    recursive: true
+    delete: false
+  become: true
+  become_user: "{{ user.name }}"
 
 # - name: EXTRAS-COMMON-BACKUP - Copy user settings
 #   when: backup_persist_firefox

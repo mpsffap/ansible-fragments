@@ -25,6 +25,8 @@ _LIGHTBLUE=${CPref}${__LIGHTBLUE}${CSuf}
 _WHITE=${CPref}${__WHITE}${CSuf}
 _RESET=${CPref}${__RESET}${CSuf} 
 RET=0
+# Multi-Line prompt
+MULTILINE=0
 
 get_git() {
     OUT="\$(git rev-parse --is-inside-work-tree 1>/dev/null 2>&1;"
@@ -80,10 +82,15 @@ get_file() {
     echo -n ":${_BLUE}\\W${_RESET}"
 }
 get_trailer() {
+    SIGN="${_WHITE}>"
     if [[ "$USER" == "root" ]]; then
-        echo -n "${_RED}>${_RESET} "
+        SIGN="${_RED}>"
+    fi
+    if [[ $MULTILINE -eq 1 ]]; then
+        echo ""
+        echo -n "${SIGN}${_RESET} "
     else
-        echo -n "${_WHITE}>${_RESET} "
+        echo "${SIGN}${_RESET} "
     fi
 }
 
