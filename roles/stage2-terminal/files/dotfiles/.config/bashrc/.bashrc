@@ -28,7 +28,7 @@ HISTCONTROL=ignoreboth # don't put duplicate lines in the history.
 shopt -s histappend    # append to the history file, don't overwrite it
 shopt -s checkwinsize  # update the values of LINES and COLUMNS.
 #--- Aliases ------------------------------------------------------------------
-ALIASDIR_COMMON="/etc/bash_aliases"
+ALIASDIR_COMMON="/etc/bash_aliases.d"
 if [[ -d "$ALIASDIR_COMMON" ]] ; then
   for file in "$ALIASDIR_COMMON"/.bashrc_alias_*; do
     [[ -e "$file" ]] || continue # handle no matches

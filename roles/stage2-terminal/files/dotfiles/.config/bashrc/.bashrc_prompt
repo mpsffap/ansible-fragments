@@ -88,14 +88,14 @@ get_trailer() {
 }
 
 # Hardcoded value for testing!
-PS1_TYPE="PS1_ALL"
+PS1_TYPE="PS1_DEV"
 
 # All types
 PS1_ERR="$(get_error)"
 PS1_COM="$(get_user)$(get_host)$(get_file) $(get_trailer)"
 PS1_STD="$(get_error) $(get_user)$(get_host)$(get_file) $(get_trailer)"
 PS1_DEV="$(get_error) $(get_git)$(get_user)$(get_host)$(get_file) $(get_trailer)"
-PS1_ALL="$(get_distro) $(get_error) $(get_venv)$(get_git)$(get_user)$(get_host)$(get_file) $(get_trailer)"
+PS1_ALL="$(get_error) $(get_distro) $(get_venv)$(get_git)$(get_user)$(get_host)$(get_file) $(get_trailer)"
 
 # Choose Prompt type
 case "$PS1_TYPE" in

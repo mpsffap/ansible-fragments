@@ -12,9 +12,14 @@
           - bash-completion
         state: present
       become: true
+    - name: TERMINAL-BASE-BASH - Create alias directory
+      ansible.builtin.file:
+        path: /etc/bash_aliases.d
+        state: directory
+      become: true
     - name: TERMINAL-BASE-BASH - Copy common bash aliases
       ansible.builtin.copy:
-        src: "{{ src_etcfiles }}/bash_aliases"
+        src: "{{ src_etcfiles }}/bash_aliases.d"
         dest: "/etc/"
         owner: "root"
         group: "root"
