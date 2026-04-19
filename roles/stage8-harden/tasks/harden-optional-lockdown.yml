@@ -1,1 +1,132 @@
 ---
+- name: HARDEN-OPTIONAL-LOCKDOWN - Ensure target directory exists
+  ansible.builtin.file:
+    path: "{{ lockdown_dir_repos }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0744"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Clone wrapper repo (mps-cis-debian13)
+  ansible.builtin.git:
+    repo: "https://github.com/mpsffap/mps-cis-debian13"
+    dest: "{{ lockdown_dir_repos }}/mps-cis-debian13"
+    version: "main"
+    force: false
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Clone DEBIAN12-CIS lockdown role
+  ansible.builtin.git:
+    repo: "https://github.com/ansible-lockdown/DEBIAN12-CIS"
+    dest: "{{ lockdown_dir_repos }}/DEBIAN12-CIS"
+    version: "main"
+    force: false
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Ensure DEBIAN12-CIS directory ownership
+  ansible.builtin.file:
+    path: "{{ lockdown_dir_repos }}/DEBIAN12-CIS"
+    state: directory
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0744"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Copy wrapper contents into DEBIAN12-CIS
+  ansible.builtin.copy:
+    src: "{{ lockdown_dir_repos }}/mps-cis-debian13/"
+    dest: "{{ lockdown_dir_repos }}/DEBIAN12-CIS/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0744"
+    remote_src: true
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Create inventory directory
+  ansible.builtin.file:
+    path: "{{ lockdown_dir_repos }}/DEBIAN12-CIS/inventory"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0744"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Render inventory file
+  ansible.builtin.template:
+    src: "{{ src_lockdown }}/hosts.j2"
+    dest: "{{ lockdown_dir_repos }}/DEBIAN12-CIS/inventory/hosts"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Install ansible
+  ansible.builtin.apt:
+    name:
+      - ansible
+    state: present
+  become: true
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Ensure .ssh directory exists
+  ansible.builtin.file:
+    path: "{{ user.home }}/.ssh"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Generate RSA SSH keypair if missing
+  community.crypto.openssh_keypair:
+    path: "{{ user.home }}/.ssh/id_rsa"
+    type: rsa
+    size: 4096
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0600"
+    force: true
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Read public key
+  ansible.builtin.slurp:
+    src: "{{ user.home }}/.ssh/id_rsa.pub"
+  register: self_pub
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Authorize own key
+  ansible.posix.authorized_key:
+    user: "{{ user.name }}"
+    key: "{{ self_pub['content'] | b64decode }}"
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: HARDEN-OPTIONAL-LOCKDOWN - Run DEBIAN12-CIS site.yml playbook
+  ansible.builtin.shell: |
+    set -o pipefail
+    /usr/bin/ansible-playbook -i inventory/hosts site.yml -v \
+      2>&1 | tee {{ lockdown_dir_repos }}/ansible-lockdown.log
+  args:
+    creates: "{{ lockdown_dir_repos }}/ansible-lockdown.log"
+    chdir: "{{ lockdown_dir_repos }}/DEBIAN12-CIS"
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: "False"
+    ANSIBLE_SSH_CONTROL_PATH: "none"
+    ANSIBLE_SSH_ARGS: >
+      -o PreferredAuthentications=publickey
+      -o PubkeyAuthentication=yes
+      -o StrictHostKeyChecking=no
+      -o UserKnownHostsFile=/dev/null
+  become: true
+  become_user: "{{ user.name }}"

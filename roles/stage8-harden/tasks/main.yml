@@ -1,11 +1,11 @@
-- name: HARDEN-MAIN - Include base hardening packages
-  ansible.builtin.include_tasks: harden-base.yml
-  when: enable_harden_base
+---
+- name: HARDEN-MAIN-FACTS - Prepare user facts
+  ansible.builtin.include_tasks: facts-harden-user.yml
 
-- name: HARDEN-MAIN - Include common hardening packages
-  ansible.builtin.include_tasks: harden-common.yml
-  when: enable_harden_base
-
-- name: HARDEN-MAIN - Include optional hardening packages
-  ansible.builtin.include_tasks: harden-optional.yml
-  when: enable_harden_base
+- name: HARDEN-MAIN - Include hardening
+  ansible.builtin.include_tasks: harden.yml
+  loop: "{{ users_present }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    user: "{{ item }}"
