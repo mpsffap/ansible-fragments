@@ -5,7 +5,7 @@ enable_extras_base: true
 enable_extras_base_essentials: true
 # Common
 enable_extras_common: true
-enable_extras_common_backup: true
+enable_extras_common_backup: false
 enable_extras_common_gaming: false
 enable_extras_common_gaming_essentials: true
 enable_extras_common_gaming_dxvk: true
@@ -14,12 +14,13 @@ enable_extras_common_gaming_steam: true
 enable_extras_common_gaming_lutris: true
 
 # Optional
-enable_extras_optional: false
+enable_extras_optional: true
 enable_extras_optional_dev: true
-enable_extras_optional_dev_java: true
+enable_extras_optional_dev_java: false
 enable_extras_optional_dev_latex: false
-enable_extras_optional_dev_dotnet: true
-enable_extras_optional_dev_unity: true
+enable_extras_optional_dev_dotnet: false
+enable_extras_optional_dev_espidf: true
+enable_extras_optional_dev_unity: false
 
 # -- Source files
 src_etcfiles: "../files/etc"
@@ -51,3 +52,11 @@ backup_persist_ssh_authorized: true
 backup_persist_firefox: true
 backup_persist_brave: true
 backup_persist_nerdtree: true
+
+# -- esp-idf
+esp_idf_src_base: "{{ user.home }}/esp/sources"
+esp_idf_tools_base: "{{ user.home }}/esp/tools"
+esp_base: "{{ user.home }}/esp"
+esp_idf_versions:
+  - v5.3
+  - v5.4

@@ -3,4 +3,13 @@
 # shellcheck disable=SC2139,SC2015,SC2142,SC2154
 
 # Skeletons
-alias skel='new-skeleton.bash'
+alias skel-list='new-skeleton.bash -a ls'
+skel-cp() {
+    [[ $# -eq 0 ]] && echo "At least one argument needed: -n NAME"
+    NAME="$1"
+    DEST="./$NAME"
+    [[ $# -gt 1 ]] && DEST="$2"
+    [[ $# -gt 2 ]] && echo "Only two arguments allowed: $*"
+    new-skeleton.bash -a cp -n "$NAME" -d "$DEST"
+    cd "$DEST"  || exit 1
+}

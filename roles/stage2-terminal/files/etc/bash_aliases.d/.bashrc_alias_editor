@@ -2,6 +2,11 @@
 
 # shellcheck disable=SC2139,SC2015,SC2142,SC2154
 
+# Files
+LOG_TIMINGS="$HOME/.config/nvim-session/startup_log.log"
+LAST_SESSION="$HOME/.config/nvim-session/last_session.vim"
+LAST_SESSION_ROOT="/root/.config/nvim-session/last_session.vim"
+
 # vim
 alias edit='nvim'
 alias v='vim'
@@ -9,8 +14,25 @@ alias vi='vim'
 alias sv='sudo vim'
 alias svim='sudo vim'
 
-# nvim
+# Set default config
+export NVIM_APPNAME="nvim"
+
+# Aliases
+alias n='nvim'
+alias ntime="rm -rf $LOG_TIMINGS ; nvim --startuptime $LOG_TIMINGS -c 'q'; cat $LOG_TIMINGS | tail -n 2"
+alias nls='nvim -S $LAST_SESSION'
 alias nv='nvim'
+alias nvls='nvim -S $LAST_SESSION'
+alias nvc='NVIM_APPNAME=nvim-core nvim'
+alias nvctime="rm -rf $LOG_TIMINGS ; NVIM_APPNAME=nvim-core nvim --startuptime $LOG_TIMINGS -c 'q'; cat $LOG_TIMINGS | tail -n 2"
+alias nvcls='NVIM_APPNAME=nvim-core nvim -S $LAST_SESSION'
+alias nvt='NVIM_APPNAME=nvim-tools nvim'
+alias nvttime="rm -rf $LOG_TIMINGS ; NVIM_APPNAME=nvim-tools nvim --startuptime $LOG_TIMINGS -c 'q'; cat $LOG_TIMINGS | tail -n 2"
+alias nvtls='NVIM_APPNAME=nvim-tools nvim -S $LAST_SESSION'
+alias nvm='NVIM_APPNAME=nvim-minimal nvim'
+alias nvmtime="rm -rf $LOG_TIMINGS ; NVIM_APPNAME=nvim-minimal nvim --startuptime $LOG_TIMINGS -c 'q'; cat $LOG_TIMINGS | tail -n 2"
+alias nvmls='NVIM_APPNAME=nvim-minimal nvim -S $LAST_SESSION'
 alias snv='sudo nvim'
+alias snvls='sudo nvim -S $LAST_SESSION_ROOT'
 
 # nano? :-D

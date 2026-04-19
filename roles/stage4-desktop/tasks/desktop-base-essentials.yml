@@ -6,6 +6,7 @@
       - arandr
       - iw
       - xcwd
+      - espeak
       - lxde-icon-theme
       - thunderbird
       - firefox-esr
@@ -23,7 +24,6 @@
       - libmpg123-dev
     state: present
   become: true
-
 
 - name: DESKTOP-BASE-ESSENTIALS - Copy Config
   ansible.posix.synchronize:

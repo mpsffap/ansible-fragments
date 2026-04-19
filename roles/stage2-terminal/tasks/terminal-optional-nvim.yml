@@ -97,9 +97,33 @@
 - name: TERMINAL-OPTIONAL-NVIM - Copy bash config if needed
   when: user != {}
   block:
-    - name: TERMINAL-OPTIONAL-NVIM - Sync config files
+    - name: TERMINAL-OPTIONAL-NVIM - Sync nvim config
       ansible.posix.synchronize:
         src: "{{ src_dotfiles }}/.config/nvim"
+        dest: "{{ user.home }}/.config"
+        recursive: true
+        delete: false
+      become: true
+      become_user: "{{ user.name }}"
+    - name: TERMINAL-OPTIONAL-NVIM - Sync nvim-core config
+      ansible.posix.synchronize:
+        src: "{{ src_dotfiles }}/.config/nvim-core"
+        dest: "{{ user.home }}/.config"
+        recursive: true
+        delete: false
+      become: true
+      become_user: "{{ user.name }}"
+    - name: TERMINAL-OPTIONAL-NVIM - Sync nvim-tools config
+      ansible.posix.synchronize:
+        src: "{{ src_dotfiles }}/.config/nvim-tools"
+        dest: "{{ user.home }}/.config"
+        recursive: true
+        delete: false
+      become: true
+      become_user: "{{ user.name }}"
+    - name: TERMINAL-OPTIONAL-NVIM - Sync nvim-minimal config
+      ansible.posix.synchronize:
+        src: "{{ src_dotfiles }}/.config/nvim-minimal"
         dest: "{{ user.home }}/.config"
         recursive: true
         delete: false

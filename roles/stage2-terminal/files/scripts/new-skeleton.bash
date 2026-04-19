@@ -49,6 +49,7 @@ do_ls() {
 }
 do_cp() {
     [[ -z "$NAME" ]] && echo "Name is empty!" && usage && exit 1
+    [[ ! -d "$DEST" ]] && mkdir -p "$DEST"
     [[ ! -d "$DEST" ]] && echo "Destination given is not valid: '$DEST'" && usage && exit 2
     if [[ -f "$SKELDIR/$NAME" ]]; then
         echo "Copy File-Template '$NAME' to '$DEST'"
@@ -56,6 +57,7 @@ do_cp() {
     elif [[ -d "$SKELDIR/$NAME" ]]; then
         echo "Copy Dir-Template '$NAME' to '$DEST'"
         cp -v -r "$SKELDIR/$NAME"/* "$DEST"
+        # cd "$DEST" || exit 1
     else
         echo "Template does not exist: '$NAME'"
     fi

@@ -7,7 +7,7 @@ M.getplugins = function()
 		require("mps-core.oil.oil-repo"),
 		require("mps-core.yazi.yazi-repo"),
 		require("mps-core.lspconfig.lspconfig-repo"),
-		require("mps-core.lspsaga.lspsaga-repo"),
+		-- require("mps-core.lspsaga.lspsaga-repo"),
 		require("mps-core.telescope.telescope-repo"),
 		require("mps-core.nerdtree.nerdtree-repo"),
 		--require("mps-core.nvim-tree.nvim-tree-repo"),
@@ -28,7 +28,7 @@ M.configure = function()
 	require("mps-core.oil.oil-config")
 	require("mps-core.yazi.yazi-config")
 	require("mps-core.lspconfig.lspconfig-config")
-	require("mps-core.lspsaga.lspsaga-config")
+	-- require("mps-core.lspsaga.lspsaga-config")
 	require("mps-core.telescope.telescope-config")
 	--require("mps-core.nvim-tree.nvim-tree-config")
 	require("mps-core.nvimcmp.nvimcmp-config")

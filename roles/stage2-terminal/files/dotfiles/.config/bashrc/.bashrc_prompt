@@ -53,6 +53,12 @@ get_error() {
     # OUT="${OUT}[\$RET]${_RESET}"
     echo -n "$OUT"
 }
+get_espenv() {
+   OUT="\$(CURRENT=\$(env | grep -E '^IDF_PATH') ; if [[ \"\$CURRENT\" != \"\" ]] ; then"
+   OUT="${OUT} printf '%s(v%s)%s ' '${_LIGHTBLUE}'  \$ESP_IDF_VERSION '${_RESET}'; else"
+   OUT="${OUT} printf '%s' '${_RESET}'; fi)"
+   echo -n "$OUT"
+}
 get_distro() {
     if [[ "$DISTRO" == "Arch" ]]; then
         echo -n "${_RED}${_RESET}"
@@ -101,7 +107,7 @@ PS1_TYPE="PS1_DEV"
 PS1_ERR="$(get_error)"
 PS1_COM="$(get_user)$(get_host)$(get_file) $(get_trailer)"
 PS1_STD="$(get_error) $(get_user)$(get_host)$(get_file) $(get_trailer)"
-PS1_DEV="$(get_error) $(get_git)$(get_user)$(get_host)$(get_file) $(get_trailer)"
+PS1_DEV="$(get_error) $(get_espenv)$(get_git)$(get_user)$(get_host)$(get_file) $(get_trailer)"
 PS1_ALL="$(get_error) $(get_distro) $(get_venv)$(get_git)$(get_user)$(get_host)$(get_file) $(get_trailer)"
 
 # Choose Prompt type

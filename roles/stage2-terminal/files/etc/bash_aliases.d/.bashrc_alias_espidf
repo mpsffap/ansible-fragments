@@ -1,0 +1,35 @@
+#!/bin/bash
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+DEFAULT_ESP_DEVICE="/dev/ttyACM0"
+DEFAULT_ESP_TARGET="esp32-p4"
+DEFAULT_ESP_IDF_VERSION="v5.3"
+
+# Reset environment variables and clean PATH
+alias esp-use-unset='
+hash -r;
+unset $(compgen -v | grep -E "^(IDF_|ESP_)");
+export PATH=$(echo "$PATH" | tr ":" "\n" | grep -vE "/esp-idf-v[0-9]" | paste -sd:)
+echo "PATH=$(echo $PATH)"
+'
+
+# For default ESP-IDF version (via your activate script)
+alias esp-use-default="source \$HOME/.local/bin/activate-espidf-${DEFAULT_ESP_IDF_VERSION}.bash >/dev/null 2>&1"
+
+# For specific ESP-IDF versions
+alias esp-use-v5.3="esp-use-default && source \$HOME/.local/bin/activate-espidf-v5.3.bash >/dev/null 2>&1 && idf.py --version"
+alias esp-use-v5.4="esp-use-default && source \$HOME/.local/bin/activate-espidf-v5.4.bash >/dev/null 2>&1 && idf.py --version"
+alias esp-use-v6.0="esp-use-default && source \$HOME/.local/bin/activate-espidf-v6.0.bash >/dev/null 2>&1 && idf.py --version"
+
+# create, build, flash, etc.
+alias esp-menu="idf.py menuconfig"
+alias esp-clean='idf.py fullclean'
+alias esp-create='idf.py create-project'
+alias esp-addlib='idf.py add-dependency'
+alias esp-target="idf.py set-target $DEFAULT_ESP_TARGET"
+alias esp-build='idf.py build'
+alias esp-rebuild='idf.py fullclean build'
+alias esp-flash="idf.py -p $DEFAULT_ESP_DEVICE flash"
+alias esp-reflash="idf.py -p $DEFAULT_ESP_DEVICE fullclean build flash"
+alias esp-reflashmon="idf.py -p $DEFAULT_ESP_DEVICE fullclean build flash monitor"
+alias esp-mon="idf.py -p $DEFAULT_ESP_DEVICE monitor"
+

@@ -38,6 +38,13 @@ K.tmap("n", "glsd", "lsp_document_symbols", "[gt] [l]sp [d]ocument [s]ymbols")
 K.tmap("n", "glsw", "lsp_dynamic_workspace_symbols", "[gt] [l]sp [w]orkspace [s]ymbols")
 K.tmap("n", "glg", "diagnostics", "[gt] dia[g]nostics")
 
+-- Unbind default keybinds
+vim.api.nvim_del_keymap("n", "grr")
+vim.api.nvim_del_keymap("n", "gra")
+vim.api.nvim_del_keymap("n", "gri")
+vim.api.nvim_del_keymap("n", "grn")
+vim.api.nvim_del_keymap("n", "grt")
+
 -- Override default lsp bindings
 K.tmap("n", "gd", "lsp_definitions", "[gt] [l]sp [d]efinitions")
 K.tmap("n", "gr", "lsp_references", "[gt] [l]sp [r]eferences")

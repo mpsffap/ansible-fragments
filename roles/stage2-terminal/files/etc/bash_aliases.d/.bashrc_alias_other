@@ -19,3 +19,21 @@ alias sysre='systemctl restart'
 
 # xset keyboard rate
 alias xx='xset r rate 250 50'
+
+# say something with espeak
+alias cowsay-en='cowsay $(fortune)'
+alias cowsay-de='cowsay $(fortune de)'
+alias cowsay-off='cowsay $(fortune de -o)'
+alias cowsay-bofh='cowsay $(fortune bofh-excuses)'
+alias cowsay-anarchy='cowsay $(fortune anarchism)'
+alias say-en='say "$(fortune)"'
+alias say-de='say "$(fortune de)"'
+alias say-off='say "$(fortune de -o)"'
+alias say-off='say "$(fortune de -o)"'
+alias say-bofh='say "$(fortune bofh-excuses)"'
+alias say-anarchy='say "$(fortune anarchism)"'
+say(){
+    SAYING="$1"
+    echo "$SAYING"
+    dunst_espeak.bash SAY "$SAYING"
+}

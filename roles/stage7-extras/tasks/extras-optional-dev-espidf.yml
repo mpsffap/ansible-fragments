@@ -1,0 +1,91 @@
+---
+# =====================================================
+# SYSTEM DEPENDENCIES
+# =====================================================
+- name: EXTRAS-OPTIONAL-DEV-ESPIDF - Install system dependencies
+  become: true
+  ansible.builtin.apt:
+    name:
+      - git
+      - wget
+      - flex
+      - bison
+      - gperf
+      - cmake
+      - ninja-build
+      - ccache
+      - libffi-dev
+      - libssl-dev
+      - dfu-util
+      - python3
+      - python3-pip
+      - python3-venv
+    state: present
+
+# =====================================================
+# ENSURE BASE DIRECTORIES EXIST
+# =====================================================
+- name: EXTRAS-OPTIONAL-DEV-ESPIDF - Ensure base directories exist
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.file:
+    path: "{{ path }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ esp_idf_src_base }}"
+    - "{{ esp_idf_tools_base }}"
+    - "{{ user.home }}/.local/bin"
+  loop_control:
+    loop_var: path
+
+# =====================================================
+# INSTALL ESP-IDF PER VERSION (ISOLATED)
+# =====================================================
+- name: EXTRAS-OPTIONAL-DEV-ESPIDF - Install ESP-IDF versions
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.shell: |
+    set -e
+
+    VERSION="{{ espidf_version }}"
+
+    SRC="{{ esp_idf_src_base }}/esp-idf-$VERSION"
+    TOOLS="{{ esp_idf_tools_base }}/esp-idf-$VERSION"
+
+    export IDF_PATH="$SRC"
+    export IDF_TOOLS_PATH="$TOOLS"
+
+    if [ ! -d "$SRC/.git" ]; then
+      git clone -j8 -b $VERSION --recursive https://github.com/espressif/esp-idf.git "$SRC"
+    fi
+
+    cd "$SRC"
+    ./install.sh
+    . export.sh
+
+    touch "$TOOLS/.installed"
+  args:
+    executable: /bin/bash
+    creates: "{{ esp_idf_tools_base }}/esp-idf-{{ espidf_version }}/.installed"
+  loop: "{{ esp_idf_versions }}"
+  loop_control:
+    loop_var: espidf_version
+
+# =====================================================
+# CREATE ACTIVATION SCRIPTS
+# =====================================================
+- name: EXTRAS-OPTIONAL-DEV-ESPIDF - Create activation scripts
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.copy:
+    dest: "{{ user.home }}/.local/bin/activate-espidf-{{ espidf_version }}.bash"
+    mode: "0755"
+    content: |
+      #!/bin/bash
+      export IDF_PATH="{{ esp_idf_src_base }}/esp-idf-{{ espidf_version }}"
+      export IDF_TOOLS_PATH="{{ esp_idf_tools_base }}/esp-idf-{{ espidf_version }}"
+      source "$IDF_PATH/export.sh"
+  loop: "{{ esp_idf_versions }}"
+  loop_control:
+    loop_var: espidf_version

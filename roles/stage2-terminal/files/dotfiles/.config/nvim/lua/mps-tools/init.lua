@@ -9,7 +9,7 @@ M.getplugins = function()
 		require("mps-tools.dadbod.dadbod-repo"),
 		require("mps-tools.render-markdown.render-markdown-repo"),
 		require("mps-tools.markdown-preview.markdown-preview-repo"),
-		require("mps-tools.dressing.dressing-repo"),
+		-- require("mps-tools.dressing.dressing-repo"),
 		require("mps-tools.noice.noice-repo"),
 		require("mps-tools.live-preview.live-preview-repo"),
 		-- require("mps-tools.swenv.swenv-repo"),
@@ -20,7 +20,7 @@ M.getplugins = function()
 		require("mps-tools.minipairs.minipairs-repo"),
 		require("mps-tools.nvim-hlslens.nvim-hlslens-repo"),
 		require("mps-tools.nvim-ts-autotag.nvim-ts-autotag-repo"),
-		require("mps-tools.vim-rest-console.vim-rest-console-repo"),
+		-- require("mps-tools.vim-rest-console.vim-rest-console-repo"),
 		require("mps-tools.other.other-repo"),
 		--require("mps-tools.gp.gp-repo"),
 	}
@@ -32,7 +32,7 @@ M.configure = function()
 	require("mps-tools.project.project-config")
 	require("mps-tools.render-markdown.render-markdown-config")
 	require("mps-tools.markdown-preview.markdown-preview-config")
-	require("mps-tools.dressing.dressing-config")
+	-- require("mps-tools.dressing.dressing-config")
 	require("mps-tools.noice.noice-config")
 	-- require("mps-tools.swenv.swenv-config")
 	require("mps-tools.toggleterm.toggleterm-config")
