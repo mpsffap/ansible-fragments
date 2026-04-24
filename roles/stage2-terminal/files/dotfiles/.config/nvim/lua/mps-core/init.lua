@@ -2,7 +2,7 @@ local M = {}
 M.getplugins = function()
 	return {
 		require("mps-core.mason.mason-repo"),
-		-- require("mps-core.treesitter.treesitter-repo"),
+		require("mps-core.treesitter.treesitter-repo"),
 		require("mps-core.neoconf.neoconf-repo"),
 		require("mps-core.oil.oil-repo"),
 		require("mps-core.yazi.yazi-repo"),
@@ -10,7 +10,7 @@ M.getplugins = function()
 		-- require("mps-core.lspsaga.lspsaga-repo"),
 		require("mps-core.telescope.telescope-repo"),
 		require("mps-core.nerdtree.nerdtree-repo"),
-		--require("mps-core.nvim-tree.nvim-tree-repo"),
+		require("mps-core.nvim-tree.nvim-tree-repo"),
 		require("mps-core.undotree.undotree-repo"),
 		require("mps-core.harpoon.harpoon-repo"),
 		require("mps-core.whichkey.whichkey-repo"),
@@ -23,14 +23,14 @@ M.getplugins = function()
 end
 M.configure = function()
 	-- Configure
-	-- require("mps-core.treesitter.treesitter-config")
+	require("mps-core.treesitter.treesitter-config")
 	require("mps-core.neoconf.neoconf-config")
 	require("mps-core.oil.oil-config")
 	require("mps-core.yazi.yazi-config")
 	require("mps-core.lspconfig.lspconfig-config")
 	-- require("mps-core.lspsaga.lspsaga-config")
 	require("mps-core.telescope.telescope-config")
-	--require("mps-core.nvim-tree.nvim-tree-config")
+	require("mps-core.nvim-tree.nvim-tree-config")
 	require("mps-core.nvimcmp.nvimcmp-config")
 	require("mps-core.luasnip.luasnip-config")
 	require("mps-core.comment.comment-config")
@@ -42,7 +42,7 @@ M.configure = function()
 	require("mps-core.yazi.yazi-keymaps")
 	require("mps-core.telescope.telescope-keymaps")
 	require("mps-core.nerdtree.nerdtree-keymaps")
-	-- require("mps-core.nvim-tree.nvim-tree-keymaps")
+	require("mps-core.nvim-tree.nvim-tree-keymaps")
 	require("mps-core.harpoon.harpoon-keymaps")
 	require("mps-core.nvimcmp.nvimcmp-keymaps")
 

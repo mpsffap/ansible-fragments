@@ -8,10 +8,10 @@ M.getplugins = function()
 		require("mps-tools.lazygit.lazygit-repo"),
 		require("mps-tools.dadbod.dadbod-repo"),
 		require("mps-tools.render-markdown.render-markdown-repo"),
-		require("mps-tools.markdown-preview.markdown-preview-repo"),
+		-- require("mps-tools.markdown-preview.markdown-preview-repo"),
 		-- require("mps-tools.dressing.dressing-repo"),
 		require("mps-tools.noice.noice-repo"),
-		require("mps-tools.live-preview.live-preview-repo"),
+		-- require("mps-tools.live-preview.live-preview-repo"),
 		-- require("mps-tools.swenv.swenv-repo"),
 		require("mps-tools.toggleterm.toggleterm-repo"),
 		require("mps-tools.todo-comments.todo-comments-repo"),
@@ -31,7 +31,7 @@ M.configure = function()
 	require("mps-tools.overseer.overseer-config")
 	require("mps-tools.project.project-config")
 	require("mps-tools.render-markdown.render-markdown-config")
-	require("mps-tools.markdown-preview.markdown-preview-config")
+	-- require("mps-tools.markdown-preview.markdown-preview-config")
 	-- require("mps-tools.dressing.dressing-config")
 	require("mps-tools.noice.noice-config")
 	-- require("mps-tools.swenv.swenv-config")
@@ -42,7 +42,7 @@ M.configure = function()
 	require("mps-tools.minipairs.minipairs-config")
 	require("mps-tools.nvim-hlslens.nvim-hlslens-config")
 	require("mps-tools.vim-rest-console.vim-rest-console-config")
-	require("mps-tools.live-preview.live-preview-config")
+	-- require("mps-tools.live-preview.live-preview-config")
 	--require("mps-tools.gp.gp-config")
 
 	-- Keymaps

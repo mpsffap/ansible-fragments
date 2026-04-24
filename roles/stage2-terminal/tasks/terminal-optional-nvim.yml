@@ -32,6 +32,7 @@
       - flake8
       - pylint
       - mypy
+      - pandoc
       - python3-neovim
       - python3-pynvim
   become: true

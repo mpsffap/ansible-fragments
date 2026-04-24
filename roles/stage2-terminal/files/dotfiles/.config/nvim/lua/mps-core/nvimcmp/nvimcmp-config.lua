@@ -1,6 +1,5 @@
 -- Set up nvim-cmp.
 local cmp = require("cmp")
-
 local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 require("luasnip.loaders.from_vscode").lazy_load()
@@ -185,8 +184,9 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 
 -- Set up lspconfig.
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-require("lspconfig")["pyright"].setup({
+vim.lsp.config("pyright", {
 	capabilities = capabilities,
+	-- You can add other server-specific settings here
 })
 
 function setAutoCmp(mode)

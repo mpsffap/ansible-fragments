@@ -1,10 +1,20 @@
-local lspconfig = require("lspconfig")
+-- Instead of lspconfig = require('lspconfig')
+-- Use the newer way to access server configs if you are on the latest lspconfig
+-- local lspconfig = vim.lsp.config
+-- local lspconfig = vim.lsp.util
+local lspconfig = require("lspconfig") -- The warning happens here
+-- local lsputil = require("lspconfig.util")
+
+-- Note: If your version of lspconfig is transitioning,
+-- check if you can simply use:
+-- local lspconfig = require('lspconfig') -- The warning happens here
+
 local on_attach = function(client, bufnr)
-	-- client.server_capabilities.completionProvider = true
-	-- client.server_capabilities.documentFormattingProvider = true
-	-- client.server_capabilities.documentRangeFormattingProvider = true
-	-- client.server_capabilities.hoverProvider = true
-	-- client.server_capabilities.signatureHelpProvider = true
+	client.server_capabilities.completionProvider = true
+	client.server_capabilities.documentFormattingProvider = true
+	client.server_capabilities.documentRangeFormattingProvider = true
+	client.server_capabilities.hoverProvider = true
+	client.server_capabilities.signatureHelpProvider = true
 	-- print("Lsp '", client.name, "' attached to buffer ", bufnr)
 end
 local pid = vim.fn.getpid()
@@ -27,7 +37,7 @@ local config = function()
 	-- ############################################################################
 	-- # Linters and formatters
 	-- ############################################################################
-	lspconfig.html.setup({
+	vim.lsp.config("html", {
 		on_attach = on_attach,
 		capabilities = vscode_capabilities,
 		filetypes = { "html", "templ" },
@@ -42,7 +52,10 @@ local config = function()
 		settings = {},
 		single_file_support = true,
 	})
-	lspconfig.cssls.setup({
+	vim.lsp.enable("html")
+
+	vim.lsp.config("cssls", {
+		-- vim.lsp.config("cssls", {
 		on_attach = on_attach,
 		capabilities = vscode_capabilities,
 		filetypes = { "css", "scss", "less" },
@@ -61,7 +74,8 @@ local config = function()
 		root_dir = lspconfig.util.root_pattern("package.json", ".git"),
 		single_file_support = true,
 	})
-	lspconfig.ts_ls.setup({
+	vim.lsp.enable("cssls")
+	vim.lsp.config("ts_ls", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -71,7 +85,8 @@ local config = function()
 		settings = {},
 		root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git"),
 	})
-	lspconfig.dockerls.setup({
+	vim.lsp.enable("ts_ls")
+	vim.lsp.config("dockerls", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -81,7 +96,8 @@ local config = function()
 		root_dir = lspconfig.util.root_pattern("Dockerfile"),
 		single_file_support = true,
 	})
-	lspconfig.docker_compose_language_service.setup({
+	vim.lsp.enable("dockerls")
+	vim.lsp.config("docker_compose_language_service", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -96,7 +112,8 @@ local config = function()
 		),
 		single_file_support = true,
 	})
-	lspconfig.texlab.setup({
+	vim.lsp.enable("docker_compose_language_service")
+	vim.lsp.config("texlab", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -131,7 +148,8 @@ local config = function()
 		},
 		single_file_support = true,
 	})
-	lspconfig.jsonls.setup({
+	vim.lsp.enable("texlab")
+	vim.lsp.config("jsonls", {
 		on_attach = on_attach,
 		capabilities = vscode_capabilities,
 		filetypes = {
@@ -145,7 +163,8 @@ local config = function()
 		root_dir = lspconfig.util.find_git_ancestor(),
 		single_file_support = true,
 	})
-	lspconfig.marksman.setup({
+	vim.lsp.enable("jsonls")
+	vim.lsp.config("marksman", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -156,7 +175,8 @@ local config = function()
 		root_dir = lspconfig.util.root_pattern(".git", ".marksman.toml"),
 		single_file_support = true,
 	})
-	lspconfig.lemminx.setup({
+	vim.lsp.enable("marksman")
+	vim.lsp.config("lemminx", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -170,8 +190,9 @@ local config = function()
 		root_dir = lspconfig.util.find_git_ancestor(),
 		single_file_support = true,
 	})
+	vim.lsp.enable("lemminx")
 
-	lspconfig.lua_ls.setup({
+	vim.lsp.config("lua_ls", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		settings = {
@@ -188,7 +209,8 @@ local config = function()
 			},
 		},
 	})
-	lspconfig.bashls.setup({
+	vim.lsp.enable("lua_ls")
+	vim.lsp.config("bashls", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -209,16 +231,19 @@ local config = function()
 			},
 		},
 	})
-	lspconfig.rust_analyzer.setup({
+	vim.lsp.enable("bashls")
+	vim.lsp.config("rust_analyzer", {
 		settings = {
 			["rust-analyzer"] = {},
 		},
 	})
-	lspconfig.ruff.setup({
+	vim.lsp.enable("rust_analyzer")
+	vim.lsp.config("ruff", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 	})
-	lspconfig.pyright.setup({
+	vim.lsp.enable("ruff")
+	vim.lsp.config("pyright", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		settings = {
@@ -232,13 +257,14 @@ local config = function()
 					diagnosticMode = "workspace",
 					autoImportCompletions = true,
 				},
-				venvPath = vim.fn.getcwd() .. "/.venv",
-				pythonPath = vim.fn.getcwd() .. "/.venv/bin/python",
+				venvPath = vim.fn.getcwd() .. "/.venv/default",
+				pythonPath = vim.fn.getcwd() .. "/.venv/default/bin/python",
 			},
 			python = vim.fn.getcwd() .. "/.venv/bin/python",
 		},
 	})
-	lspconfig.taplo.setup({
+	vim.lsp.enable("pyright")
+	vim.lsp.config("taplo", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -250,7 +276,8 @@ local config = function()
 		root_dir = lspconfig.util.root_pattern(".toml", ".git"),
 		single_file_support = true,
 	})
-	lspconfig.vimls.setup({
+	vim.lsp.enable("taplo")
+	vim.lsp.config("vimls", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -278,7 +305,8 @@ local config = function()
 		},
 		single_file_support = true,
 	})
-	lspconfig.nginx_language_server.setup({
+	vim.lsp.enable("vimls")
+	vim.lsp.config("nginx_language_server", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -287,7 +315,8 @@ local config = function()
 		settings = {},
 		single_file_support = true,
 	})
-	lspconfig.cmake.setup({
+	vim.lsp.enable("nginx_language_server")
+	vim.lsp.config("cmake", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -300,7 +329,8 @@ local config = function()
 		root_dir = lspconfig.util.root_pattern("CMakePresets.json", "CTestConfig.cmake", ".git", "build", "cmake"),
 		single_file_support = true,
 	})
-	lspconfig.clangd.setup({
+	vim.lsp.enable("cmake")
+	vim.lsp.config("clangd", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetypes = {
@@ -330,7 +360,8 @@ local config = function()
 		),
 		single_file_support = true,
 	})
-	lspconfig.csharp_ls.setup({
+	vim.lsp.enable("clangd")
+	vim.lsp.config("csharp_ls", {
 		on_attach = on_attach,
 		capabilities = vscode_capabilities,
 		filetypes = {
@@ -342,7 +373,8 @@ local config = function()
 		},
 		single_file_support = true,
 	})
-	lspconfig.omnisharp.setup({
+	vim.lsp.enable("csharp_ls")
+	vim.lsp.config("omnisharp", {
 		on_attach = on_attach,
 		capabilities = vscode_capabilities,
 		cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
@@ -357,7 +389,8 @@ local config = function()
 		root_dir = lspconfig.util.root_pattern(".csproject"),
 		-- Additional configuration can be added here
 	})
-	lspconfig.ansiblels.setup({
+	vim.lsp.enable("omnisharp")
+	vim.lsp.config("ansiblels", {
 		filetypes = {
 			"yaml",
 			"yml",
@@ -387,6 +420,7 @@ local config = function()
 		on_attach = on_attach,
 		capabilities = capabilities,
 	})
+	vim.lsp.enable("ansiblels")
 	-- ############################################################################
 	-- # Linters
 	-- ############################################################################
@@ -429,7 +463,7 @@ local config = function()
 	-- ############################################################################
 	-- # Setup
 	-- ############################################################################
-	lspconfig.efm.setup({
+	vim.lsp.config("efm", {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		filetype = {

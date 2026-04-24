@@ -30,20 +30,24 @@ K.tcmap("n", "<leader>tcsm", "find_files_mps", "[tc] [s]earch [m]ps")
 K.tcmap("n", "<leader>tcsr", "find_files_repo", "[tc] [s]earch [r]epo")
 K.tcmap("n", "<leader>tcss", "find_files_scratch", "[tc] [s]earch [s]cratch")
 
--- Telescope Lsp Keybinds
-K.tmap("n", "glr", "lsp_references", "[gt] [l]sp [r]eferences")
-K.tmap("n", "gld", "lsp_definitions", "[gt] [l]sp [d]efinitions")
-K.tmap("n", "gltd", "lsp_type_definitions", "[gt] [l]sp [t]ype [d]efinitions")
-K.tmap("n", "glsd", "lsp_document_symbols", "[gt] [l]sp [d]ocument [s]ymbols")
-K.tmap("n", "glsw", "lsp_dynamic_workspace_symbols", "[gt] [l]sp [w]orkspace [s]ymbols")
-K.tmap("n", "glg", "diagnostics", "[gt] dia[g]nostics")
-
 -- Unbind default keybinds
 vim.api.nvim_del_keymap("n", "grr")
 vim.api.nvim_del_keymap("n", "gra")
 vim.api.nvim_del_keymap("n", "gri")
 vim.api.nvim_del_keymap("n", "grn")
 vim.api.nvim_del_keymap("n", "grt")
+
+-- Telescope Lsp Keybinds
+K.tmap("n", "glr", "lsp_references", "[gt] [l]sp [r]eferences")
+K.tmap("n", "gld", "lsp_definitions", "[gt] [l]sp [d]efinitions")
+K.tmap("n", "glt", "lsp_type_definitions", "[gt] [l]sp [t]ype definitions")
+K.tmap("n", "glsd", "lsp_document_symbols", "[gt] [l]sp [d]ocument [s]ymbols")
+K.tmap("n", "glsw", "lsp_dynamic_workspace_symbols", "[gt] [l]sp [w]orkspace [s]ymbols")
+K.tmap("n", "glg", "diagnostics", "[gt] dia[g]nostics")
+
+-- Unbind default keybinds
+-- vim.api.nvim_del_keymap("n", "gd")
+vim.api.nvim_del_keymap("n", "grx")
 
 -- Override default lsp bindings
 K.tmap("n", "gd", "lsp_definitions", "[gt] [l]sp [d]efinitions")
