@@ -118,6 +118,7 @@ keys_static = [
     Key([], "XF86AudioPrev", lazy.spawn(spotifyprev), desc="Prev song"),
     Key([], "XF86AudioPlay", lazy.spawn(spotifyplay), desc="Play/pause song"),
     Key([], "XF86AudioStop", lazy.spawn(spotifystop), desc="Stop song"),
+    Key(modshift, "i", lazy.restart(), desc="Enable keybinds"),
     Key(m, "i", lazy.reload_config(), desc="Enable keybinds"),
     Key(m, "o", lazy.function(toggle_gaming_mode, keys_f), desc="Toggle gaming mode"),
     Key(m, "p", lazy.spawn(xset), desc="Set Key rate"),

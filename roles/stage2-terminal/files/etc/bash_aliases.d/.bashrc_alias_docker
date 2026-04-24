@@ -1,23 +1,23 @@
 #!/bin/bash
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154,SC2207
 
-# shellcheck disable=SC2139,SC2015,SC2142,SC2154
-
-# docker
-alias dps="docker ps -a"
-alias dcexec="docker exec -ti "
-alias dcstop="docker container stop "
-alias dckill="docker container kill "
-alias dcrm="docker container rm"
-alias dnls="docker network ls"
-alias dvls="docker volume ls"
-alias dirm="docker image rm"
-alias dia="docker images -a"
-alias dlogs="docker logs -f"
-alias dexe="docker exec -it"
-alias diatagged='docker images -a | grep -v "<none>"'
-function dbash() { docker exec -it "$1" bash ;}
-function dsh() { docker exec -it "$1" sh ;}
-function dip() { docker exec "$1" cat /etc/hosts | grep "$1" | cut -f 1; }
+# --- Functions / Aliases ---
+function dps() { docker ps -a "$@"; }
+function dexec() { docker exec -ti "$@"; }
+function dstop() { docker container stop "$@"; }
+function dkill() { docker container kill "$@"; }
+function drm() { docker container rm "$@"; }
+function dnls() { docker network ls "$@"; }
+function dvls() { docker volume ls "$@"; }
+function dirm() { docker image rm "$@"; }
+function dia() { docker images -a "$@"; }
+function dlogs() { docker logs -f "$@"; }
+function diatagged() { docker images -a | grep -v "<none>" "$@"; }
+function dbash() { docker exec -it "$1" bash; }
+function dsh() { docker exec -it "$1" sh; }
+function dip() { 
+    docker exec "$1" cat /etc/hosts | grep "$1" | cut -fmt 1; 
+}
 function dips() {
   if [ -z "$1" ]; then
     docker ps -q | xargs -n1 docker inspect --format '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}' | sed 's|^/||'
@@ -25,4 +25,31 @@ function dips() {
     docker inspect --format '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}' "$1" | sed 's|^/||'
   fi
 }
-
+# --- Completion Functions ---
+_get_docker_containers() {
+    docker ps --format '{{.Names}}'
+}
+_get_docker_images() {
+    docker images --format '{{.Repository}}:{{.Tag}}'
+}
+_complete_docker_containers() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "$(_get_docker_containers)" -- "$cur") )
+}
+_complete_docker_images() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "$(_get_docker_images)" -- "$cur") )
+}
+# --- Register Completions ---
+complete -F _complete_docker_containers dexec
+complete -F _complete_docker_containers dstop
+complete -F _complete_docker_containers dkill
+complete -F _complete_docker_containers drm
+complete -F _complete_docker_containers dbash
+complete -F _complete_docker_containers dsh
+complete -F _complete_docker_containers dip
+complete -F _complete_docker_containers dips
+complete -F _complete_docker_containers dlogs
+complete -F _complete_docker_images dirm
+complete -F _complete_docker_images dia
+complete -F _complete_docker_images diatagged

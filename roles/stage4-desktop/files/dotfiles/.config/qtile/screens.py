@@ -60,10 +60,10 @@ widget_config_bottom_primary: dict[str, bool] = {
     "widgets_bottom_primary_clipboard": True,
     "widgets_bottom_primary_net": True,
     "widgets_bottom_primary_systray": True,
-    "widgets_bottom_primary_battery": True,
-    "widgets_bottom_primary_forticlient": True,
+    "widgets_bottom_primary_battery": False,
+    "widgets_bottom_primary_forticlient": False,
     "widgets_bottom_primary_kanata": True,
-    "widgets_bottom_primary_updater": False,
+    "widgets_bottom_primary_updater": True,
     "widgets_bottom_primary_clock": True,
 }
 widget_config_top_secondary: dict[str, bool] = {
@@ -78,8 +78,8 @@ widget_config_bottom_secondary: dict[str, bool] = {
     "widgets_bottom_secondary_clipboard": True,
     "widgets_bottom_secondary_net": True,
     "widgets_bottom_secondary_systray": True,
-    "widgets_bottom_secondary_battery": True,
-    "widgets_bottom_secondary_forticlient": True,
+    "widgets_bottom_secondary_battery": False,
+    "widgets_bottom_secondary_forticlient": False,
     "widgets_bottom_secondary_kanata": True,
     "widgets_bottom_secondary_updater": True,
     "widgets_bottom_secondary_clock": True,
@@ -300,7 +300,7 @@ def create_bar_top_primary(cfg):
 
 def create_bar_bottom_primary(cfg):
     widgets_bottom_primary = [
-        # ("widgets_bottom_primary_layout_icon", create_widget_layout_icon),
+        ("widgets_bottom_primary_layout_icon", create_widget_layout_icon),
         ("widgets_bottom_primary_window_count", widget.WindowCount),
         ("widgets_bottom_primary_groupbox", create_widget_groupbox),
         ("widgets_bottom_primary_sep", widget.Sep),
@@ -314,7 +314,7 @@ def create_bar_bottom_primary(cfg):
         ("widgets_bottom_primary_systray", widget.Systray),
         ("widgets_bottom_primary_battery", create_widget_battery),
         ("widgets_bottom_primary_sep", widget.Sep),
-        # ("widgets_bottom_primary_forticlient", create_widgetbox_forticlient),
+        ("widgets_bottom_primary_forticlient", create_widgetbox_forticlient),
         ("widgets_bottom_secondary_sep", widget.Sep),
         ("widgets_bottom_primary_kanata", create_widgetbox_kanata),
         ("widgets_bottom_secondary_sep", widget.Sep),

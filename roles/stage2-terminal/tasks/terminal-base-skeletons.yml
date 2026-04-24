@@ -1,0 +1,17 @@
+---
+- name: TERMINAL-BASE-SKELETONS - Create folder
+  ansible.builtin.file:
+    path: "{{ user.home }}/.config/skeletons"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"
+
+- name: TERMINAL-BASE-SKELETONS - Copy Skeletons
+  ansible.posix.synchronize:
+    src: "{{ src_skeletons }}/"
+    dest: "{{ user.home }}/.config/skeletons/"
+    recursive: true
+    delete: false
+  become: true
+  become_user: "{{ user.name }}"

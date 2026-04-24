@@ -13,3 +13,50 @@ skel-cp() {
     new-skeleton.bash -a cp -n "$NAME" -d "$DEST"
     cd "$DEST"  || exit 1
 }
+
+
+_complete_new_skeleton() {
+    local cur prev args
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    
+    # Get all arguments currently passed to the script (excluding the command itself)
+    args="${COMP_WORDS[@]:1}"
+
+    case "$prev" in
+        -a)
+            # Complete action list: ls, cp
+            local actions="ls cp"
+            COMPREPLY=( $(compgen -W "$actions" -- "$cur") )
+            return 0
+            ;;
+        -n)
+            # Complete template names from ~/.config/skeletons
+            local skeleton_dir="$HOME/.config/skeletons"
+            if [ -d "$skeleton_dir" ]; then
+                # List files and folders in the skeletons directory
+                local templates=$(ls "$skeleton_dir")
+                COMPREPLY=( $(compgen -W "$templates" -- "$cur") )
+            fi
+            return 0
+            ;;
+        -d)
+            # Complete destination paths using default file completion
+            # This uses the built-in directory/file expansion logic
+            local dest_dir="."
+            # If a path was already provided after -d, use that, otherwise use current dir
+            COMPREPLY=( $(compgen -d -- "$cur") ) 
+            return 0
+            ;;
+    esac
+
+    # Default behavior: If we are typing a flag (like -a or -n), suggest the flags themselves
+    if [[ "$cur" == -* ]]; then
+        local flags="-a -n -d"
+        COMPRELY=( $(compgen -W "$flags" -- "$cur") )
+    fi
+}
+
+# Register the completion for your specific script
+complete -F _complete_new_skeleton new-skeleton.bash

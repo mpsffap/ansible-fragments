@@ -31,7 +31,7 @@ home = os.path.expanduser("~")
 terminal = "kitty"
 ap = "spotify --disable-gpu"
 ev = "evince"
-bb = "LIBVA_DRIVER_NAME=iHD  brave-browser --ignore-gpu-blocklist       --enable-gpu-rasterization       --enable-zero-copy       --enable-features=VaapiVideoDecoder,CanvasOopRasterization,OverlayScrollbar,UseSkiaRenderer       --disable-features=UseChromeOSDirectVideoDecoder       --use-gl=desktop       --use-angle=d3d11 --disable-gpu-sandbox"
+bb = "LIBVA_DRIVER_NAME=iHD  brave-browser --ignore-gpu-blocklist --enable-gpu-raization --enable-zero-copy --enable-features=VaapiVideoDecoder,CanvasOopRasterization,OverlayScrollbar,UseSkiaRenderer --disable-features=UseChromeOSDirectVideoDecoder --use-gl=desktop --use-angle=d3d11"
 ff = "firefox-esr"
 fm = "thunar"
 ge = "gedit"
@@ -56,12 +56,6 @@ randomwp = f"{home}/.local/bin/randomize_wp.bash"
 startup = f"{home}/.local/bin/autostart.sh"
 cleanup = f"{home}/.local/bin/autostart_clean.sh"
 update = f"{home}/.local/bin/launch_updates.bash"
-opacityBar = 1
-barBorderWidth = 2
-resizeAmount = 30
-marginBar = [1, 4, 1, 4]
-widthBorder = 1
-gapsWindow = 3
 wallpapers = {
     "1": "/usr/share/images/wallpaper/wormhole.jpg",
     "2": "/usr/share/images/wallpaper/moon.jpg",
@@ -74,6 +68,14 @@ wallpapers = {
     "9": "/usr/share/images/wallpaper/guitar.jpg",
     "0": "/usr/share/images/wallpaper/vorschlag.jpg",
 }
+
+# bar settings
+opacityBar = 1
+barBorderWidth = 2
+resizeAmount = 30
+marginBar = [1, 4, 1, 4]
+widthBorder = 1
+gapsWindow = 3
 widget_defaults = dict(
     font="JetBrainsMono Nerd Font",
     fontsize=14,

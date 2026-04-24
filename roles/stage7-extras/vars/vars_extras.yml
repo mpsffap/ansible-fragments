@@ -60,3 +60,4 @@ esp_base: "{{ user.home }}/esp"
 esp_idf_versions:
   - v5.3
   - v5.4
+  - v6.0

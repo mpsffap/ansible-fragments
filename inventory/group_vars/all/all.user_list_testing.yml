@@ -1,27 +1,27 @@
 ---
 users:
-  # - name: root
-  #   group: "root"
-  #   home: "/root"
-  #   groups: ["admin", "config", "foobar"]
-  #   append_groups: true
-  #   comment: "TheOneAndOnly"
-  #   shell: "/bin/bash"
-  #   create_home: true
-  #   system: false
-  #   expires: -1
-  #   password: "rootpass"
-  #   state: present
-  #   sudo:
-  #     nopasswd: false
-  #     macros: []
-  #   ssh_keys:
-  #     - name: id_rsa
-  #       path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa"
-  #     - name: id_rsa.pub
-  #       path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa.pub"
-  #   authorized_keys:
-  #     - path: "{{ playbook_dir }}/../testfiles/identities/dummy/authorized_keys"
+  - name: root
+    group: "root"
+    home: "/root"
+    groups: ["admin", "config", "foobar"]
+    append_groups: true
+    comment: "TheOneAndOnly"
+    shell: "/bin/bash"
+    create_home: true
+    system: false
+    expires: -1
+    password: "rootpass"
+    state: present
+    sudo:
+      nopasswd: false
+      macros: []
+    ssh_keys:
+      - name: id_rsa
+        path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa"
+      - name: id_rsa.pub
+        path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa.pub"
+    authorized_keys:
+      - path: "{{ playbook_dir }}/../testfiles/identities/dummy/authorized_keys"
   - name: jb
     # uid: 1000
     # gid: 1000

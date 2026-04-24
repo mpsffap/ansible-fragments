@@ -1,0 +1,24 @@
+services:
+  proxy:
+    build: ./proxy
+    networks:
+      - frontend
+  app:
+    build: ./app
+    networks:
+      - frontend
+      - backend
+  db:
+    image: postgres:18
+    networks:
+      - backend
+
+networks:
+  frontend:
+    # Specify driver options
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+  backend:
+    # Use a custom driver
+driver: custom-driver

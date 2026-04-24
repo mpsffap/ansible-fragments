@@ -14,3 +14,7 @@
 - name: TERMINAL-BASE-SCRIPTS - Copy scripts
   ansible.builtin.include_tasks: terminal-base-scripts.yml
   when: enable_terminal_base_scripts
+
+- name: TERMINAL-BASE-SKELETONS - Copy skeletons
+  ansible.builtin.include_tasks: terminal-base-skeletons.yml
+  when: enable_terminal_base_skeletons

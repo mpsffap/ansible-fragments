@@ -14,7 +14,10 @@ class MpsGroups(object):
             Group(
                 "3",
                 label="3  ",
-                matches=[Match(wm_class="Firefox-esr")],
+                matches=[
+                    Match(wm_class="Firefox-esr"),
+                    Match(wm_class="brave-browser"),
+                ],
                 layout="max",
             ),
             Group(

@@ -1,5 +1,5 @@
 #!/bin/bash
-SKELDIR=~/mps/skeletons
+SKELDIR=~/.config/skeletons
 ACTION="ls"
 NAME=""
 DEST="."
