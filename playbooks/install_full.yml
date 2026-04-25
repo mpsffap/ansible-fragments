@@ -15,7 +15,7 @@
     - "../vars/vars_full.yml"
   roles:
     - stage0-init
-    - stage1-users
+    # - stage1-users
     - stage2-terminal
     - stage3-services
     - stage4-desktop

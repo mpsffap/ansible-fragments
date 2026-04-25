@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     dest: "{{ report_dir }}/params-stage2-terminal.log"
     content: |
-      installer_version={{ installer_version }}
+      installer_version_terminal={{ installer_version }}
       enable_terminal_base={{ enable_terminal_base }}
       enable_terminal_base_essentials={{ enable_terminal_base_essentials }}
       enable_terminal_base_bash={{ enable_terminal_base_bash }}

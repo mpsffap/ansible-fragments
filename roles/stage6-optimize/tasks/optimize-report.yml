@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     dest: "{{ report_dir }}/params-stage6-optimize.log"
     content: |
-      installer_version={{ installer_version }}
+      installer_version_optimize={{ installer_version }}
       enable_optimize_base={{ enable_optimize_base }}
       enable_optimize_base_essentials={{ enable_optimize_base_essentials }}
       enable_optimize_common={{ enable_optimize_common }}

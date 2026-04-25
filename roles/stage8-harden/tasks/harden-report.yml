@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     dest: "{{ report_dir }}/params-stage8-harden.log"
     content: |
-      installer_version={{ installer_version }}
+      installer_version_harden={{ installer_version }}
       enable_harden_base=false
       enable_harden_base_essentials={{ enable_harden_base_essentials }}
       enable_harden_base_firewall={{ enable_harden_base_firewall }}

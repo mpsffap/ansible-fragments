@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     dest: "{{ report_dir }}/params-stage3-services.log"
     content: |
-      installer_version={{ installer_version }}
+      installer_version_services={{ installer_version }}
       enable_services_base={{ enable_services_base }}
       enable_services_common={{ enable_services_common }}
       enable_services_common_docker={{ enable_services_common_docker }}

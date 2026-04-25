@@ -30,7 +30,7 @@
   ansible.builtin.copy:
     dest: "{{ report_dir }}/params-stage1-users.log"
     content: |
-      installer_version={{ installer_version }}
+      installer_version_users={{ installer_version }}
       enable_users_add={{ enable_users_add }}
       enable_users_del={{ enable_users_del }}
       enable_users_groups_add={{ enable_users_groups_add }}

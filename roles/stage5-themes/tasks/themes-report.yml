@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     dest: "{{ report_dir }}/params-stage5-themes.log"
     content: |
-      installer_version={{ installer_version }}
+      installer_version_themes={{ installer_version }}
       enable_themes_base={{ enable_themes_base }}
       enable_themes_base_essentials={{ enable_themes_base_essentials }}
       enable_themes_common={{ enable_themes_common }}

@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     dest: "{{ report_dir }}/params-stage7-extras.log"
     content: |
-      installer_version={{ installer_version }}
+      installer_version_extras={{ installer_version }}
       enable_extras_base={{ enable_extras_base }}
       enable_extras_base_essentials={{ enable_extras_base_essentials }}
       enable_extras_common={{ enable_extras_common }}

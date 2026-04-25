@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     dest: "{{ report_dir }}/params-stage4-desktop.log"
     content: |
-      installer_version={{ installer_version }}
+      installer_version_desktop={{ installer_version }}
       enable_desktop_base={{ enable_desktop_base }}
       enable_desktop_base_essentials={{ enable_desktop_base_essentials }}
       enable_desktop_base_thunar={{ enable_desktop_base_thunar }}

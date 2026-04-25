@@ -9,7 +9,7 @@
   ansible.builtin.copy:
     dest: "{{ report_dir }}/params-stage0-init.log"
     content: |
-      installer_version={{ installer_version }}
+      installer_version_init={{ installer_version }}
       enable_init_base={{ enable_init_base }}
       enable_init_base_apt={{ enable_init_base_apt }}
       enable_init_base_autoupgrades={{ enable_init_base_autoupgrades }}
