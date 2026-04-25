@@ -58,13 +58,31 @@
         group: "root"
         mode: "0755"
 
-    - name: DESKTOP-COMMON-QTILE - Create runner
-      ansible.builtin.copy:
-        src: "{{ src_scripts }}/qtilerun.bash"
-        dest: "/usr/local/bin/qtilerun.bash"
-        owner: "root"
-        group: "root"
-        mode: "0755"
+    - name: DESKTOP-COMMON-QTILE - Copy autostart scripts
+      ansible.posix.synchronize:
+        src: "{{ src_scripts }}/{{ file }}"
+        dest: "{{ user.home }}/.local/bin/{{ file }}"
+        recursive: true
+        delete: false
+      loop: "{{ desktop_scripts_autostart }}"
+      loop_control:
+        loop_var: "file"
+      when: desktop_scripts_autostart is defined
+      become: true
+      become_user: "{{ user.name }}"
+
+    - name: DESKTOP-COMMON-QTILE - Copy qtile scripts
+      ansible.posix.synchronize:
+        src: "{{ src_scripts }}/{{ file }}"
+        dest: "{{ user.home }}/.local/bin/{{ file }}"
+        recursive: true
+        delete: false
+      loop: "{{ desktop_scripts_qtile }}"
+      loop_control:
+        loop_var: "file"
+      when: desktop_scripts_qtile is defined
+      become: true
+      become_user: "{{ user.name }}"
 
     - name: DESKTOP-COMMON-QTILE - Copy picom config
       ansible.builtin.copy:

@@ -15,12 +15,12 @@ enable_extras_common_gaming_lutris: true
 
 # Optional
 enable_extras_optional: true
-enable_extras_optional_dev: true
-enable_extras_optional_dev_java: false
-enable_extras_optional_dev_latex: false
-enable_extras_optional_dev_dotnet: false
+enable_extras_optional_dev: false
+enable_extras_optional_dev_java: true
+enable_extras_optional_dev_latex: true
+enable_extras_optional_dev_dotnet: true
 enable_extras_optional_dev_espidf: true
-enable_extras_optional_dev_unity: false
+enable_extras_optional_dev_unity: true
 
 # -- Source files
 src_etcfiles: "../files/etc"

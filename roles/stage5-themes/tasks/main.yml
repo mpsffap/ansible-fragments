@@ -9,3 +9,5 @@
     label: "{{ item.name }}"
   vars:
     user: "{{ item }}"
+- name: THEMES-MAIN - Include report
+  ansible.builtin.include_tasks: themes-report.yml

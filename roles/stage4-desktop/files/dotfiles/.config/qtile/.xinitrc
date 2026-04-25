@@ -1,4 +1,3 @@
 #!/bin/sh
 
-~/mps/snippets/autostart.sh
-
+~/.local/bin/qtile-autostart-start.sh

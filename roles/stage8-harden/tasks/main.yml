@@ -9,3 +9,6 @@
     label: "{{ item.name }}"
   vars:
     user: "{{ item }}"
+
+- name: HARDEN-MAIN - Include report
+  ansible.builtin.include_tasks: harden-report.yml

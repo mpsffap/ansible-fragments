@@ -1,0 +1,20 @@
+---
+- name: INIT-REPORT -  Ensure report directory exists
+  ansible.builtin.file:
+    path: "{{ report_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-REPORT -  Write installer parameters
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/params-stage5-themes.log"
+    content: |
+      installer_version={{ installer_version }}
+      enable_themes_base={{ enable_themes_base }}
+      enable_themes_base_essentials={{ enable_themes_base_essentials }}
+      enable_themes_common={{ enable_themes_common }}
+      enable_themes_optional={{ enable_themes_optional }}
+      enable_themes_optional_grubmenu={{ enable_themes_optional_grubmenu }}
+      enable_themes_optional_plymouth={{ enable_themes_optional_plymouth }}
+      enable_themes_optional_lightdm={{ enable_themes_optional_lightdm }}
+    mode: "0644"

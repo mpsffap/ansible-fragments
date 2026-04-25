@@ -1,0 +1,18 @@
+---
+- name: INIT-REPORT -  Ensure report directory exists
+  ansible.builtin.file:
+    path: "{{ report_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-REPORT -  Write installer parameters
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/params-stage3-services.log"
+    content: |
+      installer_version={{ installer_version }}
+      enable_services_base={{ enable_services_base }}
+      enable_services_common={{ enable_services_common }}
+      enable_services_common_docker={{ enable_services_common_docker }}
+      enable_services_optional={{ enable_services_optional }}
+
+    mode: "0644"

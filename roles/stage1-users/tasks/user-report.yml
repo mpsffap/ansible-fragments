@@ -1,0 +1,38 @@
+---
+- name: USER-REPORT - Ensure report directory exists
+  ansible.builtin.file:
+    path: "{{ report_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: USER-REPORT - Sanitize users for reporting
+  ansible.builtin.set_fact:
+    users_sanitized: "{{ users_sanitized | default([]) + [masked_user] }}"
+  vars:
+    masked_user: >-
+      {{
+        item | combine({
+          'password': '**********' if item.password is defined else omit,
+          'password_hash': '**********' if item.password is defined else omit,
+          'password_plain': '**********' if item.password is defined else omit,
+          'ssh_keys': '**********' if item.password is defined else omit,
+        })
+      }}
+  loop: "{{ users_present }}"
+
+- name: USER-REPORT - Write users configuration
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/users.yml"
+    content: "{{ users_sanitized | to_nice_yaml }}"
+    mode: "0644"
+
+- name: USER-REPORT - Write installer parameters
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/params-stage1-users.log"
+    content: |
+      installer_version={{ installer_version }}
+      enable_users_add={{ enable_users_add }}
+      enable_users_del={{ enable_users_del }}
+      enable_users_groups_add={{ enable_users_groups_add }}
+
+    mode: "0644"

@@ -29,3 +29,6 @@
   vars:
     user_data: "{{ item }}"
   when: enable_users_del is true
+
+- name: USER-MANAGE-MAIN - Include report
+  ansible.builtin.include_tasks: user-report.yml

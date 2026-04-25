@@ -32,15 +32,14 @@ local config = {
 	---NOTE: If given `false` then the plugin won't create any mappings
 	mappings = {
 		---Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
-		basic = true,
+		basic = false,
 		---Extra mapping; `gco`, `gcO`, `gcA`
-		extra = true,
+		extra = false,
 	},
-	---Function to call before (un)comment
-	pre_hook = nil,
-	---Function to call after (un)comment
-	post_hook = nil,
+	-- ---Function to call before (un)comment
+	-- pre_hook = nil,
+	-- ---Function to call after (un)comment
+	-- post_hook = nil,
 }
 
 require("Comment").setup(config)
-

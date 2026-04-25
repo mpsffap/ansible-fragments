@@ -9,7 +9,7 @@ enable_harden_common_apparmor: true
 enable_harden_common_auditing: true
 # Optional
 enable_harden_optional: true
-enable_harden_optional_lockdown: true
+enable_harden_optional_lockdown: false
 
 # -- Source files
 src_etcfiles: "../files/etc"

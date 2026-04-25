@@ -1,0 +1,30 @@
+---
+- name: INIT-REPORT -  Ensure report directory exists
+  ansible.builtin.file:
+    path: "{{ report_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-REPORT -  Write installer parameters
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/params-stage7-extras.log"
+    content: |
+      installer_version={{ installer_version }}
+      enable_extras_base={{ enable_extras_base }}
+      enable_extras_base_essentials={{ enable_extras_base_essentials }}
+      enable_extras_common={{ enable_extras_common }}
+      enable_extras_common_backup=false
+      enable_extras_common_gaming=false
+      enable_extras_common_gaming_essentials={{ enable_extras_common_gaming_essentials }}
+      enable_extras_common_gaming_dxvk={{ enable_extras_common_gaming_dxvk }}
+      enable_extras_common_gaming_gaming={{ enable_extras_common_gaming_gaming }}
+      enable_extras_common_gaming_steam={{ enable_extras_common_gaming_steam }}
+      enable_extras_common_gaming_lutris={{ enable_extras_common_gaming_lutris }}
+      enable_extras_optional={{ enable_extras_optional }}
+      enable_extras_optional_dev={{ enable_extras_optional_dev }}
+      enable_extras_optional_dev_java=false
+      enable_extras_optional_dev_latex=false
+      enable_extras_optional_dev_dotnet=false
+      enable_extras_optional_dev_espidf={{ enable_extras_optional_dev_espidf }}
+      enable_extras_optional_dev_unity=false
+    mode: "0644"

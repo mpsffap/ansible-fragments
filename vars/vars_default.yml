@@ -1,11 +1,11 @@
 ---
 # Stage0
-enable_base: true
-enable_common: true
-enable_optional: true
+enable_init_base: true
+enable_init_common: true
+enable_init_optional: true
 
 # Stage1
-enable_groups_add: true
+enable_users_groups_add: true
 enable_users_add: true
 enable_users_del: true
 

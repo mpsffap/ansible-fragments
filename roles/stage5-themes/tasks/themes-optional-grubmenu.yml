@@ -5,7 +5,7 @@
     dest: "{{ dst_themefiles }}/"
     owner: "root"
     group: "root"
-    mode: "0700"
+    mode: "0744"
   loop: "{{ grub_themes }}"
   loop_control:
     loop_var: "theme"
@@ -24,28 +24,28 @@
   when: grub_icons is defined
 
 - name: THEMES-OPTIONAL-GRUB - Ensure GRUB_GFXMODE
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/default/grub
     regexp: "^GRUB_GFXMODE="
     line: "GRUB_GFXMODE=1920x1080"
     state: present
 
 - name: THEMES-OPTIONAL-GRUB - Ensure GRUB_THEME
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/default/grub
     regexp: "^GRUB_THEME="
     line: 'GRUB_THEME="/boot/grub/themes/{{ grub_theme }}/theme.txt"'
     state: present
 
 - name: THEMES-OPTIONAL-GRUB - Ensure Hostname
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "/boot/grub/themes/{{ grub_theme }}/theme.txt"
     regexp: 'text = "Host: CFG_HOST"'
     line: '  text = "Host: {{ inventory_hostname }}"'
     state: present
 
 - name: THEMES-OPTIONAL-GRUB - Ensure Version
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "/boot/grub/themes/{{ grub_theme }}/theme.txt"
     regexp: 'text = "VERSION: CFG_VERSION"'
     line: '  text = "VERSION: {{ app_version }}"'

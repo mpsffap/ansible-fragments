@@ -6,6 +6,8 @@
       - lxappearance
       - lightdm
       - picom
+      - xscreensaver
+      - lxlock
       - xbacklight
       - numlockx
       - xclip

@@ -47,7 +47,7 @@
     mode: "0644"
 
 - name: SERVICES-COMMON-DOCKER - Configure Docker daemon with overlay storage
-  template:
+  ansible.builtin.template:
     src: "{{ src_templates }}/docker.j2"
     dest: "{{ dst_docker_config }}/daemon.json"
     owner: root
@@ -72,13 +72,12 @@
     mode: "0755"
     owner: root
     group: docker
-    recurse: true
 
 - name: SERVICES-COMMON-DOCKER - Ensure ownership of Docker root directory
   ansible.builtin.file:
     path: "{{ dst_docker_root }}"
     state: directory
-    recurse: true
+    # recurse: true
     owner: root
     group: docker
     mode: "0755"

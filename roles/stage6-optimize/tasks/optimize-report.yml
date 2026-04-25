@@ -1,0 +1,20 @@
+---
+- name: INIT-REPORT -  Ensure report directory exists
+  ansible.builtin.file:
+    path: "{{ report_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-REPORT -  Write installer parameters
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/params-stage6-optimize.log"
+    content: |
+      installer_version={{ installer_version }}
+      enable_optimize_base={{ enable_optimize_base }}
+      enable_optimize_base_essentials={{ enable_optimize_base_essentials }}
+      enable_optimize_common={{ enable_optimize_common }}
+      enable_optimize_optional={{ enable_optimize_optional }}
+      enable_optimize_optional_zram=false
+      enable_optimize_optional_ramdisks={{ enable_optimize_optional_ramdisks }}
+      enable_optimize_optional_kmscon={{ enable_optimize_optional_kmscon }}
+    mode: "0644"

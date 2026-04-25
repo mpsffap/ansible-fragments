@@ -9,3 +9,6 @@
     label: "{{ item.name }}"
   vars:
     user: "{{ item }}"
+
+- name: OPTIMIZE-MAIN - Include report
+  ansible.builtin.include_tasks: optimize-report.yml

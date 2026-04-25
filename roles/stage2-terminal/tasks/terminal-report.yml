@@ -1,0 +1,27 @@
+---
+- name: INIT-REPORT -  Ensure report directory exists
+  ansible.builtin.file:
+    path: "{{ report_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-REPORT -  Write installer parameters
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/params-stage2-terminal.log"
+    content: |
+      installer_version={{ installer_version }}
+      enable_terminal_base={{ enable_terminal_base }}
+      enable_terminal_base_essentials={{ enable_terminal_base_essentials }}
+      enable_terminal_base_bash={{ enable_terminal_base_bash }}
+      enable_terminal_base_vim={{ enable_terminal_base_vim }}
+      enable_terminal_base_scripts={{ enable_terminal_base_scripts }}
+      enable_terminal_base_skeletons={{ enable_terminal_base_skeletons }}
+      enable_terminal_common={{ enable_terminal_common }}
+      enable_terminal_common_python={{ enable_terminal_common_python }}
+      enable_terminal_common_rust={{ enable_terminal_common_rust }}
+      enable_terminal_optional={{ enable_terminal_optional }}
+      enable_terminal_optional_kitty={{ enable_terminal_optional_kitty }}
+      enable_terminal_optional_nvim={{ enable_terminal_optional_nvim }}
+      enable_terminal_optional_tmux={{ enable_terminal_optional_tmux }}
+      enable_terminal_optional_yazi={{ enable_terminal_optional_yazi }}
+    mode: "0644"

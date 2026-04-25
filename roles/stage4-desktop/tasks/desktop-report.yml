@@ -1,0 +1,26 @@
+---
+- name: INIT-REPORT -  Ensure report directory exists
+  ansible.builtin.file:
+    path: "{{ report_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-REPORT -  Write installer parameters
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/params-stage4-desktop.log"
+    content: |
+      installer_version={{ installer_version }}
+      enable_desktop_base={{ enable_desktop_base }}
+      enable_desktop_base_essentials={{ enable_desktop_base_essentials }}
+      enable_desktop_base_thunar={{ enable_desktop_base_thunar }}
+      enable_desktop_base_wm={{ enable_desktop_base_wm }}
+      enable_desktop_common={{ enable_desktop_common }}
+      enable_desktop_common_x11={{ enable_desktop_common_x11 }}
+      enable_desktop_common_rofi={{ enable_desktop_common_rofi }}
+      enable_desktop_common_qtile={{ enable_desktop_common_qtile }}
+      enable_desktop_optional={{ enable_desktop_optional }}
+      enable_desktop_optional_gnometools={{ enable_desktop_optional_gnometools }}
+      enable_desktop_optional_brave={{ enable_desktop_optional_brave }}
+      enable_desktop_optional_spotify={{ enable_desktop_optional_spotify }}
+      enable_desktop_optional_kanata={{ enable_desktop_optional_kanata }}
+    mode: "0644"

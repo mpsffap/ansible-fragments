@@ -40,3 +40,16 @@
         owner: "{{ user.name }}"
         group: "{{ user.name }}"
         mode: "0700"
+
+    - name: DESKTOP-COMMON-ROFI - Copy snippets
+      ansible.posix.synchronize:
+        src: "{{ src_scripts }}/{{ file }}"
+        dest: "{{ user.home }}/.local/bin/{{ file }}"
+        recursive: true
+        delete: false
+      loop: "{{ rofi_snippets }}"
+      loop_control:
+        loop_var: "file"
+      when: rofi_snippets is defined
+      become: true
+      become_user: "{{ user.name }}"

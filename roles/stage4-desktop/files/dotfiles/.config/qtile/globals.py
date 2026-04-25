@@ -47,15 +47,22 @@ mux = f"{terminal} {home}/.local/bin/launch_tmux.bash"
 slh = f"{terminal} {home}/.screenlayout/layout_hive.bash"
 xset = "xset r rate 250 50"
 
-rofilaunch = f"{home}/.local/bin/rofi-boot-launcher.sh"
 rofiwindows = "rofi -show window"
-rofipower = f"{home}/.local/bin/rofi-boot-powermenu.sh"
+rofilaunch = f"{home}/.local/bin/rofi-boot-launcher.bash"
+rofipower = f"{home}/.local/bin/rofi-boot-powermenu.bash"
+rofiautorandr = f"{home}/.local/bin/rofi-boot-autorandr.bash"
 screenshot = "gnome-screenshot -i"
 keepasslauncher = f"keepass2 {home}/mps/secrets/Database.kdbx"
 randomwp = f"{home}/.local/bin/randomize_wp.bash"
-startup = f"{home}/.local/bin/autostart.sh"
-cleanup = f"{home}/.local/bin/autostart_clean.sh"
+startup = f"{home}/.local/bin/qtile-autostart-start.bash"
+cleanup = f"{home}/.local/bin/qtile-autostart-stop.bash"
 update = f"{home}/.local/bin/launch_updates.bash"
+
+spotifynext = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+spotifyprev = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+spotifyplay = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+spotifystop = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
+
 wallpapers = {
     "1": "/usr/share/images/wallpaper/wormhole.jpg",
     "2": "/usr/share/images/wallpaper/moon.jpg",
@@ -82,8 +89,3 @@ widget_defaults = dict(
     padding=7,
 )
 extension_defaults = widget_defaults.copy()
-
-spotifynext = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
-spotifyprev = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
-spotifyplay = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
-spotifystop = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"

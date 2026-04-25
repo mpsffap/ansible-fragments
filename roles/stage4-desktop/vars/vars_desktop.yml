@@ -18,10 +18,10 @@ enable_desktop_optional_spotify: true
 enable_desktop_optional_kanata: true
 
 # -- Source files
-src_dotfiles: "../files/dotfiles"
-src_etcfiles: "../files/etc"
-src_scripts: "../files/scripts"
-src_images: "../files/templates/images/wallpaper"
+src_dotfiles: "{{ role_path }}/files/dotfiles"
+src_etcfiles: "{{ role_path }}/files/etc"
+src_scripts: "{{ role_path }}/files/scripts"
+src_images: "{{ role_path }}/files/templates/images/wallpaper"
 
 # --Destination files
 dst_qtile_repo: "/usr/share/mps/tools/qtile"
@@ -37,28 +37,35 @@ url_brave_repo: "https://brave-browser-apt-release.s3.brave.com/"
 url_spotify_key: "https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc"
 url_spotify_repo: "http://repository.spotify.com"
 
-# -- qtile
-dst_venv_qtile: "~/.venvs/default"
-
-# -- Desktop
+# -- WM
 desktop_dotfiles_essentials:
   - ".gtkrc-2.0"
   - ".config/xfce4"
   - ".config/gtk-2.0"
   - ".config/gtk-3.0"
   - ".config/gedit"
+
+# -- FM
 desktop_dotfiles_thunar:
   - ".config/Thunar"
+
+# -- Qtile
+dst_venv_qtile: "~/.venvs/default"
 desktop_dotfiles_wm:
   - ".config/dconf"
   - ".config/dunst"
   - ".config/picom.conf"
 desktop_scripts_autostart:
-  - "autostart.sh"
-  - "autostart_clean.sh"
+  - "qtile-autostart-start.bash"
+  - "qtile-autostart-stop.bash"
+desktop_scripts_qtile:
+  - "qtile-startup.bash"
+  - "qtile-reload.bash"
+  - "qtile-restart.bash"
 
 # -- Rofi
 rofi_snippets:
-  - "rofi-boot-dwmswitch.sh"
-  - "rofi-boot-launcher.sh"
-  - "rofi-boot-powermenu.sh"
+  - "rofi-boot-dwmswitch.bash"
+  - "rofi-boot-launcher.bash"
+  - "rofi-boot-powermenu.bash"
+  - "rofi-boot-autorandr.bash"

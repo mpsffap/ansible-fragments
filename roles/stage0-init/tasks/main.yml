@@ -1,12 +1,15 @@
 ---
 - name: INIT-MAIN - Include base packages
   ansible.builtin.include_tasks: init-base.yml
-  when: enable_base
+  when: enable_init_base
 
 - name: INIT-MAIN - Include common packages
   ansible.builtin.include_tasks: init-common.yml
-  when: enable_common
+  when: enable_init_common
 
 - name: INIT-MAIN - Include optional packages
   ansible.builtin.include_tasks: init-optional.yml
-  when: enable_optional
+  when: enable_init_optional
+
+- name: INIT-MAIN - Include report
+  ansible.builtin.include_tasks: init-report.yml

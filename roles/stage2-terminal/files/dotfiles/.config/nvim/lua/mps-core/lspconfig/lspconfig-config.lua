@@ -10,11 +10,11 @@ local lspconfig = require("lspconfig") -- The warning happens here
 -- local lspconfig = require('lspconfig') -- The warning happens here
 
 local on_attach = function(client, bufnr)
-	client.server_capabilities.completionProvider = true
-	client.server_capabilities.documentFormattingProvider = true
-	client.server_capabilities.documentRangeFormattingProvider = true
-	client.server_capabilities.hoverProvider = true
-	client.server_capabilities.signatureHelpProvider = true
+	-- client.server_capabilities.completionProvider = true
+	-- client.server_capabilities.documentFormattingProvider = true
+	-- client.server_capabilities.documentRangeFormattingProvider = true
+	-- client.server_capabilities.hoverProvider = true
+	-- client.server_capabilities.signatureHelpProvider = true
 	-- print("Lsp '", client.name, "' attached to buffer ", bufnr)
 end
 local pid = vim.fn.getpid()

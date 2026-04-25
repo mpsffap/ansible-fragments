@@ -1,12 +1,12 @@
 ---
 - name: INIT-OPTIONAL-BUILD - Include optional build tool packages
   ansible.builtin.include_tasks: init-optional-build.yml
-  when: enable_common_build
+  when: enable_init_common_build
 
 - name: INIT-OPTIONAL-STATS - Include optional networking packages
   ansible.builtin.include_tasks: init-optional-stats.yml
-  when: enable_common_stats
+  when: enable_init_common_stats
 
 - name: INIT-OPTIONAL-TERMINAL - Include optional terminal tools
   ansible.builtin.include_tasks: init-optional-terminal.yml
-  when: enable_common_terminal
+  when: enable_init_common_terminal

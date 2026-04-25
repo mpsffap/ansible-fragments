@@ -9,3 +9,5 @@
     label: "{{ item.name }}"
   vars:
     user: "{{ item }}"
+- name: TERMINAL-MAIN - Include report
+  ansible.builtin.include_tasks: terminal-report.yml

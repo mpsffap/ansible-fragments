@@ -1,0 +1,21 @@
+---
+- name: INIT-REPORT -  Ensure report directory exists
+  ansible.builtin.file:
+    path: "{{ report_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-REPORT -  Write installer parameters
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/params-stage8-harden.log"
+    content: |
+      installer_version={{ installer_version }}
+      enable_harden_base=false
+      enable_harden_base_essentials={{ enable_harden_base_essentials }}
+      enable_harden_base_firewall={{ enable_harden_base_firewall }}
+      enable_harden_common=false
+      enable_harden_common_apparmor={{ enable_harden_common_apparmor }}
+      enable_harden_common_auditing={{ enable_harden_common_auditing }}
+      enable_harden_optional={{ enable_harden_optional }}
+      enable_harden_optional_lockdown={{ enable_harden_optional_lockdown }}
+    mode: "0644"

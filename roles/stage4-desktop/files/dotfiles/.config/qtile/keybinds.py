@@ -7,6 +7,7 @@ from globals import (
     rofipower,
     rofilaunch,
     rofiwindows,
+    rofiautorandr,
     screenshot,
     spotifynext,
     spotifyprev,
@@ -97,6 +98,7 @@ keys_static = [
     Key(modctrl, "e", lazy.restart(), desc="Shutdown Qtile"),
     Key(modctrl, "a", lazy.spawn(startup), desc="autostart"),
     Key(modctrl, "Delete", lazy.spawn(rofipower), desc="Powermenu"),
+    Key(modctrl, "d", lazy.spawn(rofiautorandr), desc="Powermenu"),
     Key(m, "d", lazy.spawncmd(), desc="dmenu"),
     # Move between groups
     Key(a, "Left", lazy.screen.prev_group(), desc="Move prev"),
@@ -120,7 +122,8 @@ keys_static = [
     Key([], "XF86AudioStop", lazy.spawn(spotifystop), desc="Stop song"),
     Key(modshift, "i", lazy.restart(), desc="Enable keybinds"),
     Key(m, "i", lazy.reload_config(), desc="Enable keybinds"),
-    Key(m, "o", lazy.function(toggle_gaming_mode, keys_f), desc="Toggle gaming mode"),
+    Key(m, "o", lazy.function(toggle_gaming_mode, keys_f),
+        desc="Toggle gaming mode"),
     Key(m, "p", lazy.spawn(xset), desc="Set Key rate"),
 ]
 

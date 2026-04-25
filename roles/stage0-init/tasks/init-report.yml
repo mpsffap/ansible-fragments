@@ -1,0 +1,31 @@
+---
+- name: INIT-REPORT -  Ensure report directory exists
+  ansible.builtin.file:
+    path: "{{ report_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: INIT-REPORT -  Write installer parameters
+  ansible.builtin.copy:
+    dest: "{{ report_dir }}/params-stage0-init.log"
+    content: |
+      installer_version={{ installer_version }}
+      enable_init_base={{ enable_init_base }}
+      enable_init_base_apt={{ enable_init_base_apt }}
+      enable_init_base_autoupgrades={{ enable_init_base_autoupgrades }}
+      enable_init_base_locale={{ enable_init_base_locale }}
+      enable_init_base_time={{ enable_init_base_time }}
+      enable_init_base_fonts={{ enable_init_base_fonts }}
+      enable_init_base_essentials={{ enable_init_base_essentials }}
+      enable_init_base_fm={{ enable_init_base_fm }}
+      enable_init_base_sshclient={{ enable_init_base_sshclient }}
+      enable_init_base_sshserver={{ enable_init_base_sshserver }}
+      enable_init_optional={{ enable_init_optional }}
+      enable_init_optional_archives={{ enable_init_optional_archives }}
+      enable_init_optional_fm={{ enable_init_optional_fm }}
+      enable_init_optional_networking={{ enable_init_optional_networking }}
+      enable_init_common={{ enable_init_common }}
+      enable_init_common_build={{ enable_init_common_build }}
+      enable_init_common_stats={{ enable_init_common_stats }}
+      enable_init_common_terminal={{ enable_init_common_terminal }}
+    mode: "0644"

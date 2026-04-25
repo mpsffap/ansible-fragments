@@ -1,9 +1,9 @@
 ---
 # -- Component Configuration
 # manage Users
-enable_groups_add: true
 enable_users_add: true
 enable_users_del: true
+enable_users_groups_add: true
 
 # Print passwords being generated in plain text to stdout
 user_print_passwords_plaintext: false

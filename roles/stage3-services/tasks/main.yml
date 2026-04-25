@@ -10,3 +10,6 @@
 - name: SERVICES-COMMON - Install optional packages
   ansible.builtin.include_tasks: services-optional.yml
   when: enable_services_optional
+
+- name: SERVICES-MAIN - Include report
+  ansible.builtin.include_tasks: services-report.yml

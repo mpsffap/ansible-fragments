@@ -7,7 +7,7 @@
     state: present
   become: true
 - name: THEMES-OPTIONAL-PLYMOUTH - Ensure Version
-  copy:
+  ansible.builtin.copy:
     src: "/usr/share/plymouth/themes/joy/"
     dest: "/usr/share/plymouth/themes/{{ grub_theme }}/"
     owner: "root"
@@ -15,7 +15,7 @@
     mode: "0755"
 
 - name: THEMES-OPTIONAL-PLYMOUTH - Ensure plymouth script
-  copy:
+  ansible.builtin.copy:
     src: "/usr/share/plymouth/themes/joy/joy.plymouth"
     dest: "/usr/share/plymouth/themes/{{ grub_theme }}/{{ grub_theme }}.plymouth"
     owner: "root"
@@ -23,7 +23,7 @@
     mode: "0755"
 
 - name: THEMES-OPTIONAL-PLYMOUTH - Ensure theme script
-  copy:
+  ansible.builtin.copy:
     src: "/usr/share/plymouth/themes/joy/joy.script"
     dest: "/usr/share/plymouth/themes/{{ grub_theme }}/{{ grub_theme }}.script"
     owner: "root"
@@ -35,20 +35,23 @@
     path: "/usr/share/plymouth/themes/{{ grub_theme }}/{{ grub_theme }}.script"
     regexp: "joy"
     replace: "{{ grub_theme }}"
+  become: true
 
 - name: THEMES-OPTIONAL-PLYMOUTH - Replace string in a file
   ansible.builtin.replace:
     path: "/usr/share/plymouth/themes/{{ grub_theme }}/{{ grub_theme }}.plymouth"
     regexp: "joy"
     replace: "{{ grub_theme }}"
+  become: true
 
-- name: THEMES-OPTIONAL-PLYMOUTH - Ensure Version
-  copy:
+- name: THEMES-OPTIONAL-PLYMOUTH - Ensure Background image
+  ansible.builtin.copy:
     src: "/boot/grub/themes/{{ grub_theme }}/background.png"
     dest: "/usr/share/plymouth/themes/{{ grub_theme }}/"
     owner: "root"
     group: "root"
     mode: "0755"
+  become: true
 
 - name: THEMES-OPTIONAL-PLYMOUTH - Set theme {{ grub_theme }}
   ansible.builtin.command:

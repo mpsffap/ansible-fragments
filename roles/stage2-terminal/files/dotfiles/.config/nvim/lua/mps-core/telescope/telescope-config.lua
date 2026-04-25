@@ -2,6 +2,9 @@
 -- See `:help telescope` and `:help telescope.setup()`
 require("telescope").setup({
 	defaults = {
+		preview = {
+			treesitter = false,
+		},
 		path_display = { "smart" },
 		layout_config = {
 			bottom_pane = {
@@ -49,4 +52,3 @@ require("telescope").setup({
 
 -- Enable telescope fzf native, if installed
 pcall(require("telescope").load_extension, "fzf")
-
