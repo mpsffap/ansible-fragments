@@ -36,15 +36,15 @@ require("dapui").setup({
 			elements = {
 				{
 					id = "scopes",
-					size = 0.25,
+					size = 0.45,
 				},
 				{
 					id = "breakpoints",
-					size = 0.25,
+					size = 0.1,
 				},
 				{
 					id = "stacks",
-					size = 0.25,
+					size = 0.2,
 				},
 				{
 					id = "watches",
@@ -58,11 +58,11 @@ require("dapui").setup({
 			elements = {
 				{
 					id = "repl",
-					size = 0.25,
+					size = 0.75,
 				},
 				{
 					id = "console",
-					size = 0.75,
+					size = 0.25,
 				},
 			},
 			position = "bottom",
@@ -182,6 +182,20 @@ require("nvim-dap-virtual-text").setup({
 	virt_text_win_col = 81, -- position the virtual text at a fixed window column (starting from the first text column) ,
 	-- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
 })
+require("persistent-breakpoints").setup({
+	save_dir = vim.fn.stdpath("data") .. "/nvim-session",
+	-- when to load the breakpoints? "BufReadPost" is recommanded.
+	load_breakpoints_event = { "BufReadPost" },
+	-- record the performance of different function. run :lua require('persistent-breakpoints.api').print_perf_data() to see the result.
+	perf_record = false,
+	-- perform callback when loading a persisted breakpoint
+	--- @param opts DAPBreakpointOptions options used to create the breakpoint ({condition, logMessage, hitCondition})
+	--- @param buf_id integer the buffer the breakpoint was set on
+	--- @param line integer the line the breakpoint was set on
+	on_load_breakpoint = nil,
+	-- set this to true if the breakpoints are not loaded when you are using a session-like plugin.
+	always_reload = false,
+})
 
 local dap = require("dap")
 local dapui = require("dapui")
@@ -211,13 +225,15 @@ vim.fn.sign_define(
 
 vim.g.dap_virtual_text = true
 
-local pythonPath = os.getenv("HOME") .. "/mps/venv/nvim/bin/python"
+local pythonPath = os.getenv("HOME") .. "/.venvs/default/bin/python"
 require("dap-python").setup(pythonPath)
--- table.insert(require("dap").configurations.python, {
--- 	justMyCode = false,
--- 	type = "python",
--- 	request = "launch",
--- 	name = "My custom launch configuration",
--- 	program = "${file}",
--- 	-- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
--- })
+table.insert(require("dap").configurations.python, {
+	justMyCode = true,
+	type = "python",
+	request = "launch",
+	name = "UMI-Debug",
+	-- program = "${file}",
+	program = vim.fn.systemlist("git rev-parse --show-toplevel")[1] .. "/src/unattend_my_iso/debug.py",
+	cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1] .. "/src/unattend_my_iso",
+	-- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+})

@@ -130,22 +130,24 @@ keys_static = [
 
 class MpsKeybinds:
     def init_keybinds(self, groups):
-        keys = keys_static
-        keys.extend(keys_f)
+        # keys = keys_static
         for group in groups:
-            keys.append(Key(m, group.name, lazy.group[group.name].toscreen()))
-            keys.append(
+            keys_f.append(
+                Key(m, group.name, lazy.group[group.name].toscreen()))
+            keys_f.append(
                 Key(
                     modshift,
                     group.name,
                     lazy.window.togroup(group.name, switch_group=False),
                 )
             )
-            keys.append(
+            keys_f.append(
                 Key(
                     mcs,
                     group.name,
                     lazy.window.togroup(group.name, switch_group=True),
                 )
             )
+        keys = keys_static
+        keys.extend(keys_f)
         return keys

@@ -15,6 +15,7 @@ return {
 		"mfussenegger/nvim-dap-python",
 		"theHamsta/nvim-dap-virtual-text",
 		"nvim-neotest/nvim-nio",
+		"Weissle/persistent-breakpoints.nvim",
 	},
 	config = function()
 		local dap = require("dap")
