@@ -8,7 +8,7 @@ local lsputil = require("lspconfig.util")
 
 -- Note: If your version of lspconfig is transitioning,
 -- check if you can simply use:
--- local lspconfig = require('lspconfig') -- The warning happens here
+-- local lspconfig = require('lspconfig')
 
 local on_attach = function(client, bufnr)
 	-- client.server_capabilities.completionProvider = true
@@ -16,7 +16,7 @@ local on_attach = function(client, bufnr)
 	-- client.server_capabilities.documentRangeFormattingProvider = true
 	-- client.server_capabilities.hoverProvider = true
 	-- client.server_capabilities.signatureHelpProvider = true
-	-- print("Lsp '", client.name, "' attached to buffer ", bufnr)
+	print("Lsp '", client.name, "' attached to buffer ", bufnr)
 end
 local pid = vim.fn.getpid()
 local omnisharp_bin = "/usr/local/bin/omnisharp-roslyn/OmniSharp"

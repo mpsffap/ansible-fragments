@@ -10,7 +10,7 @@ M.getplugins = function()
 		require("mps-tools.render-markdown.render-markdown-repo"),
 		-- require("mps-tools.markdown-preview.markdown-preview-repo"),
 		-- require("mps-tools.dressing.dressing-repo"),
-		require("mps-tools.noice.noice-repo"),
+		-- require("mps-tools.noice.noice-repo"),
 		-- require("mps-tools.live-preview.live-preview-repo"),
 		-- require("mps-tools.swenv.swenv-repo"),
 		require("mps-tools.toggleterm.toggleterm-repo"),
@@ -33,7 +33,7 @@ M.configure = function()
 	require("mps-tools.render-markdown.render-markdown-config")
 	-- require("mps-tools.markdown-preview.markdown-preview-config")
 	-- require("mps-tools.dressing.dressing-config")
-	require("mps-tools.noice.noice-config")
+	-- require("mps-tools.noice.noice-config")
 	-- require("mps-tools.swenv.swenv-config")
 	require("mps-tools.toggleterm.toggleterm-config")
 	require("mps-tools.nvim-ts-autotag.nvim-ts-autotag-config")
