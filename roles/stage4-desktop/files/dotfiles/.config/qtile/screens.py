@@ -60,8 +60,8 @@ widget_config_bottom_primary: dict[str, bool] = {
     "widgets_bottom_primary_clipboard": True,
     "widgets_bottom_primary_net": True,
     "widgets_bottom_primary_systray": True,
-    "widgets_bottom_primary_battery": False,
-    "widgets_bottom_primary_forticlient": False,
+    "widgets_bottom_primary_battery": True,
+    "widgets_bottom_primary_forticlient": True,
     "widgets_bottom_primary_kanata": True,
     "widgets_bottom_primary_updater": True,
     "widgets_bottom_primary_clock": True,
@@ -78,8 +78,8 @@ widget_config_bottom_secondary: dict[str, bool] = {
     "widgets_bottom_secondary_clipboard": True,
     "widgets_bottom_secondary_net": True,
     "widgets_bottom_secondary_systray": True,
-    "widgets_bottom_secondary_battery": False,
-    "widgets_bottom_secondary_forticlient": False,
+    "widgets_bottom_secondary_battery": True,
+    "widgets_bottom_secondary_forticlient": True,
     "widgets_bottom_secondary_kanata": True,
     "widgets_bottom_secondary_updater": True,
     "widgets_bottom_secondary_clock": True,
@@ -223,29 +223,21 @@ def create_widgetbox_net():
 
 
 def create_widgetbox_forticlient():
-    return WidgetKanata(
-        name="bbb",
-        file=FILE_KANATA_STATE,
-        max_chars=64,
-        fontsize=11,
-        update_interval=0.5,
+    return WidgetFortinet(
+        name="FortinetWidget",
+        update_interval=2,
         fmt="{}",
-        mouse_callbacks={},
+        mouse_callbacks={
+            "Button1": lazy.spawn("forticlient gui"),
+            "Button3": lazy.spawn(
+                (
+                    f"forticlient vpn disconnect {NAME_SSO_ADM} & "
+                    f"forticlient vpn disconnect {NAME_SSL_ADM} & "
+                    f"forticlient vpn disconnect {NAME_PUB} & "
+                )
+            ),
+        },
     )
-    # return WidgetFortinet(
-    #     update_interval=2,
-    #     fmt="{}",
-    #     mouse_callbacks={
-    #         "Button1": lazy.spawn("forticlient gui"),
-    #         "Button3": lazy.spawn(
-    #             (
-    #                 f"forticlient vpn disconnect {NAME_SSO_ADM} & "
-    #                 f"forticlient vpn disconnect {NAME_SSL_ADM} & "
-    #                 f"forticlient vpn disconnect {NAME_PUB} & "
-    #             )
-    #         ),
-    #     },
-    # )
 
 
 def create_widgetbox_kanata():
@@ -401,7 +393,8 @@ class MpsScreens(object):
                         opacity=opacityBar,
                     ),
                     bottom=bar.Bar(
-                        create_bar_bottom_secondary(widget_config_bottom_secondary),
+                        create_bar_bottom_secondary(
+                            widget_config_bottom_secondary),
                         BAR_HEIGHT,
                         border_color=barBorderColor,
                         border_width=barBorderWidth,
