@@ -74,7 +74,7 @@
     - name: DESKTOP-COMMON-QTILE - Copy qtile scripts
       ansible.posix.synchronize:
         src: "{{ src_scripts }}/{{ file }}"
-        dest: "{{ user.home }}/.local/bin/{{ file }}"
+        dest: "/usr/local/bin/{{ file }}"
         recursive: true
         delete: false
       loop: "{{ desktop_scripts_qtile }}"
