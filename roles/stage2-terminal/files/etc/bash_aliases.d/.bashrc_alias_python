@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# Alias config: python
+alias pvl="deactivate &>/dev/null ; source ./.venv/bin/activate"
+alias pvd="deactivate &>/dev/null ; source ~/.venvs/default/bin/activate"
+alias pvm="python3 -m venv ./.venv"
+alias pvr="deactivate &>/dev/null"
+
+alias ppi="pip install"

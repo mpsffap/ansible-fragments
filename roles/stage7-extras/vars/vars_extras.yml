@@ -15,12 +15,14 @@ enable_extras_common_gaming_lutris: true
 
 # Optional
 enable_extras_optional: true
-enable_extras_optional_dev: false
-enable_extras_optional_dev_java: true
-enable_extras_optional_dev_latex: true
-enable_extras_optional_dev_dotnet: true
-enable_extras_optional_dev_espidf: true
-enable_extras_optional_dev_unity: true
+enable_extras_optional_dev: true
+enable_extras_optional_dev_java: false
+enable_extras_optional_dev_latex: false
+enable_extras_optional_dev_dotnet: false
+enable_extras_optional_dev_espidf: false
+enable_extras_optional_dev_unity: false
+enable_extras_optional_dev_lmstudio: true
+enable_extras_optional_dev_lmstudio_desktop: true
 
 # -- Source files
 src_etcfiles: "../files/etc"
@@ -52,6 +54,9 @@ backup_persist_ssh_authorized: true
 backup_persist_firefox: true
 backup_persist_brave: true
 backup_persist_nerdtree: true
+
+# -- LM Studio
+lmstudio_desktop_version: "0.4.12-1"
 
 # -- esp-idf
 esp_idf_src_base: "{{ user.home }}/esp/sources"

@@ -1,0 +1,46 @@
+---
+# =====================================================
+# INSTALL ESP-IDF PER VERSION (ISOLATED)
+# =====================================================
+- name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Check if LM Studio is already installed
+  become: true
+  ansible.builtin.stat:
+    path: "{{ user.home }}/.lmstudio/bin/lms"
+  register: lmstudio_installed
+
+- name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Download LM Studio installer
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.get_url:
+    url: "{{ url_lmstudio_install }}"
+    dest: "/tmp/lmstudio-install.sh"
+    mode: "0755"
+  when: not lmstudio_installed.stat.exists
+
+- name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Install LM Studio
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.shell: /tmp/lmstudio-install.sh
+  when: not lmstudio_installed.stat.exists
+
+- name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Create AppImage folder
+  become: true
+  ansible.builtin.file:
+    path: "{{ user.home }}/.local/bin"
+    state: directory
+    mode: "0755"
+
+- name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Check if AppImage already exists
+  become: true
+  ansible.builtin.stat:
+    path: "{{ user.home }}/.local/bin/LM-Studio-{{ lmstudio_desktop_version }}-x64.AppImage"
+  register: lmstudio_appimage
+
+- name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Download desktop AppImage
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.get_url:
+    url: "https://installers.lmstudio.ai/linux/x64/{{ lmstudio_desktop_version }}/LM-Studio-{{ lmstudio_desktop_version }}-x64.AppImage"
+    dest: "{{ user.home }}/.local/bin/LM-Studio-{{ lmstudio_desktop_version }}-x64.AppImage"
+    mode: "0755"
+  when: not lmstudio_appimage.stat.exists

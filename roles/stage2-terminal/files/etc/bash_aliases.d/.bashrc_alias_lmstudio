@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+DIR_APP="$HOME/.local/bin"
+
+# Alias config: lmstudio CLI
+alias lmll="lms ls"
+alias lmps="lms ps"
+alias lmup="lms load"
+alias lmdown="lms unload"
+
+# Alias config: lmstudio APP
+alias lmapp="${DIR_APP}/LM-Studio-0.4.12-1-x64.AppImage"

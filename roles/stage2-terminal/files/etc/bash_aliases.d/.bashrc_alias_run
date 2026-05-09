@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# ps stuff
+run_appimages() {
+    local app
+    app=$(find ~/.local.bin -maxdepth 1 -type f -name "*.AppImage" | fzf) || return
+    "$app"
+}

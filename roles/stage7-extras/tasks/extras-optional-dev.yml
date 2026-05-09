@@ -18,3 +18,7 @@
 - name: EXTRAS-OPTIONAL-DEV-ESPIDF - Install esp-idf tools
   ansible.builtin.include_tasks: extras-optional-dev-espidf.yml
   when: enable_extras_optional_dev_espidf
+
+- name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Install lmstudio tools
+  ansible.builtin.include_tasks: extras-optional-dev-lmstudio.yml
+  when: enable_extras_optional_dev_lmstudio
