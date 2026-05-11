@@ -23,7 +23,7 @@ M.getplugins = function()
 end
 M.configure = function()
 	-- Configure
-	require("mps-core.treesitter.treesitter-config")
+	-- require("mps-core.treesitter.treesitter-config")
 	require("mps-core.neoconf.neoconf-config")
 	require("mps-core.oil.oil-config")
 	require("mps-core.yazi.yazi-config")

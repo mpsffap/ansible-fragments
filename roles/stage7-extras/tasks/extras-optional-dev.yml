@@ -22,3 +22,7 @@
 - name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Install lmstudio tools
   ansible.builtin.include_tasks: extras-optional-dev-lmstudio.yml
   when: enable_extras_optional_dev_lmstudio
+
+- name: EXTRAS-OPTIONAL-DEV-OPENCODE - Install opencode tools
+  ansible.builtin.include_tasks: extras-optional-dev-opencode.yml
+  when: enable_extras_optional_dev_opencode

@@ -37,7 +37,9 @@ class MpsGroups(object):
                 ],
                 layout="monadtall",
             ),
-            Group("6", label="6 󰦖 ", matches=[], layout="monadtall"),
+            Group("6", label="6 󰦖 ", matches=[
+                Match(wm_class="LM Studio"),
+            ], layout="monadtall"),
             Group(
                 "7",
                 label="7  ",

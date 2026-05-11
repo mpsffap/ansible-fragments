@@ -11,14 +11,14 @@ if [ "${debian_chroot:-}" = "" ] && [ -r /etc/debian_chroot ]; then
 	debian_chroot=$(cat /etc/debian_chroot)
 fi
 #--- Prompt -------------------------------------------------------------------
-if [[ -f ~/.config/bashrc/.bashrc_colors ]] ; then
-    source ~/.config/bashrc/.bashrc_colors 
+if [[ -f ~/.config/bashrc/.bashrc_colors ]]; then
+	source ~/.config/bashrc/.bashrc_colors
 fi
-if [[ -f ~/.config/bashrc/.bashrc_distro ]] ; then
-    source ~/.config/bashrc/.bashrc_colors 
+if [[ -f ~/.config/bashrc/.bashrc_distro ]]; then
+	source ~/.config/bashrc/.bashrc_colors
 fi
-if [[ -f ~/.config/bashrc/.bashrc_prompt ]] ; then
-    source ~/.config/bashrc/.bashrc_prompt 
+if [[ -f ~/.config/bashrc/.bashrc_prompt ]]; then
+	source ~/.config/bashrc/.bashrc_prompt
 fi
 #--- History ------------------------------------------------------------------
 HISTSIZE=99999
@@ -29,14 +29,14 @@ shopt -s histappend    # append to the history file, don't overwrite it
 shopt -s checkwinsize  # update the values of LINES and COLUMNS.
 #--- Aliases ------------------------------------------------------------------
 ALIASDIR_COMMON="/etc/bash_aliases.d"
-if [[ -d "$ALIASDIR_COMMON" ]] ; then
-  for file in "$ALIASDIR_COMMON"/.bashrc_alias_*; do
-    [[ -e "$file" ]] || continue # handle no matches
-    source "$file"
-  done
+if [[ -d "$ALIASDIR_COMMON" ]]; then
+	for file in "$ALIASDIR_COMMON"/.bashrc_alias_*; do
+		[[ -e "$file" ]] || continue # handle no matches
+		source "$file"
+	done
 fi
-if [[ -f ~/.config/bashrc/.bashrc_alias_custom ]] ; then
-    source ~/.config/bashrc/.bashrc_alias_custom
+if [[ -f ~/.config/bashrc/.bashrc_alias_custom ]]; then
+	source ~/.config/bashrc/.bashrc_alias_custom
 fi
 #--- Bash completion ----------------------------------------------------------
 if ! shopt -oq posix; then
@@ -47,8 +47,8 @@ if ! shopt -oq posix; then
 	fi
 fi
 #--- Path Variable -----------------------------------------------------
-if [[ ! -d  "$HOME/.local/bin" ]]; then
-    mkdir -p "$HOME/.local/bin"
+if [[ ! -d "$HOME/.local/bin" ]]; then
+	mkdir -p "$HOME/.local/bin"
 fi
 export PATH=$PATH:~/.local/bin
 #--- Environment Variable -----------------------------------------------------
@@ -71,9 +71,26 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_ENABLE_HIGHDPI_SCALING=1
 # export TERM=xterm-kitty
 # export DISPLAY=:0
-#--- Zoxide -------------------------------------------------------------------
+#--- Zoxide --------------------------------------------------------------------
 eval "$(zoxide init bash)"
-#--- Cargo -------------------------------------------------------------------
-if [[ -f  "$HOME/.cargo/env" ]]; then
-. "$HOME/.cargo/env"
+#--- Cargo ---------------------------------------------------------------------
+if [[ -f "$HOME/.cargo/env" ]]; then
+	. "$HOME/.cargo/env"
 fi
+
+#--- opencode ------------------------------------------------------------------
+if [[ -f "$HOME"/.opencode/bin/opencode ]]; then
+	export PATH="$HOME"/.opencode/bin:$PATH
+fi
+#--- fzf -----------------------------------------------------------------------
+export FZF_DEFAULT_OPTS="
+    --height=80%
+    --layout=reverse
+    --tmux 70%
+    --inline-info
+    --prompt='❯ '
+    --pointer='▶'
+    --marker='✓'
+    --preview='batcat --color=always {}'
+    --bind 'alt-p:toggle-preview'
+"

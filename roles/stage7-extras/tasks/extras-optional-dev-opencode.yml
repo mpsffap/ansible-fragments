@@ -1,0 +1,24 @@
+---
+# =====================================================
+# INSTALL ESP-IDF PER VERSION (ISOLATED)
+# =====================================================
+- name: EXTRAS-OPTIONAL-DEV-OPENCODE - Check if Opencode is already installed
+  become: true
+  ansible.builtin.stat:
+    path: "{{ user.home }}/.opencode/bin/opencode"
+  register: opencode_installed
+
+- name: EXTRAS-OPTIONAL-DEV-OPENCODE - Download opencode installer
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.get_url:
+    url: "{{ url_opencode }}"
+    dest: "/tmp/opencode-install.sh"
+    mode: "0755"
+  when: not opencode_installed.stat.exists
+
+- name: EXTRAS-OPTIONAL-DEV-OPENCODE - Install Opencode
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.shell: /tmp/opencode-install.sh
+  when: not opencode_installed.stat.exists

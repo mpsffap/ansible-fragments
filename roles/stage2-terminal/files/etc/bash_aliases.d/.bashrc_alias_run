@@ -3,8 +3,24 @@
 # shellcheck disable=SC2139,SC2015,SC2142,SC2154
 
 # ps stuff
+run_appimage() {
+    local image="$1"
+    "$image" &
+}
 run_appimages() {
     local app
-    app=$(find ~/.local.bin -maxdepth 1 -type f -name "*.AppImage" | fzf) || return
-    "$app"
+    app=$(find ~/.local/bin -maxdepth 1 -type f -name "*.AppImage" | fzf) || return
+    chmod +x "$app" &>/dev/null
+    "$app" &
 }
+
+# --- Completion Functions ---
+_get_appimages() {
+    find ~/.local/bin -maxdepth 1 -type f -name "*.AppImage"
+}
+_complete_appimages() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=($(compgen -W "$(_get_appimages)" -- "$cur"))
+}
+# --- Register Completions ---
+complete -F _complete_appimages run_appimage

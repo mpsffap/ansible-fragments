@@ -33,7 +33,7 @@
 - name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Check if AppImage already exists
   become: true
   ansible.builtin.stat:
-    path: "{{ user.home }}/.local/bin/LM-Studio-{{ lmstudio_desktop_version }}-x64.AppImage"
+    path: "{{ user.home }}/.local/bin/{{ user.home }}/.local/bin/lmstudio.AppImage"
   register: lmstudio_appimage
 
 - name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Download desktop AppImage
@@ -41,6 +41,24 @@
   become_user: "{{ user.name }}"
   ansible.builtin.get_url:
     url: "https://installers.lmstudio.ai/linux/x64/{{ lmstudio_desktop_version }}/LM-Studio-{{ lmstudio_desktop_version }}-x64.AppImage"
-    dest: "{{ user.home }}/.local/bin/LM-Studio-{{ lmstudio_desktop_version }}-x64.AppImage"
+    dest: "{{ user.home }}/.local/bin/lmstudio.AppImage"
     mode: "0755"
+  when: not lmstudio_appimage.stat.exists
+
+- name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Create desktop launcher
+  become: true
+  become_user: "{{ user.name }}"
+  ansible.builtin.copy:
+    dest: "{{ user.home }}/.local/share/applications/lmstudio.desktop"
+    mode: "0644"
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=LM Studio
+      Comment=Run LM Studio
+      Exec={{ user.home }}/.local/bin/lmstudio.AppImage
+      Icon=lmstudio
+      Terminal=false
+      Categories=Development;Utility;
+      StartupNotify=true
   when: not lmstudio_appimage.stat.exists

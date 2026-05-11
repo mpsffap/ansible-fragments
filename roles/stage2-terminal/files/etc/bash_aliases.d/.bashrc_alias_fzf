@@ -1,0 +1,131 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+alias fra="fzf_run_appimage"
+alias fras="fzf_run_appimages"
+alias ffa="fzf_find_appimages"
+alias ffu="fzf_find_user"
+alias ffd="fzf_find_dotconf"
+alias fft="fzf_find_tmux"
+alias ffi="fzf_find_images"
+alias ffh="fzf_find_history"
+alias ffr="fzf_find_rg"
+alias ffp="fzf_find_parent"
+alias fkp="fzf_kill_process"
+
+# ps stuff
+fzf_run_appimage() {
+    local image="$1"
+    "$image" &
+}
+
+fzf_run_appimages() {
+    local app
+    app=$(find ~/.local/bin -maxdepth 1 -type f -name "*.AppImage" | fzf) || return
+    chmod +x "$app" &>/dev/null
+    "$app" &
+}
+fzf_find_appimages() {
+    local app
+    app=$(find ~/.local/bin -maxdepth 1 -type f -name "*.AppImage" | fzf) || return
+    echo "$app"
+}
+fzf_find_user() {
+    local app
+    app=$(find ~/.config -type f -name "*" | fzf) || return
+    echo "$app"
+}
+fzf_find_parent() {
+    local app
+    app=$(find . -type f | fzf --preview='batcat --color=always {}') || return
+    echo "$app"
+}
+
+fzf_find_dotconf() {
+    local app
+    app=$(
+        find ~/.config -type f \( \
+            -name "*rc" -o \
+            -name "*.config" -o \
+            -name "*.conf" -o \
+            -name "*.cfg" -o \
+            -name "*.ini" \) | fzf \
+            --preview 'batcat --color=always {1} --highlight-line {2}' \
+            --preview-window 'up,60%,border-bottom,+{2}+3/3,~3'
+    ) || return
+    echo "$app"
+}
+fzf_find_tmux() {
+    local app
+    app=$(tmux ls | fzf) || return
+    echo "$app"
+}
+fzf_find_rg() {
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    INITIAL_QUERY="${*:-}"
+    fzf --ansi --disabled --query "$INITIAL_QUERY" \
+        --bind "start:reload:$RG_PREFIX {q} || true" \
+        --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+        --delimiter : \
+        --preview 'batcat --color=always {1} --highlight-line {2}' \
+        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+        --bind 'enter:become(vim {1} +{2})'
+}
+fzf_find_images() {
+    local app
+    app=$(
+        find /usr/share/ -type f \( \
+            -name "*.png" -o \
+            -name "*.svg" -o \
+            -name "*.jpg" -o \
+            -name "*.jpeg" \) | fzf --preview='kitty icat --clear --transfer-mode=memory --stdin=no --place=${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}@0x0 {}'
+    ) || return
+    echo "$app"
+}
+fzf_find_history() {
+    local app
+    app=$(
+        fc -ln | fzf
+    ) || return
+    echo "$app"
+}
+
+fzf_edit_dotconf() {
+    local app
+    app=$(find ~ -type f \( \
+        -name "*rc" -o \
+        -name "*.config" -o \
+        -name "*.conf" -o \
+        -name "*.cfg" -o \
+        -name "*.ini" \) | fzf) || return
+    edit "$app"
+}
+fzf_attach_tmux() {
+    local app
+    app=$(tmux ls | fzf | cut -f1 -d ":") || return
+    tmux attach -t "$app"
+}
+
+fzf_kill_process() {
+    (
+        date
+        ps -ef
+    ) |
+        fzf --bind='ctrl-r:reload(date; ps -ef)' \
+            --header=$'Press CTRL-R to reload\n\n' --header-lines=2 \
+            --preview='echo {}' --preview-window=down,3,wrap \
+            --layout=reverse --height=80% | awk '{print $2}' | xargs kill -9
+}
+
+# --- Completion Functions ---
+_get_fzf_appimages() {
+    find ~/.local/bin -maxdepth 1 -type f -name "*.AppImage"
+}
+_complete_fzf_appimages() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=($(compgen -W "$(_get_fzf_appimages)" -- "$cur"))
+}
+# --- Register Completions ---
+complete -F _complete_fzf_appimages fzf_run_appimage
+complete -F _complete_fzf_appimages fra

@@ -21,6 +21,7 @@ enable_extras_optional_dev_latex: false
 enable_extras_optional_dev_dotnet: false
 enable_extras_optional_dev_espidf: false
 enable_extras_optional_dev_unity: false
+enable_extras_optional_dev_opencode: true
 enable_extras_optional_dev_lmstudio: true
 enable_extras_optional_dev_lmstudio_desktop: true
 
@@ -46,6 +47,7 @@ url_lutris_repo: "https://download.opensuse.org/repositories/home:/strycore/Debi
 url_lutris_sources: "/etc/apt/sources.list.d/lutris.list"
 url_lutris_key_url: "https://download.opensuse.org/repositories/home:/strycore/Debian_13/Release.key"
 url_lutris_key_path: "/etc/apt/keyrings/lutris.gpg"
+url_opencode: "https://opencode.ai/install"
 
 # -- Backup options
 backup_persist_ssh_keys: true
