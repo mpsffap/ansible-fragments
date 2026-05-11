@@ -6,6 +6,7 @@
 alias sb='source ~/.bashrc'
 alias bash-reload='source ~/.bashrc'
 
+alias whichalias='alias | grep '
 # Random
 alias h='history'
 alias grep='grep --color=auto'

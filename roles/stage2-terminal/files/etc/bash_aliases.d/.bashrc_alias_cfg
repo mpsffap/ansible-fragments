@@ -17,3 +17,4 @@ alias cfg-fstab="sudo vim /etc/fstab"
 alias cfg-crypt="sudo vim /etc/crypttab"
 alias cfg-net="sudo vim /etc/network/interfaces"
 alias cfg-apt='sudo vim /etc/apt/sources.list'
+alias cfg-opencode='sudo vim ~/.config/opencode/opencode.json'

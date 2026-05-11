@@ -36,6 +36,8 @@ FONTSIZE = 20
 FONTSIZE_SMALL = 20
 BAR_HEIGHT = 30
 SECOND_SCREEN = True
+THIRD_SCREEN = True
+FORTICLIENT = True
 NAME_NA = "N/A"
 NAME_ADM = "bks-adm"
 NAME_SSL_ADM = f"SSL {NAME_ADM}"
@@ -61,13 +63,10 @@ widget_config_bottom_primary: dict[str, bool] = {
     "widgets_bottom_primary_net": True,
     "widgets_bottom_primary_systray": True,
     "widgets_bottom_primary_battery": True,
-    "widgets_bottom_primary_forticlient": False,
+    "widgets_bottom_primary_forticlient": FORTICLIENT,
     "widgets_bottom_primary_kanata": True,
     "widgets_bottom_primary_updater": True,
     "widgets_bottom_primary_clock": True,
-}
-widget_config_top_secondary: dict[str, bool] = {
-    "widgets_top_secondary_window_name": True,
 }
 widget_config_bottom_secondary: dict[str, bool] = {
     "widgets_bottom_secondary_layout_icon": True,
@@ -79,10 +78,13 @@ widget_config_bottom_secondary: dict[str, bool] = {
     "widgets_bottom_secondary_net": True,
     "widgets_bottom_secondary_systray": True,
     "widgets_bottom_secondary_battery": True,
-    "widgets_bottom_secondary_forticlient": False,
+    "widgets_bottom_secondary_forticlient": FORTICLIENT,
     "widgets_bottom_secondary_kanata": True,
     "widgets_bottom_secondary_updater": True,
     "widgets_bottom_secondary_clock": True,
+}
+widget_config_top_secondary: dict[str, bool] = {
+    "widgets_top_secondary_window_name": True,
 }
 widgets_top_primary: list = []
 widgets_bottom_primary: list = []
@@ -381,6 +383,30 @@ class MpsScreens(object):
             ),
         ]
         if SECOND_SCREEN:
+            screenlist.append(
+                Screen(
+                    top=bar.Bar(
+                        create_bar_top_secondary(widget_config_top_secondary),
+                        BAR_HEIGHT,
+                        border_color=barBorderColor,
+                        border_width=barBorderWidth,
+                        background=barColor,
+                        margin=marginBar,
+                        opacity=opacityBar,
+                    ),
+                    bottom=bar.Bar(
+                        create_bar_bottom_secondary(
+                            widget_config_bottom_secondary),
+                        BAR_HEIGHT,
+                        border_color=barBorderColor,
+                        border_width=barBorderWidth,
+                        background=barColor,
+                        margin=marginBar,
+                        opacity=opacityBar,
+                    ),
+                ),
+            )
+        if THIRD_SCREEN:
             screenlist.append(
                 Screen(
                     top=bar.Bar(

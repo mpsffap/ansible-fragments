@@ -7,6 +7,7 @@ from globals import (
     rofipower,
     rofilaunch,
     rofiwindows,
+    rofissh,
     rofiautorandr,
     screenshot,
     spotifynext,
@@ -108,7 +109,8 @@ keys_static = [
     Key(m, "Prior", lazy.group.prev_window(), desc="Focus prev"),
     Key(m, "Next", lazy.group.next_window(), desc="Focus next"),
     # Applications
-    Key(a, "Tab", lazy.spawn(rofiwindows), desc="Launcher widget"),
+    Key(a, "space", lazy.spawn(rofissh), desc="Launcher ssh widget"),
+    Key(a, "Tab", lazy.spawn(rofiwindows), desc="Launcher window widget"),
     Key(m, "Print", lazy.spawn(screenshot), desc="Screenshot"),
     Key(m, "t", lazy.spawn(randomwp), desc="Randomize wallpaper"),
     Key(m, "v", lazy.spawn(slh), desc="screenlayout hive"),
