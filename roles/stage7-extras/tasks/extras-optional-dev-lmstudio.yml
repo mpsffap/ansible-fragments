@@ -12,7 +12,7 @@
   become: true
   become_user: "{{ user.name }}"
   ansible.builtin.get_url:
-    url: "{{ url_lmstudio_install }}"
+    url: "{{ url_lmstudio }}"
     dest: "/tmp/lmstudio-install.sh"
     mode: "0755"
   when: not lmstudio_installed.stat.exists

@@ -48,6 +48,7 @@ url_lutris_sources: "/etc/apt/sources.list.d/lutris.list"
 url_lutris_key_url: "https://download.opensuse.org/repositories/home:/strycore/Debian_13/Release.key"
 url_lutris_key_path: "/etc/apt/keyrings/lutris.gpg"
 url_opencode: "https://opencode.ai/install"
+url_lmstudio: "https://lmstudio.ai/install.sh"
 
 # -- Backup options
 backup_persist_ssh_keys: true
