@@ -50,6 +50,7 @@ xset = "xset r rate 250 50"
 
 rofiwindows = "rofi -show window"
 rofissh = "rofi -show ssh"
+rofitmux = f"{home}/.local/bin/rofi-boot-tmux-sessionizer.bash"
 rofilaunch = f"{home}/.local/bin/rofi-boot-launcher.bash"
 rofipower = f"{home}/.local/bin/rofi-boot-powermenu.bash"
 rofiautorandr = f"{home}/.local/bin/rofi-boot-autorandr.bash"
@@ -73,7 +74,7 @@ wallpapers = {
     "5": "/usr/share/images/wallpaper/mainframe.jpg",
     "6": "/usr/share/images/wallpaper/backyard.jpg",
     "7": "/usr/share/images/wallpaper/mobile.jpg",
-    "8": "/usr/share/images/wallpaper/tarkov.jpg",
+    "8": "/usr/share/images/wallpaper/xp.jpg",
     "9": "/usr/share/images/wallpaper/guitar.jpg",
     "0": "/usr/share/images/wallpaper/vorschlag.jpg",
 }

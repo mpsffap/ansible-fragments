@@ -8,6 +8,7 @@ from globals import (
     rofilaunch,
     rofiwindows,
     rofissh,
+    rofitmux,
     rofiautorandr,
     screenshot,
     spotifynext,
@@ -109,14 +110,16 @@ keys_static = [
     Key(m, "Prior", lazy.group.prev_window(), desc="Focus prev"),
     Key(m, "Next", lazy.group.next_window(), desc="Focus next"),
     # Applications
+    Key(m, "space", lazy.spawn(rofilaunch), desc="Start rofi"),
     Key(a, "space", lazy.spawn(rofissh), desc="Launcher ssh widget"),
+    Key(modctrl, "space", lazy.spawn(rofitmux), desc="Launcher ssh widget"),
     Key(a, "Tab", lazy.spawn(rofiwindows), desc="Launcher window widget"),
     Key(m, "Print", lazy.spawn(screenshot), desc="Screenshot"),
     Key(m, "t", lazy.spawn(randomwp), desc="Randomize wallpaper"),
     Key(m, "v", lazy.spawn(slh), desc="screenlayout hive"),
     Key(m, "Return", lazy.spawn(tm), desc="Launch terminal"),
     Key(modshift, "Return", lazy.spawn(mux), desc="Launch terminal"),
-    Key(m, "space", lazy.spawn(rofilaunch), desc="Start rofi"),
+
     # Media keys for spotify
     Key([], "XF86AudioNext", lazy.spawn(spotifynext), desc="Next song"),
     Key([], "XF86AudioPrev", lazy.spawn(spotifyprev), desc="Prev song"),

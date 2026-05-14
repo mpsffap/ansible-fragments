@@ -69,3 +69,4 @@ rofi_snippets:
   - "rofi-boot-launcher.bash"
   - "rofi-boot-powermenu.bash"
   - "rofi-boot-autorandr.bash"
+  - "rofi-boot-tmux.bash"
