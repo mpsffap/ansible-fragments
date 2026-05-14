@@ -1,0 +1,3 @@
+[target_hosts]
+hive ansible_user=deploy ansible_port=22
+
