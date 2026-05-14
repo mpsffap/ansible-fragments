@@ -14,15 +14,6 @@ alias grep='grep --color=auto'
 # kitty icat
 alias icat='kitty +kitten icat --align=center --scale-up'
 
-# tmux session control
-alias tls="tmux ls"
-alias tas="tmux attach -t "
-alias tns="tmux new -s "
-alias tks="tmux kill-server"
-alias tkss="tmux kill-session -t "
-alias muxme="~/mps/snippets/launch_tmux.bash"
-alias muxme-matrix="~/mps/snippets/launch_tmux.bash 'hm && ho'"
-
 # command history
 alias r="fc -r"
 alias rx='bash -c "$(fc -ln -1)"'

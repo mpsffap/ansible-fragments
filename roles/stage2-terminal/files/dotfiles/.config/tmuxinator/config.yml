@@ -1,0 +1,47 @@
+# /home/jb/.config/tmuxinator/config.yml
+
+name: config
+root: ~/.config/
+windows:
+  - scratch:
+      layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
+      panes:
+        - bash ho
+        - bash
+        - bash
+  - bashrc:
+      layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
+      panes:
+        - cfg-bashrc
+        - bash
+        - bash
+  - nvim:
+      layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
+      panes:
+        - cfg-nvim
+        - bash
+        - bash
+  - qtile:
+      layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
+      panes:
+        - cfg-qtile
+        - bash
+        - bash
+  - tmux:
+      layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
+      panes:
+        - cfg-tmux
+        - bash
+        - bash
+  - tmuxinator:
+      layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
+      panes:
+        - cfg-tmuxinator
+        - bash
+        - bash
+  - mps:
+      layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
+      panes:
+        - "cd $HOME/mps/repo/github/mpsffap/ansible-fragments/"
+        - "cd $HOME/mps/repo/github/mpsffap/ansible-fragments/"
+        - "cd $HOME/mps/repo/github/mpsffap/ansible-fragments/"

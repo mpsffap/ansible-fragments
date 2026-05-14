@@ -70,3 +70,6 @@ rofi_snippets:
   - "rofi-boot-powermenu.bash"
   - "rofi-boot-autorandr.bash"
   - "rofi-boot-tmux.bash"
+  - "rofi-boot-tmux-sessionizer.bash"
+  - "rofi-boot-tmuxinator.bash"
+  - "rofi-boot-tmux-tmuxinizer.bash"

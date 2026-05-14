@@ -1,0 +1,11 @@
+# /home/jb/.config/tmuxinator/vibe.yml
+
+name: vibe
+root: ~/projects/
+windows:
+  - editor:
+      layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
+      panes:
+        - nvim
+        - bash opencode -c
+        - bash
