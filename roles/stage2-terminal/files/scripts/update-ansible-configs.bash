@@ -1,17 +1,24 @@
 #!/bin/bash
 
-LOCCFG="$HOME/.config"
-LOCETC="/etc"
+# Target dir
 ANSDIR=~/mps/repo/github/mpsffap/ansible-fragments
+
+# Target subdirs
 ROLEDIR="$ANSDIR"/roles
+# stage2
 STAGE2DOT="$ROLEDIR"/stage2-terminal/files/dotfiles
 STAGE2ETC="$ROLEDIR"/stage2-terminal/files/etc
 STAGE2SKL="$ROLEDIR"/stage2-terminal/files/skeletons
 STAGE2CFG="$STAGE2DOT"/.config
+# stage4
 STAGE4DOT="$ROLEDIR"/stage4-desktop/files/dotfiles
 STAGE4CFG="$STAGE4DOT"/.config
 
-# Stage2
+# local dirs
+LOCCFG="$HOME/.config"
+LOCETC="/etc"
+
+# Update Stage2
 cp -r "$LOCCFG"/nvim "$STAGE2CFG"/
 cp -r "$LOCCFG"/nvim-core "$STAGE2CFG"/
 cp -r "$LOCCFG"/nvim-minimal "$STAGE2CFG"/
@@ -23,7 +30,7 @@ cp -r "$LOCCFG"/tmux/tmux.conf "$STAGE2CFG"/tmux
 cp -r "$LOCCFG"/tmux/tmux.conf.local "$STAGE2CFG"/tmux
 cp -r "$LOCCFG"/skeletons/* "$STAGE2SKL"/
 
-# # Stage4
+# Update Stage4
 cp -r "$LOCCFG"/qtile "$STAGE4CFG"/
 cp -r "$LOCCFG"/kanata "$STAGE4CFG"/
 cp -r "$LOCCFG"/Thunar "$STAGE4CFG"/
