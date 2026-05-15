@@ -1,6 +1,9 @@
 #!/bin/bash
-# shellcheck disable=SC2139,SC2015,SC2142,SC2154
-[[ -f /etc/mps/.env ]] && source /etc/mps/.env
+# shellcheck disable=SC1090,SC1091,SC2139,SC2015,SC2142,SC2154
+MPS_CONFDIR="/etc/mps"
+[[ -f "$MPS_CONFDIR"/.env ]] && source "$MPS_CONFDIR"/.env
+
+# Stagefiles
 declare -A STAGES
 STAGES["0"]="stage0-init.yml"
 STAGES["1"]="stage1-users.yml"
@@ -13,11 +16,20 @@ STAGES["7"]="stage7-extras.yml"
 STAGES["8"]="stage8-harden.yml"
 
 # mps
-alias mps_merge="mps merge"
-alias mps_update="mps update"
-alias mps_install="mps install"
+alias mpss="mps status"
+alias mpsm="mps merge"
+alias mpsu="mps update"
+alias mpsi="mps install"
+alias mpsia="mps install all"
 
 # Custom handler
+_mps_status() {
+    echo "Version    : $MPS_INSTALLER_VERSION_INIT"
+    echo "Configdir  : $MPS_CONFDIR"
+    echo "Repository : $MPS_REPODIR"
+    echo "Inventory  : $MPS_ANSIBLE_INVENTORY"
+    echo "Reportdir  : $MPS_ANSIBLE_REPORTS"
+}
 _mps_update() {
     cd "$MPS_REPODIR" || exit 1
     git pull
@@ -51,6 +63,9 @@ mps() {
             ;;
         "install")
             _mps_install "$cmd" "$target"
+            ;;
+        "status")
+            _mps_status
             ;;
         *)
             echo "unknown command: $cmd"
