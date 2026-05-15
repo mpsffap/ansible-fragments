@@ -1,0 +1,60 @@
+#!/bin/bash
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+[[ -f /etc/mps/.env ]] && source /etc/mps/.env
+declare -A STAGES
+STAGES["0"]="stage0-init.yml"
+STAGES["1"]="stage1-users.yml"
+STAGES["2"]="stage2-terminal.yml"
+STAGES["3"]="stage3-services.yml"
+STAGES["4"]="stage4-desktop.yml"
+STAGES["5"]="stage5-themes.yml"
+STAGES["6"]="stage6-optimize.yml"
+STAGES["7"]="stage7-extras.yml"
+STAGES["8"]="stage8-harden.yml"
+
+# mps
+alias mps_merge="mps merge"
+alias mps_update="mps update"
+alias mps_install="mps install"
+
+# Custom handler
+_mps_update() {
+    cd "$MPS_REPODIR" || exit 1
+    git pull
+}
+_mps_install() {
+    cd "$MPS_REPODIR" || exit 2
+    [[ -z "$target" ]] && echo "Target missing: '$target'" && exit 3
+    if [[ "$target" == "all" ]]; then
+        inventory="$MPS_ANSIBLE_INVENTORY"
+        for key in $(seq 0 8); do
+            file="${STAGES[$key]}"
+            ansible-playbook playbooks/"$file" -i "$inventory"
+
+        done
+    else
+        ansible-playbook playbooks/"${STAGES[$target]}" -i "$MPS_ANSIBLE_INVENTORY"
+    fi
+}
+_mps_merge() {
+    merge-ansible-configs.bash
+}
+mps() {
+    cmd="$1"
+    target="$2"
+    case "$cmd" in
+        "merge")
+            _mps_merge
+            ;;
+        "update")
+            _mps_update
+            ;;
+        "install")
+            _mps_install "$cmd" "$target"
+            ;;
+        *)
+            echo "unknown command: $cmd"
+            ;;
+    esac
+
+}
