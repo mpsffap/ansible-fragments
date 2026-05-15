@@ -9,3 +9,4 @@ alias apb='ansible-playbook --become --vault-pass-file vault/vault_pass.txt -i i
 ansible_playbook() {
     ansible-playbook "$1" | grep --line-buffered -Ev '^include*|^ |^}|^- '
 }
+

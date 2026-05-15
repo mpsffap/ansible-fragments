@@ -82,6 +82,16 @@ fi
 if [[ -f "$HOME"/.opencode/bin/opencode ]]; then
 	export PATH="$HOME"/.opencode/bin:$PATH
 fi
+
+#--- bitwarden -----------------------------------------------------------------
+if [[ -n "${KITTY_PASSWORD_MANAGER}" ]]; then
+	kitty @ set-colors background='#161666'
+	ssh vault "bw-fzf"
+	pw=$(ssh vault "cat /tmp/bw_last ; rm -rf /tmp/bw_last")
+	echo "$pw" | kitty @ send-text -m id:"$KITTY_PASSWORD_MANAGER" --stdin
+	exit 0
+fi
+
 #--- fzf -----------------------------------------------------------------------
 export FZF_DEFAULT_OPTS="
     --height=80%
