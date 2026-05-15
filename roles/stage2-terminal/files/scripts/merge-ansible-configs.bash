@@ -27,6 +27,7 @@ cp -r "$LOCCFG"/nvim-tools "$STAGE2CFG"/
 cp -r "$LOCCFG"/bashrc "$STAGE2CFG"/
 cp -r "$LOCETC"/bash_aliases.d/ "$STAGE2ETC"/
 cp -r "$LOCCFG"/kitty "$STAGE2CFG"/
+cp -r "$LOCCFG"/tmuxinator "$STAGE2CFG"/
 cp -r "$LOCCFG"/tmux/tmux.conf "$STAGE2CFG"/tmux
 cp -r "$LOCCFG"/tmux/tmux.conf.local "$STAGE2CFG"/tmux
 cp -r "$LOCCFG"/skeletons/* "$STAGE2SKL"/
