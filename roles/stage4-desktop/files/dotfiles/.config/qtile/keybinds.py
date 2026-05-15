@@ -5,7 +5,7 @@ from globals import (
     startup,
     randomwp,
     rofipower,
-    rofitmuxinizer,
+    rofilaunch,
     rofiwindows,
     rofissh,
     rofitmux,
@@ -110,7 +110,7 @@ keys_static = [
     Key(m, "Prior", lazy.group.prev_window(), desc="Focus prev"),
     Key(m, "Next", lazy.group.next_window(), desc="Focus next"),
     # Applications
-    Key(m, "space", lazy.spawn(rofitmuxinizer), desc="Start rofi"),
+    Key(m, "space", lazy.spawn(rofilaunch), desc="Start rofi"),
     Key(a, "space", lazy.spawn(rofissh), desc="Launcher ssh widget"),
     Key(modctrl, "space", lazy.spawn(rofitmux), desc="Launcher ssh widget"),
     Key(a, "Tab", lazy.spawn(rofiwindows), desc="Launcher window widget"),

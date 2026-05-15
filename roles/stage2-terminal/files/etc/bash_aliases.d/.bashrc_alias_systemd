@@ -1,0 +1,13 @@
+#!/bin/bash
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# systemctl
+alias sdr='systemctl daemon-reload'
+alias syss='systemctl status'
+alias sysup='systemctl start'
+alias sysdown='systemctl stop'
+alias sysre='systemctl restart'
+
+# journalctl
+alias jstate='journalctl -u'
+

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "lsp": true,
+  "autoupdate": false,
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "git *": "ask",
+      "npm *": "ask",
+      "rm *": "ask",
+      "grep *": "allow"
+    },
+    "edit": {
+      "*": "deny",
+      "AGENTS.md": "allow",
+      "SPEC.md": "allow"
+    }
+  }
+}
