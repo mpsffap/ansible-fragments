@@ -5,8 +5,12 @@ if [ -z "$ARG" ]; then
 		[ -f "$f" ] && basename "$f" .yml
 	done
 else
+
+	# tmux switch-client -t "$1" 2>/dev/null || tmux attach -t "$1"
 	if tmux list-sessions | grep -E "^$ARG:" &>/dev/null; then
-		kitty tmux attach -t "$1" &
+		if ! tmux switch-client -t "$1" 2>/dev/null ; then
+			kitty tmux attach -t "$1" &
+		fi
 		killall rofi # dirty hack, as rofi blocks
 	else
 		kitty tmuxinator start "$1" &

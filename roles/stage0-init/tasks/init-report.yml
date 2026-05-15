@@ -13,6 +13,7 @@
       export MPS_REPODIR={{playbook_dir}}/..
       export MPS_ANSIBLE_INVENTORY={{inventory_file}}
       export MPS_ANSIBLE_REPORTS={{report_dir}}
+      export MPS_TIMESTAMP_INIT={{ ansible_date_time.iso8601 }}
     mode: "0644"
 
 - name: INIT-REPORT -  Ensure report directory exists
