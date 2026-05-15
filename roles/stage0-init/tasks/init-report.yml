@@ -12,6 +12,7 @@
       export MPS_INSTALLER_VERSION_INIT={{ installer_version }}
       export MPS_REPODIR={{playbook_dir}}/..
       export MPS_ANSIBLE_INVENTORY={{inventory_file}}
+      export MPS_ANSIBLE_REPORTS={{report_dir}}
     mode: "0644"
 
 - name: INIT-REPORT -  Ensure report directory exists
