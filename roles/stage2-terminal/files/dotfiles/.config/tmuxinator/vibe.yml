@@ -4,8 +4,9 @@ name: vibe
 root: ~/projects/
 windows:
   - editor:
-      layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
+      layout: "b7f5,191x44,0,0[191x32,0,0{122x32,0,0,257,68x32,123,0,258},191x11,0,33{95x11,0,33,259,95x11,96,33,260}]"
       panes:
-        - nvim
-        - bash opencode -c
-        - bash
+        - cmatrix && nls
+        - opencode
+        - bash ho
+        - bash -c yazi

@@ -2,6 +2,15 @@
 # shellcheck disable=SC2139,SC2015,SC2142,SC2154
 
 # Custom config aliases
+alias projects="z ~/projects"
+alias desktop="z ~/Desktop"
+alias docs="z ~/Documents"
+alias download="z ~/Download"
+alias scratch="z ~/scratch"
+alias public="z ~/Public"
+alias repo="z ~/repo"
+alias dir-github="z ~/repo/github"
+alias dir-gitlab="z ~/repo/gitlab"
 alias dir-locbin="z ~/.local/bin"
 alias dir-loccfg="z ~/.config"
 alias dir-mps="source /etc/mps/.env ; z $repo_dir"

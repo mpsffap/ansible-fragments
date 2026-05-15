@@ -7,16 +7,21 @@ ANSDIR="$MPS_REPODIR"
 # Target subdirs
 ROLEDIR="$ANSDIR"/roles
 # stage2
-STAGE2DOT="$ROLEDIR"/stage2-terminal/files/dotfiles
-STAGE2ETC="$ROLEDIR"/stage2-terminal/files/etc
-STAGE2SKL="$ROLEDIR"/stage2-terminal/files/skeletons
+STAGE2FLS="$ROLEDIR"/stage2-terminal/files
+STAGE2DOT="$STAGE2FLS"/dotfiles
+STAGE2SCR="$STAGE2FLS"/scripts
+STAGE2ETC="$STAGE2FLS"/etc
+STAGE2SKL="$STAGE2FLS"/skeletons
 STAGE2CFG="$STAGE2DOT"/.config
 # stage4
-STAGE4DOT="$ROLEDIR"/stage4-desktop/files/dotfiles
+STAGE4FLS="$ROLEDIR"/stage4-desktop/files
+STAGE4DOT="$STAGE4FLS"/dotfiles
+STAGE4SCR="$STAGE4FLS"/scripts
 STAGE4CFG="$STAGE4DOT"/.config
 
 # local dirs
 LOCCFG="$HOME/.config"
+LOCBIN="$HOME/.local/bin"
 LOCETC="/etc"
 
 # Update Stage2
@@ -31,8 +36,15 @@ cp -r "$LOCCFG"/tmuxinator "$STAGE2CFG"/
 cp -r "$LOCCFG"/tmux/tmux.conf "$STAGE2CFG"/tmux
 cp -r "$LOCCFG"/tmux/tmux.conf.local "$STAGE2CFG"/tmux
 cp -r "$LOCCFG"/skeletons/* "$STAGE2SKL"/
+cp -r "$LOCBIN"/merge-ansible-configs.bash "$STAGE2SCR"/
+cp -r "$LOCBIN"/new-skeleton.bash "$STAGE2SCR"/
+
+exit 0
 
 # Update Stage4
 cp -r "$LOCCFG"/qtile "$STAGE4CFG"/
 cp -r "$LOCCFG"/kanata "$STAGE4CFG"/
 cp -r "$LOCCFG"/Thunar "$STAGE4CFG"/
+cp -r "$LOCBIN"/rofi-boot-* "$STAGE4SCR"/
+cp -r "$LOCBIN"/qtile-* "$STAGE4SCR"/
+cp -r "$LOCCFG"/picom.conf "$STAGE4DOT"/

@@ -42,9 +42,9 @@ windows:
   - mps:
       layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
       panes:
-        - "cd $HOME/mps/repo/github/mpsffap/ansible-fragments/"
-        - "cd $HOME/mps/repo/github/mpsffap/ansible-fragments/"
-        - "cd $HOME/mps/repo/github/mpsffap/ansible-fragments/"
+        - "cd $HOME/repo/github/mpsffap/ansible-fragments/ ; n roles/stage2-terminal/tasks/terminal-base-bash.yml"
+        - "cd $HOME/repo/github/mpsffap/ansible-fragments/"
+        - "cd $HOME/repo/github/mpsffap/ansible-fragments/"
   - oc:
       layout: "0503,238x54,0,0[238x44,0,0{146x44,0,0,38,91x44,147,0,40},238x9,0,45,39]"
       panes:
