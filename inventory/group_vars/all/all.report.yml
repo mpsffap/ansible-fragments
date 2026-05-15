@@ -1,3 +1,4 @@
 # -- Report
 report_dir: "/var/log/ansible-installer"
+config_dir: "/etc/mps"
 installer_version: "0.0.1"

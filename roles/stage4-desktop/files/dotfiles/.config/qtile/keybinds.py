@@ -9,6 +9,7 @@ from globals import (
     rofiwindows,
     rofissh,
     rofitmux,
+    rofitmuxinizer,
     rofiautorandr,
     screenshot,
     spotifynext,
@@ -34,7 +35,8 @@ from globals import (
 
 keys_f = [
     # Applications + Movement
-    Key(a, "F1", spawn_once(mux), lazy.group["1"].toscreen(), desc="Tmux"),
+    Key(a, "F1", spawn_once(rofitmuxinizer),
+        lazy.group["1"].toscreen(), desc="Tmux Sessionizer"),
     Key(a, "F2", spawn_once(fm), lazy.group["2"].toscreen(), desc="Files"),
     Key(a, "F3", spawn_once(bb), lazy.group["3"].toscreen(), desc="Browser"),
     Key(a, "F4", spawn_once(lm), lazy.group["6"].toscreen(), desc="LM Studio"),

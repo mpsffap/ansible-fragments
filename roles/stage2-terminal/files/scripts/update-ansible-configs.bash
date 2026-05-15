@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Target dir
-ANSDIR=~/mps/repo/github/mpsffap/ansible-fragments
+[[ -f /etc/mps/.env ]] && source /etc/mps/.env
+ANSDIR="$MPS_REPODIR"
 
 # Target subdirs
 ROLEDIR="$ANSDIR"/roles

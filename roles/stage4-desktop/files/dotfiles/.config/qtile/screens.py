@@ -38,6 +38,8 @@ BAR_HEIGHT = 30
 SECOND_SCREEN = True
 THIRD_SCREEN = True
 FORTICLIENT = True
+BATTERY = True
+KANATA = True
 NAME_NA = "N/A"
 NAME_ADM = "bks-adm"
 NAME_SSL_ADM = f"SSL {NAME_ADM}"
@@ -62,9 +64,9 @@ widget_config_bottom_primary: dict[str, bool] = {
     "widgets_bottom_primary_clipboard": True,
     "widgets_bottom_primary_net": True,
     "widgets_bottom_primary_systray": True,
-    "widgets_bottom_primary_battery": True,
+    "widgets_bottom_primary_battery": BATTERY,
     "widgets_bottom_primary_forticlient": FORTICLIENT,
-    "widgets_bottom_primary_kanata": True,
+    "widgets_bottom_primary_kanata": KANATA,
     "widgets_bottom_primary_updater": True,
     "widgets_bottom_primary_clock": True,
 }
@@ -77,9 +79,9 @@ widget_config_bottom_secondary: dict[str, bool] = {
     "widgets_bottom_secondary_clipboard": True,
     "widgets_bottom_secondary_net": True,
     "widgets_bottom_secondary_systray": True,
-    "widgets_bottom_secondary_battery": True,
+    "widgets_bottom_secondary_battery": BATTERY,
     "widgets_bottom_secondary_forticlient": FORTICLIENT,
-    "widgets_bottom_secondary_kanata": True,
+    "widgets_bottom_secondary_kanata": KANATA,
     "widgets_bottom_secondary_updater": True,
     "widgets_bottom_secondary_clock": True,
 }

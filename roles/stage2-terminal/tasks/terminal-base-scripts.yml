@@ -12,6 +12,6 @@
     src: "{{ src_scripts }}/"
     dest: "{{ user.home }}/.local/bin/"
     recursive: true
-    delete: false
+    # delete: false
   become: true
   become_user: "{{ user.name }}"
