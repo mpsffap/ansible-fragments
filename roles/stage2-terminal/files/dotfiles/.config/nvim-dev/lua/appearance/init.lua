@@ -1,0 +1,16 @@
+return {
+	require("appearance.tokyonight"),
+	require("appearance.lualine"),
+	require("appearance.bufferline"),
+	require("appearance.alpha"),
+	require("appearance.barbecue"),
+	require("appearance.scrollbar"),
+	require("appearance.indent-blankline"),
+	require("appearance.colorful-winsep"),
+	require("appearance.symbols-outline"),
+	require("appearance.gitsigns"),
+	require("appearance.colorizer"),
+	require("appearance.windows"),
+	require("appearance.gruvbox"),
+	require("appearance.yank-highlight"),
+}

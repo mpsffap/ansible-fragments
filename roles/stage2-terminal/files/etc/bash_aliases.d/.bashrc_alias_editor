@@ -35,4 +35,5 @@ alias nvmls='NVIM_APPNAME=nvim-minimal nvim -S $LAST_SESSION'
 alias snv='sudo nvim'
 alias snvls='sudo nvim -S $LAST_SESSION_ROOT'
 
-# nano? :-D
+# dev version
+alias nvd='NVIM_APPNAME=nvim-dev nvim' 
