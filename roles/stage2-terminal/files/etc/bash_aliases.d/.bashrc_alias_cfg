@@ -18,3 +18,4 @@ alias cfg-crypt="sudo vim /etc/crypttab"
 alias cfg-net="sudo vim /etc/network/interfaces"
 alias cfg-apt='sudo vim /etc/apt/sources.list'
 alias cfg-opencode='edit ~/.config/opencode/opencode.json'
+alias cfg-mpsmerge='edit ~/.local/bin/merge-ansible-configs.bash'
