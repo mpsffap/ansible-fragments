@@ -1,0 +1,22 @@
+#!/bin/bash
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# Custom config aliases
+UMI_DIR="$HOME"/repo/github/odem/unattend-my-iso
+UMI_CFG="$HOME"/repo/gitlab/idris/idris-iso-config
+UMI_VERB=2
+
+umi() {
+    target="$1"
+    overlay="$2"
+    cmd="$3"
+    verb="$UMI_VERB"
+    [[ $# -gt 3 ]] && verb="$4"
+    make -C "$UMI_DIR" \
+        DAEMONIZE=true \
+        TEMPLATEDIR="$UMI_CFG" \
+        TEMPLATE="$target" \
+        OVERLAY="$overlay" \
+        VERBOSITY="$UMI_VERB" \
+        "$cmd"
+}

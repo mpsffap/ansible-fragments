@@ -19,7 +19,7 @@
 
 - name: EXTRAS-OPTIONAL-DEV-LMSTUDIO - Install LM Studio
   become: true
-  become_user: "{{ user.name }}"
+  # become_user: "{{ user.name }}"
   ansible.builtin.shell: /tmp/lmstudio-install.sh
   when: not lmstudio_installed.stat.exists
 

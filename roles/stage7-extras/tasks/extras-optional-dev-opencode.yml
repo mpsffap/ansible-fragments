@@ -10,11 +10,11 @@
 
 - name: EXTRAS-OPTIONAL-DEV-OPENCODE - Download opencode installer
   become: true
-  become_user: "{{ user.name }}"
+  # become_user: "{{ user.name }}"
   ansible.builtin.get_url:
     url: "{{ url_opencode }}"
     dest: "/tmp/opencode-install.sh"
-    mode: "0755"
+    mode: "0777"
   when: not opencode_installed.stat.exists
 
 - name: EXTRAS-OPTIONAL-DEV-OPENCODE - Install Opencode

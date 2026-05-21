@@ -11,10 +11,12 @@
       - thunderbird
       - firefox-esr
       - evince
+      - autorandr
+      - ddcutil
     state: present
   become: true
 
-- name: DESKTOP-BASE-ESSENTIALS-SOUND - Install desktop sound essentials
+- name: DESKTOP-BASE-ESSENTIALS-ESSENTIALS - Install desktop sound essentials
   ansible.builtin.apt:
     name:
       - pulseaudio
