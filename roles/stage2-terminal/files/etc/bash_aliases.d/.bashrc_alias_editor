@@ -21,19 +21,6 @@ export NVIM_APPNAME="nvim"
 alias n='nvim'
 alias ntime="rm -rf $LOG_TIMINGS ; nvim --startuptime $LOG_TIMINGS -c 'q'; cat $LOG_TIMINGS | tail -n 2"
 alias nls='nvim -S $LAST_SESSION'
-alias nv='nvim'
-alias nvls='nvim -S $LAST_SESSION'
-alias nvc='NVIM_APPNAME=nvim-core nvim'
-alias nvctime="rm -rf $LOG_TIMINGS ; NVIM_APPNAME=nvim-core nvim --startuptime $LOG_TIMINGS -c 'q'; cat $LOG_TIMINGS | tail -n 2"
-alias nvcls='NVIM_APPNAME=nvim-core nvim -S $LAST_SESSION'
-alias nvt='NVIM_APPNAME=nvim-tools nvim'
-alias nvttime="rm -rf $LOG_TIMINGS ; NVIM_APPNAME=nvim-tools nvim --startuptime $LOG_TIMINGS -c 'q'; cat $LOG_TIMINGS | tail -n 2"
-alias nvtls='NVIM_APPNAME=nvim-tools nvim -S $LAST_SESSION'
-alias nvm='NVIM_APPNAME=nvim-minimal nvim'
-alias nvmtime="rm -rf $LOG_TIMINGS ; NVIM_APPNAME=nvim-minimal nvim --startuptime $LOG_TIMINGS -c 'q'; cat $LOG_TIMINGS | tail -n 2"
-alias nvmls='NVIM_APPNAME=nvim-minimal nvim -S $LAST_SESSION'
-alias snv='sudo nvim'
-alias snvls='sudo nvim -S $LAST_SESSION_ROOT'
-
-# dev version
 alias nvd='NVIM_APPNAME=nvim-dev nvim' 
+alias nvdls='NVIM_APPNAME=nvim-dev nvim -S $LAST_SESSION' 
+alias nvdtime='NVIM_APPNAME=nvim-dev nvim --startuptime $LOG_TIMINGS -c "q"' 

@@ -1,12 +1,12 @@
 # /home/jb/.config/tmuxinator/vibe.yml
 
 name: vibe
-root: ~/projects/
+root: ~/mps/repo/github/al-readytaken/mps-ailab/projects/
 windows:
   - editor:
       layout: "b7f5,191x44,0,0[191x32,0,0{122x32,0,0,257,68x32,123,0,258},191x11,0,33{95x11,0,33,259,95x11,96,33,260}]"
       panes:
         - cmatrix && nls
-        - opencode
+        - ssh dev-oc chat
         - bash ho
         - bash -c yazi
