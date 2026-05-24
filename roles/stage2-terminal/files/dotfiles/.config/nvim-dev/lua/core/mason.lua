@@ -1,28 +1,90 @@
 return {
-	{
-		"williamboman/mason.nvim",
-		build = ":MasonUpdate",
-		opts = {
-			ensure_installed = {
-				"debugpy",
-				"bash-debug-adapter",
-				"lldb",
-				"delve",
-				"pyright",
-				"ruff",
-				"lua-language-server",
-			},
-			ui = {
-				border = "rounded",
-				icons = {
-					package_installed = "✓",
-					package_pending = "◌",
-					package_uninstalled = "✗",
-				},
-			},
-		},
-		config = function()
-			require("mason").setup()
-		end,
-	},
+  {
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    opts = {
+      ui = {
+        border = "rounded",
+        icons = {
+          package_installed = "✓",
+          package_pending = "◌",
+          package_uninstalled = "✗",
+        },
+      },
+    },
+    config = function()
+      require("mason").setup()
+    end,
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+    },
+    opts = {
+      ensure_installed = {
+        "debugpy",
+        "bash-language-server",
+        "bash-debug-adapter",
+        "shellcheck",
+        "shfmt",
+        "lua-language-server",
+        "stylua",
+        "clangd",
+        "clang-format",
+        "codelldb",
+        "rust-analyzer",
+        "gopls",
+        "goimports",
+        "golangci-lint",
+        "delve",
+        "typescript-language-server",
+        "vtsls",
+        "eslint-lsp",
+        "prettier",
+        "html-lsp",
+        "css-lsp",
+        "tailwindcss-language-server",
+        "emmet-language-server",
+        "json-lsp",
+        "yaml-language-server",
+        "taplo",
+        "dockerfile-language-server",
+        "docker-compose-language-service",
+        "terraform-ls",
+        "tflint",
+        "marksman",
+        "lemminx",
+        "sqlls",
+        "sqlfluff",
+        "codespell",
+      },
+
+      run_on_start = true,
+      start_delay = 3000,
+    },
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {
+        "bashls",
+        "pyright",
+        "lua_ls",
+        "clangd",
+        "gopls",
+        "rust_analyzer",
+        "jsonls",
+        "yamlls",
+        "taplo",
+        "dockerls",
+        "marksman",
+        "lemminx",
+        "html",
+        "cssls",
+        "tailwindcss",
+        "vtsls",
+      },
+    },
+  },
 }

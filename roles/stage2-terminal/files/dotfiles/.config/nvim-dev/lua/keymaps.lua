@@ -40,7 +40,7 @@ map("n", "<S-y>", "<cmd>bprevious<CR>", { desc = "[Default] Prev buffer" })
 
 -- ── Quickfix list ────────────────────────────────────────────────────
 map("n", "<A-q>", function()
-	quickfix.toggle()
+  quickfix.toggle()
 end, { desc = "[Default] quickfix toggle" })
 map("n", "<A-n>", "<cmd>cnext<CR>", { desc = "[Default] cnext" })
 map("n", "<A-N>", "<cmd>cprev<CR>", { desc = "[Default] Prev quickfix" })
@@ -83,21 +83,21 @@ map("n", "<leader>ll", "<cmd>Lazy<CR>", { desc = "[Default] lazy" })
 -- ── Sessions ─────────────────────────────────────────────────────────
 pcall(vim.fn.mkdir, vim.fn.expand("$HOME/.config/nvim-session"), "p")
 map(
-	"n",
-	"<leader>ss",
-	"<cmd>mksession! ~/.config/nvim-session/last_session.vim<CR>",
-	{ desc = "[Default] save session" }
+  "n",
+  "<leader>ss",
+  "<cmd>mksession! ~/.config/nvim-session/last_session.vim<CR>",
+  { desc = "[Default] save session" }
 )
 map(
-	"n",
-	"<leader>sr",
-	"<cmd>source ~/.config/nvim-session/last_session.vim<CR>",
-	{ desc = "[Default] session restore" }
+  "n",
+  "<leader>sr",
+  "<cmd>source ~/.config/nvim-session/last_session.vim<CR>",
+  { desc = "[Default] session restore" }
 )
 
 -- ── Snipe (buffer picker) ────────────────────────────────────────────
 map("n", "<A-s>", function()
-	require("snipe").open_buffer_menu()
+  require("snipe").open_buffer_menu()
 end, { desc = "[Default] snipe buffers" })
 
 -- ── Neo-tree (file explorer) ─────────────────────────────────────────
@@ -107,65 +107,70 @@ map("n", "<A-E>", "<cmd>Neotree reveal<CR>", { desc = "[Default] neo-tree find" 
 
 -- ── Smart delete (conditional Backspace / Delete) ─────────────────────
 map("n", "<S-BS>", function()
-	smart_delete.left()
+  smart_delete.left()
 end, { desc = "[Default] Smart delete left" })
 map("i", "<S-BS>", '<C-o><cmd>lua require("helpers.smart_delete").left()<CR>', { desc = "[Default] Smart delete left" })
 map("n", "<S-Del>", function()
-	smart_delete.right()
+  smart_delete.right()
 end, { desc = "[Default] Smart delete right" })
 map(
-	"i",
-	"<S-Del>",
-	'<C-o><cmd>lua require("helpers.smart_delete").right()<CR>',
-	{ desc = "[Default] Smart delete right" }
+  "i",
+  "<S-Del>",
+  '<C-o><cmd>lua require("helpers.smart_delete").right()<CR>',
+  { desc = "[Default] Smart delete right" }
 )
 
 -- ── Debugging ────────────────────────────────────────────────────────
 map("n", "<F9>", function()
-	require("dap").continue()
+  require("dap").continue()
 end, { desc = "[Default] Start/Continue" })
 map("n", "<F10>", function()
-	require("dap").step_over()
+  require("dap").step_over()
 end, { desc = "[Default] Step Over" })
 map("n", "<F11>", function()
-	require("dap").step_into()
+  require("dap").step_into()
 end, { desc = "[Default] Step Into" })
 map("n", "<F12>", "<cmd>DapTerminate<CR>", { desc = "[Default] Terminate" })
 map("n", "mm", function()
-	require("persistent-breakpoints.api").toggle_breakpoint()
+  require("persistent-breakpoints.api").toggle_breakpoint()
 end, { desc = "[Default] Toggle breakpoint" })
 map("n", "<leader><F12>", function()
-	require("dapui").toggle()
+  require("dapui").toggle()
 end, { desc = "[Default] Toggle DAP UI" })
 map("n", "<leader>br", function()
-	require("dap").run_last()
+  require("dap").run_last()
 end, { desc = "[Default] Run last config" })
 map("n", "<leader>bb", function()
-	require("persistent-breakpoints.api").toggle_breakpoint()
+  require("persistent-breakpoints.api").toggle_breakpoint()
 end, { desc = "[Default] Toggle breakpoint" })
 map("n", "<leader>bc", function()
-	require("dap").set_breakpoint(vim.fn.input("[Condition] > "))
+  require("dap").set_breakpoint(vim.fn.input("[Condition] > "))
 end, { desc = "[Default] Conditional breakpoint" })
 map("n", "<leader>bl", function()
-	require("dap").set_breakpoint(nil, nil, vim.fn.input("[Message] > "))
+  require("dap").set_breakpoint(nil, nil, vim.fn.input("[Message] > "))
 end, { desc = "[Default] Log point breakpoint" })
 map("n", "<leader>b0", function()
-	require("persistent-breakpoints.api").clear_all_breakpoints()
+  require("persistent-breakpoints.api").clear_all_breakpoints()
 end, { desc = "[Default] Clear all breakpoints" })
 map("n", "<leader>dr", function()
-	require("dap").repl.open({}, "vsplit")
+  require("dap").repl.open({}, "vsplit")
 end, { desc = "[Default] Open REPL" })
 map("n", "<leader>dh", function()
-	require("dap.ui.widgets").hover()
+  require("dap.ui.widgets").hover()
 end, { desc = "[Default] Hover" })
 map("n", "<leader>dp", function()
-	require("dap.ui.widgets").framespreview()
+  require("dap.ui.widgets").framespreview()
 end, { desc = "[Default] Frames preview" })
 map("n", "<leader>df", function()
-	local widgets = require("dap.ui.widgets")
-	widgets.centered_float(widgets.frames)
+  local widgets = require("dap.ui.widgets")
+  widgets.centered_float(widgets.frames)
 end, { desc = "[Default] Frames float" })
 map("n", "<leader>ds", function()
-	local widgets = require("dap.ui.widgets")
-	widgets.centered_float(widgets.scopes)
+  local widgets = require("dap.ui.widgets")
+  widgets.centered_float(widgets.scopes)
 end, { desc = "[Default] Scopes float" })
+
+-- Toggle Diagnostics
+vim.keymap.set("n", "<leader>gtd", function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = "Toggle diagnostics" })

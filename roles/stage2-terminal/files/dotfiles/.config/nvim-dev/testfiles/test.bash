@@ -1,10 +1,11 @@
 #!/bin/bash
 
-AAA= "BBB"
-echo "foo" "$AAA"
+AAA="BBB"
+echo "foo" 
 
-AAA= "" 
-cd foo
+AAA="" 
+echo "$AAA"
+cd foo || exit 1
 
 
 

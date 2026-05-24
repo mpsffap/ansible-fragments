@@ -1,7 +1,7 @@
 -- Set default theme -----------------------------------------------------------
 -- vim.api.nvim_create_autocmd("VimEnter", {
--- 	once = true,
--- 	command = "colorscheme tokyonight",
+--   once = true,
+--   command = "colorscheme tokyonight",
 -- })
 
 -- Makefile Noexpand -----------------------------------------------------------

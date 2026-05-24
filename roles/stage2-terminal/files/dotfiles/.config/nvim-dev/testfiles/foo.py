@@ -15,7 +15,7 @@
 
 
 def foo():
-    foo bb ) print("BLA")
+    print("BLA")
 
 
 foo()
