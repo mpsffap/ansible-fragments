@@ -17,6 +17,7 @@ vim.g.loaded_logipat = 1
 vim.g.loaded_getscript = 1
 vim.g.loaded_getscriptPlugin = 1
 vim.g.loaded_tutor_mode_plugin = 1
+-- vim.g.editorconfig = false
 
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
@@ -33,11 +34,7 @@ opt.showtabline = 2
 opt.pumheight = 10
 opt.fillchars = { eob = " " }
 opt.list = true
-
-vim.api.nvim_create_autocmd("VimEnter", {
-	once = true,
-	command = "colorscheme tokyonight",
-})
+opt.wrap = false
 
 -- Editor behavior
 opt.breakindent = true
@@ -45,6 +42,7 @@ opt.scrolloff = 8
 opt.sidescrolloff = 8
 
 -- Tabs and indentation
+opt.expandtab = true
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
@@ -89,3 +87,21 @@ opt.timeoutlen = 1000
 
 -- System clipboard
 opt.clipboard = "unnamedplus"
+
+-- Diagnostics
+vim.diagnostic.config({
+  signs = true,
+  update_in_insert = false,
+  underline = true,
+  virtual_text = {
+    source = true,
+    spacing = 4,
+    prefix = "●",
+    format = function(diagnostic)
+      if diagnostic.code then
+        return string.format("[%s] %s", diagnostic.code, diagnostic.message)
+      end
+      return diagnostic.message
+    end,
+  },
+})

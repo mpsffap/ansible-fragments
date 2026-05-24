@@ -3,3 +3,12 @@
 AAA="BBB"
 echo "foo" "$AAA"
 
+
+AAA="" 
+cd foo
+
+
+
+
+
+

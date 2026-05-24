@@ -27,6 +27,7 @@ LOCETC="/etc"
 # Update Stage2
 cp -r "$LOCCFG"/nvim "$STAGE2CFG"/
 cp -r "$LOCCFG"/nvim-core "$STAGE2CFG"/
+cp -r "$LOCCFG"/nvim-dev "$STAGE2CFG"/
 cp -r "$LOCCFG"/nvim-minimal "$STAGE2CFG"/
 cp -r "$LOCCFG"/nvim-tools "$STAGE2CFG"/
 cp -r "$LOCCFG"/bashrc "$STAGE2CFG"/
