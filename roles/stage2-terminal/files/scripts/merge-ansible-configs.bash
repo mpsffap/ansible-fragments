@@ -26,6 +26,9 @@ LOCETC="/etc"
 
 # Update Stage2
 cp -r "$LOCCFG"/nvim "$STAGE2CFG"/
+cp -r "$LOCCFG"/nvim-core "$STAGE2CFG"/
+cp -r "$LOCCFG"/nvim-minimal "$STAGE2CFG"/
+cp -r "$LOCCFG"/nvim-tools "$STAGE2CFG"/
 cp -r "$LOCCFG"/bashrc "$STAGE2CFG"/
 cp -r "$LOCETC"/bash_aliases.d/ "$STAGE2ETC"/
 cp -r "$LOCCFG"/kitty "$STAGE2CFG"/
@@ -34,7 +37,6 @@ cp -r "$LOCCFG"/tmux/tmux.conf "$STAGE2CFG"/tmux
 cp -r "$LOCCFG"/tmux/tmux.conf.local "$STAGE2CFG"/tmux
 cp -r "$LOCCFG"/skeletons/* "$STAGE2SKL"/
 cp -r "$LOCBIN"/merge-ansible-configs.bash "$STAGE2SCR"/
-cp -r "$LOCBIN"/display_switcher.bash "$STAGE2SCR"/
 cp -r "$LOCBIN"/new-skeleton.bash "$STAGE2SCR"/
 
 exit 0

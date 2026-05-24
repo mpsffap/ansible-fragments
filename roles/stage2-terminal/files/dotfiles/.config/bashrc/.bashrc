@@ -46,6 +46,19 @@ if ! shopt -oq posix; then
 		. /etc/bash_completion
 	fi
 fi
+
+#--- Bitwarden Helper -----------------------------------------------------
+if [[ -n "${KITTY_PASSWORD_MANAGER}" ]]; then
+	#trap 'exit' EXIT
+	kitty @ set-colors background=#1e1e2e
+	if [[ $? -eq 0 ]]; then
+		ssh vault bw-fzf
+		pw=$(ssh vault bw-getpw)
+		[[ -n "${pw}" ]] && echo "${pw}" | kitty @ send-text -m id:"${KITTY_PASSWORD_MANAGER}" --stdin
+		[[ -z "${pw}" ]] && echo "Got nothing!" && sleep 2 && exit 1
+		exit 0
+	fi
+fi
 #--- Path Variable -----------------------------------------------------
 if [[ ! -d "$HOME/.local/bin" ]]; then
 	mkdir -p "$HOME/.local/bin"
