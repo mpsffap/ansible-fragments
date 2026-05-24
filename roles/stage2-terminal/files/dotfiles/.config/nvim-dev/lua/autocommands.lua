@@ -1,17 +1,17 @@
 -- Set default theme -----------------------------------------------------------
-vim.api.nvim_create_autocmd("VimEnter", {
-	once = true,
-	command = "colorscheme tokyonight",
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	once = true,
+-- 	command = "colorscheme tokyonight",
+-- })
 
 -- Makefile Noexpand -----------------------------------------------------------
 local makegroup = vim.api.nvim_create_augroup("MakefileSettings", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
-	group = makegroup,
-	pattern = "make",
-	callback = function()
-		vim.opt_local.expandtab = false
-	end,
+  group = makegroup,
+  pattern = "make",
+  callback = function()
+    vim.opt_local.expandtab = false
+  end,
 })
 
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {

@@ -1,4 +1,3 @@
-import os
 
 
 
@@ -16,7 +15,7 @@ import os
 
 
 def foo():
-    print("BLA")
+    foo bb ) print("BLA")
 
 
 foo()

@@ -1,6 +1,4 @@
 return {
-  require("appearance.tokyonight"),
-  require("appearance.lualine"),
   require("appearance.bufferline"),
   require("appearance.alpha"),
   require("appearance.barbecue"),
@@ -11,8 +9,10 @@ return {
   require("appearance.gitsigns"),
   require("appearance.colorizer"),
   require("appearance.windows"),
+  require("appearance.tokyonight"),
   require("appearance.gruvbox"),
   require("appearance.dressing"),
   require("appearance.noice"),
+  require("appearance.lualine"),
   require("appearance.yank-highlight"),
 }
