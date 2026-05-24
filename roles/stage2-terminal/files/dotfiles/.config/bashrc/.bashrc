@@ -8,17 +8,17 @@ case $- in
 esac
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ "${debian_chroot:-}" = "" ] && [ -r /etc/debian_chroot ]; then
-	debian_chroot=$(cat /etc/debian_chroot)
+  debian_chroot=$(cat /etc/debian_chroot)
 fi
 #--- Prompt -------------------------------------------------------------------
 if [[ -f ~/.config/bashrc/.bashrc_colors ]]; then
-	source ~/.config/bashrc/.bashrc_colors
+  source ~/.config/bashrc/.bashrc_colors
 fi
 if [[ -f ~/.config/bashrc/.bashrc_distro ]]; then
-	source ~/.config/bashrc/.bashrc_colors
+  source ~/.config/bashrc/.bashrc_colors
 fi
 if [[ -f ~/.config/bashrc/.bashrc_prompt ]]; then
-	source ~/.config/bashrc/.bashrc_prompt
+  source ~/.config/bashrc/.bashrc_prompt
 fi
 #--- History ------------------------------------------------------------------
 HISTSIZE=99999
@@ -30,38 +30,38 @@ shopt -s checkwinsize  # update the values of LINES and COLUMNS.
 #--- Aliases ------------------------------------------------------------------
 ALIASDIR_COMMON="/etc/bash_aliases.d"
 if [[ -d "$ALIASDIR_COMMON" ]]; then
-	for file in "$ALIASDIR_COMMON"/.bashrc_alias_*; do
-		[[ -e "$file" ]] || continue # handle no matches
-		source "$file"
-	done
+  for file in "$ALIASDIR_COMMON"/.bashrc_alias_*; do
+    [[ -e "$file" ]] || continue # handle no matches
+    source "$file"
+  done
 fi
 if [[ -f ~/.config/bashrc/.bashrc_alias_custom ]]; then
-	source ~/.config/bashrc/.bashrc_alias_custom
+  source ~/.config/bashrc/.bashrc_alias_custom
 fi
 #--- Bash completion ----------------------------------------------------------
 if ! shopt -oq posix; then
-	if [ -f /usr/share/bash-completion/bash_completion ]; then
-		. /usr/share/bash-completion/bash_completion
-	elif [ -f /etc/bash_completion ]; then
-		. /etc/bash_completion
-	fi
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
 fi
 
 #--- Bitwarden Helper -----------------------------------------------------
 if [[ -n "${KITTY_PASSWORD_MANAGER}" ]]; then
-	#trap 'exit' EXIT
-	kitty @ set-colors background=#1e1e2e
-	if [[ $? -eq 0 ]]; then
-		ssh vault bw-fzf
-		pw=$(ssh vault bw-getpw)
-		[[ -n "${pw}" ]] && echo "${pw}" | kitty @ send-text -m id:"${KITTY_PASSWORD_MANAGER}" --stdin
-		[[ -z "${pw}" ]] && echo "Got nothing!" && sleep 2 && exit 1
-		exit 0
-	fi
+  #trap 'exit' EXIT
+  kitty @ set-colors background=#1e1e2e
+  if [[ $? -eq 0 ]]; then
+    ssh vault bw-fzf
+    pw=$(ssh vault bw-getpw)
+    [[ -n "${pw}" ]] && echo "${pw}" | kitty @ send-text -m id:"${KITTY_PASSWORD_MANAGER}" --stdin
+    [[ -z "${pw}" ]] && echo "Got nothing!" && sleep 2 && exit 1
+    exit 0
+  fi
 fi
 #--- Path Variable -----------------------------------------------------
 if [[ ! -d "$HOME/.local/bin" ]]; then
-	mkdir -p "$HOME/.local/bin"
+  mkdir -p "$HOME/.local/bin"
 fi
 export PATH=$PATH:~/.local/bin
 #--- Environment Variable -----------------------------------------------------
@@ -84,16 +84,16 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_ENABLE_HIGHDPI_SCALING=1
 # export TERM=xterm-kitty
 # export DISPLAY=:0
+
 #--- Zoxide --------------------------------------------------------------------
 eval "$(zoxide init bash)"
 #--- Cargo ---------------------------------------------------------------------
 if [[ -f "$HOME/.cargo/env" ]]; then
-	. "$HOME/.cargo/env"
+  . "$HOME/.cargo/env"
 fi
-
 #--- opencode ------------------------------------------------------------------
 if [[ -f "$HOME"/.opencode/bin/opencode ]]; then
-	export PATH="$HOME"/.opencode/bin:$PATH
+  export PATH="$HOME"/.opencode/bin:$PATH
 fi
 #--- fzf -----------------------------------------------------------------------
 export FZF_DEFAULT_OPTS="
