@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# shellcheck disable=SC2139,SC2015,SC2142,SC2154
+
+# ps stuff
+alias ssh-vault="ssh vault bw-fzf"
+alias ssh-oc="ssh dev-oc chat"
+alias ssh-hermes="ssh dev-hermes chat"

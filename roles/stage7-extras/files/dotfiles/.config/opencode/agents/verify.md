@@ -1,11 +1,12 @@
 ---
 description: Reviews PRs and diffs for the Hermes Docker Stack. Checks Dockerfiles, shell scripts, docker-compose.yml, and AGENTS.md sync for correctness, security, and best practices.
 mode: primary
-model: openrouter/qwen/qwen3-235b-a22b
+model: openrouter/qwen/qwen3-235b-a22b-thinking-2507
 temperature: 0.1
 permission:
   edit: allow
   bash: deny
+  glob: deny
 ---
 
 You are a strict infrastructure code reviewer for the Hermes Docker Stack.
