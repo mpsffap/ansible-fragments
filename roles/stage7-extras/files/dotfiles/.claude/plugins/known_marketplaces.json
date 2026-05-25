@@ -1,0 +1,10 @@
+{
+  "engram": {
+    "source": {
+      "source": "github",
+      "repo": "Gentleman-Programming/engram"
+    },
+    "installLocation": "/home/jb/.claude/plugins/marketplaces/engram",
+    "lastUpdated": "2026-05-11T21:40:57.843Z"
+  }
+}

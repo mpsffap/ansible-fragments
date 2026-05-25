@@ -26,6 +26,7 @@ STAGE7CFG="$STAGE7DOT"/.config
 
 # local dirs
 LOCCFG="$HOME/.config"
+LOCHOM="$HOME"
 LOCBIN="$HOME/.local/bin"
 LOCETC="/etc"
 
@@ -55,3 +56,4 @@ cp -r "$LOCCFG"/picom.conf "$STAGE4DOT"/
 
 # Update stage7
 cp -r "$LOCCFG"/opencode "$STAGE7CFG"/
+cp -r "$LOCHOM"/.claude "$STAGE7DOT"/

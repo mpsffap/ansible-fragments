@@ -24,9 +24,20 @@
   when: not opencode_installed.stat.exists
 
 - name: EXTRAS-OPTIONAL-DEV-OPENCODE - Copy opencode config
-  ansible.builtin.copy:
+  ansible.posix.synchronize:
     src: "{{ src_dotfiles }}/.config/opencode"
     dest: "{{ user.home }}/.config"
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
-    mode: "0700"
+    recursive: true
+    delete: false
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: EXTRAS-OPTIONAL-DEV-OPENCODE - Copy claude config
+  ansible.posix.synchronize:
+    src: "{{ src_dotfiles }}/.claude/"
+    dest: "{{ user.home }}/"
+    recursive: true
+    delete: false
+  become: true
+  become_user: "{{ user.name }}"
+

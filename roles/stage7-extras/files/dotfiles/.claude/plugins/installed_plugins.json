@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "plugins": {
+    "engram@engram": [
+      {
+        "scope": "user",
+        "installPath": "/home/jb/.claude/plugins/cache/engram/engram/0.1.0",
+        "version": "0.1.0",
+        "installedAt": "2026-05-11T21:40:58.075Z",
+        "lastUpdated": "2026-05-11T21:40:58.075Z",
+        "gitCommitSha": "42160c71bfde19928de611a9da6e6e4c93a99f10"
+      }
+    ]
+  }
+}
