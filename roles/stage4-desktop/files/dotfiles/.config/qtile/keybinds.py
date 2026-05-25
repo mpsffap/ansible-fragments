@@ -45,9 +45,9 @@ keys_f = [
     Key(a, "F7", spawn_once(ap), lazy.group["9"].toscreen(), desc="Music"),
     Key([], "F4", lazy.group["scratchpad"].dropdown_toggle("pavu")),
     Key([], "F5", lazy.group["scratchpad"].dropdown_toggle("opencode")),
-    Key([], "F6", lazy.group["scratchpad"].dropdown_toggle("calc")),
-    Key([], "F7", lazy.group["scratchpad"].dropdown_toggle("htop")),
-    Key([], "F8", lazy.group["scratchpad"].dropdown_toggle("bpytop")),
+    Key([], "F6", lazy.group["scratchpad"].dropdown_toggle("hermes")),
+    Key([], "F7", lazy.group["scratchpad"].dropdown_toggle("calc")),
+    Key([], "F8", lazy.group["scratchpad"].dropdown_toggle("htop")),
 ]
 
 

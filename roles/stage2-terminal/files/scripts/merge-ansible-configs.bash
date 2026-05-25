@@ -19,6 +19,11 @@ STAGE4DOT="$STAGE4FLS"/dotfiles
 STAGE4SCR="$STAGE4FLS"/scripts
 STAGE4CFG="$STAGE4DOT"/.config
 
+# stage7
+STAGE7FLS="$ROLEDIR"/stage7-extras/files
+STAGE7DOT="$STAGE7FLS"/dotfiles
+STAGE7CFG="$STAGE7DOT"/.config
+
 # local dirs
 LOCCFG="$HOME/.config"
 LOCBIN="$HOME/.local/bin"
@@ -40,8 +45,6 @@ cp -r "$LOCCFG"/skeletons/* "$STAGE2SKL"/
 cp -r "$LOCBIN"/merge-ansible-configs.bash "$STAGE2SCR"/
 cp -r "$LOCBIN"/new-skeleton.bash "$STAGE2SCR"/
 
-exit 0
-
 # Update Stage4
 cp -r "$LOCCFG"/qtile "$STAGE4CFG"/
 cp -r "$LOCCFG"/kanata "$STAGE4CFG"/
@@ -49,3 +52,6 @@ cp -r "$LOCCFG"/Thunar "$STAGE4CFG"/
 cp -r "$LOCBIN"/rofi-boot-* "$STAGE4SCR"/
 cp -r "$LOCBIN"/qtile-* "$STAGE4SCR"/
 cp -r "$LOCCFG"/picom.conf "$STAGE4DOT"/
+
+# Update stage7
+cp -r "$LOCCFG"/opencode "$STAGE7CFG"/

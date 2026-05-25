@@ -22,3 +22,11 @@
   become_user: "{{ user.name }}"
   ansible.builtin.shell: /tmp/opencode-install.sh
   when: not opencode_installed.stat.exists
+
+- name: EXTRAS-OPTIONAL-DEV-OPENCODE - Copy opencode config
+  ansible.builtin.copy:
+    src: "{{ src_dotfiles }}/.config/opencode"
+    dest: "{{ user.home }}/.config"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0700"

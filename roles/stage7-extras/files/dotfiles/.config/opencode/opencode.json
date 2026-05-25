@@ -1,19 +1,25 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "formatter": true,
   "lsp": true,
-  "autoupdate": false,
   "permission": {
     "bash": {
-      "*": "ask",
-      "git *": "ask",
-      "npm *": "ask",
-      "rm *": "ask",
-      "grep *": "allow"
+      "*": "allow",
+      "git commit *": "ask",
+      "git push": "ask",
+      "git push *": "ask",
+      "git push --force *": "ask",
+      "git rebase *": "ask",
+      "git reset --hard *": "ask"
     },
-    "edit": {
-      "*": "deny",
-      "AGENTS.md": "allow",
-      "SPEC.md": "allow"
+    "read": {
+      "*": "allow",
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+      "**/credentials.json": "deny",
+      "**/secrets/**": "deny",
+      "*.env": "deny",
+      "*.env.*": "deny"
     }
   }
 }

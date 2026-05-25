@@ -26,6 +26,7 @@ enable_extras_optional_dev_lmstudio: true
 enable_extras_optional_dev_lmstudio_desktop: true
 
 # -- Source files
+src_dotfiles: "../files/dotfiles"
 src_etcfiles: "../files/etc"
 # src_backup: "/media/disks/backup/backup/backup_otr"
 # src_backup_sshkeys: "/media/disks/backup/backup/backup_otr/ssh/keys"
