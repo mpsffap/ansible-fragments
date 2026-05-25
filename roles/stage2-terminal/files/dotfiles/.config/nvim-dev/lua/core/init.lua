@@ -11,4 +11,5 @@ return {
 	require("core.undotree"),
 	require("core.telescope"),
 	require("core.which-key"),
+	require("core.devicons"),
 }
