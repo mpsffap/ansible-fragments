@@ -2,24 +2,35 @@
   "$schema": "https://opencode.ai/config.json",
   "formatter": true,
   "lsp": true,
-  "permission": {
-    "bash": {
-      "*": "allow",
-      "git commit *": "ask",
-      "git push": "ask",
-      "git push *": "ask",
-      "git push --force *": "ask",
-      "git rebase *": "ask",
-      "git reset --hard *": "ask"
+  "provider": {
+    "locallmstudio": {
+      "api": "openai",
+      "name": "Local LM Studio",
+      "options": {
+        "baseURL": "http://localhost:1234/v1"
+      },
+      "models": {
+        "bugtraceai-apex-g4-26b": {},
+        "zai.org/glm-4.6v-flash": {},
+        "cybeross-2.0-20b-i1": {},
+        "essentialai/rnj-1": {},
+        "qwen3-4b-cybersec": {},
+        "hermes-2-pro-llama-3-8b": {},
+        "qwen3-coder-30b-a3b-instruct": {},
+        "deepseek-r1-0528-qwen3-8b": {},
+        "qwen3.5-9b-deepseek-v4-flash": {}
+      }
     },
-    "read": {
-      "*": "allow",
-      "**/.env": "deny",
-      "**/.env.*": "deny",
-      "**/credentials.json": "deny",
-      "**/secrets/**": "deny",
-      "*.env": "deny",
-      "*.env.*": "deny"
+    "openrouter": {
+      "api": "openai",
+      "name": "OpenRouter",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1"
+      },
+      "models": {
+        "deepseek/deepseek-v4-flash": {}
+      }
     }
-  }
+  },
+  "shell": "/bin/bash"
 }
