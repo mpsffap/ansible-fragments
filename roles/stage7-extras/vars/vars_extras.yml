@@ -5,7 +5,7 @@ enable_extras_base: true
 enable_extras_base_essentials: true
 # Common
 enable_extras_common: true
-enable_extras_common_backup: false
+enable_extras_common_backup: true
 enable_extras_common_gaming: false
 enable_extras_common_gaming_essentials: true
 enable_extras_common_gaming_dxvk: true
@@ -21,17 +21,17 @@ enable_extras_optional_dev_latex: false
 enable_extras_optional_dev_dotnet: false
 enable_extras_optional_dev_espidf: false
 enable_extras_optional_dev_unity: false
-enable_extras_optional_dev_opencode: true
-enable_extras_optional_dev_lmstudio: true
-enable_extras_optional_dev_lmstudio_desktop: true
+enable_extras_optional_dev_opencode: false
+enable_extras_optional_dev_lmstudio: false
+enable_extras_optional_dev_lmstudio_desktop: false
 
 # -- Source files
 src_dotfiles: "../files/dotfiles"
 src_etcfiles: "../files/etc"
-# src_backup: "/media/disks/backup/backup/backup_otr"
+src_backup: "/media/1tbssd/backup/backup_ansible"
 # src_backup_sshkeys: "/media/disks/backup/backup/backup_otr/ssh/keys"
-src_backup: "~/backup/backup_otr"
-src_backup_ssh: "~/backup/backup_otr/ssh"
+# src_backup: "~/backup/backup_otr"
+src_backup_ssh: "/media/1tbssd/backup/backup_ansible/ssh/"
 
 # -- Destination files
 dst_unity_key: "/usr/share/keyrings/Unity_Technologies_ApS.gpg"

@@ -15,7 +15,7 @@ enable_desktop_optional: true
 enable_desktop_optional_gnometools: true
 enable_desktop_optional_brave: true
 enable_desktop_optional_spotify: true
-enable_desktop_optional_kanata: true
+enable_desktop_optional_kanata: false
 
 # -- Source files
 src_dotfiles: "{{ role_path }}/files/dotfiles"

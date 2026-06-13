@@ -1,0 +1,3 @@
+[target_hosts]
+contabo-deploy ansible_user=deploy ansible_port=22
+
