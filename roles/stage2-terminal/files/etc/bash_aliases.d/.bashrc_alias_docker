@@ -15,6 +15,13 @@ function dlogs() { docker logs -f "$@"; }
 function diatagged() { docker images -a | grep -v "<none>" "$@"; }
 function dbash() { docker exec -it "$1" bash; }
 function dsh() { docker exec -it "$1" sh; }
+function dcb() { docker compose build "$@"; }
+function dcbn() { docker compose build --no-cache "$@"; }
+function dcup() { docker compose up "$@"; }
+function dcupd() { docker compose up -d "$@"; }
+function dcre() { docker compose down "$@" && docker compose up -d "$@"; }
+function dcrel() { docker compose down "$@" && docker compose up -d "$@" && docker compose logs -f "$@";}
+function dcdown() { docker compose down "$@"; }
 function dip() { 
     docker exec "$1" cat /etc/hosts | grep "$1" | cut -fmt 1; 
 }
@@ -50,6 +57,10 @@ complete -F _complete_docker_containers dsh
 complete -F _complete_docker_containers dip
 complete -F _complete_docker_containers dips
 complete -F _complete_docker_containers dlogs
+complete -F _complete_docker_containers dcup
+complete -F _complete_docker_containers dcupd
+complete -F _complete_docker_containers dcdown
+complete -F _complete_docker_containers dcre
 complete -F _complete_docker_images dirm
 complete -F _complete_docker_images dia
 complete -F _complete_docker_images diatagged

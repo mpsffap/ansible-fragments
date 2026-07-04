@@ -22,52 +22,20 @@ users:
   #       path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa.pub"
   #   authorized_keys:
   #     - path: "{{ playbook_dir }}/../testfiles/identities/dummy/authorized_keys"
-  # - name: jb
-  #   # uid: 1000
-  #   # gid: 1000
-  #   group: "jb"
-  #   home: /home/jb
-  #   groups: ["admin", "config"]
-  #   append_groups: true
-  #   comment: "JB"
-  #   shell: /bin/bash
-  #   create_home: true
-  #   system: false
-  #   expires: -1
-  #   # password: ""
-  #   password: "jbpass"
-  #   # password: "$6$rounds=656000$TyhD0QYWPJgvbaOz$D6N9XwQNhlmUi2h4.Fp7CMBvAqr1b/uTBzCn2fO9Pd1aeFxdeDUSO2y.o./CHqD5sLUBW.veBRVLNGl7n2OLG1"
-  #   state: present
-  #   # state: absent
-  #   sudo:
-  #     nopasswd: false
-  #     macros:
-  #       - ADMIN_DEFAULT
-  #       - ADMIN_DEBUG
-  #   ssh_keys:
-  #     - name: id_rsa
-  #       path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa"
-  #       # content: "-----BEGIN RSA PRIVATE KEY-----..."
-  #     - name: id_rsa.pub
-  #       path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa.pub"
-  #       # content: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-  #   authorized_keys:
-  #     - path: "{{ playbook_dir }}/../testfiles/identities/dummy/authorized_keys"
-  #     # - content: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
-  - name: odem
+  - name: jb
     # uid: 1000
     # gid: 1000
-    group: "odem"
-    home: /home/odem
+    group: "jb"
+    home: /home/jb
     groups: ["admin", "config"]
     append_groups: true
-    comment: "ODEM"
+    comment: "JB"
     shell: /bin/bash
     create_home: true
     system: false
     expires: -1
     # password: ""
-    password: "odempass"
+    password: "jbpass"
     # password: "$6$rounds=656000$TyhD0QYWPJgvbaOz$D6N9XwQNhlmUi2h4.Fp7CMBvAqr1b/uTBzCn2fO9Pd1aeFxdeDUSO2y.o./CHqD5sLUBW.veBRVLNGl7n2OLG1"
     state: present
     # state: absent
@@ -76,6 +44,38 @@ users:
       macros:
         - ADMIN_DEFAULT
         - ADMIN_DEBUG
+    # ssh_keys:
+    #   - name: id_rsa
+    #     path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa"
+    #     # content: "-----BEGIN RSA PRIVATE KEY-----..."
+    #   - name: id_rsa.pub
+    #     path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa.pub"
+    #     # content: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+    # authorized_keys:
+    #   - path: "{{ playbook_dir }}/../testfiles/identities/dummy/authorized_keys"
+      # - content: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+  # - name: odem
+  #   # uid: 1000
+  #   # gid: 1000
+  #   group: "odem"
+  #   home: /home/odem
+  #   groups: ["admin", "config"]
+  #   append_groups: true
+  #   comment: "ODEM"
+  #   shell: /bin/bash
+  #   create_home: true
+  #   system: false
+  #   expires: -1
+  #   # password: ""
+  #   password: "odempass"
+  #   # password: "$6$rounds=656000$TyhD0QYWPJgvbaOz$D6N9XwQNhlmUi2h4.Fp7CMBvAqr1b/uTBzCn2fO9Pd1aeFxdeDUSO2y.o./CHqD5sLUBW.veBRVLNGl7n2OLG1"
+  #   state: present
+  #   # state: absent
+  #   sudo:
+  #     nopasswd: false
+  #     macros:
+  #       - ADMIN_DEFAULT
+  #       - ADMIN_DEBUG
     # ssh_keys:
     #   - name: id_rsa
     #     path: "{{ playbook_dir }}/../testfiles/identities/dummy/id_rsa"

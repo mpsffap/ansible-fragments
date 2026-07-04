@@ -32,10 +32,8 @@ LOCETC="/etc"
 
 # Update Stage2
 cp -r "$LOCCFG"/nvim "$STAGE2CFG"/
-cp -r "$LOCCFG"/nvim-core "$STAGE2CFG"/
+# cp -r "$LOCCFG"/nvim-core "$STAGE2CFG"/
 cp -r "$LOCCFG"/nvim-dev "$STAGE2CFG"/
-cp -r "$LOCCFG"/nvim-minimal "$STAGE2CFG"/
-cp -r "$LOCCFG"/nvim-tools "$STAGE2CFG"/
 cp -r "$LOCCFG"/bashrc "$STAGE2CFG"/
 cp -r "$LOCETC"/bash_aliases.d/ "$STAGE2ETC"/
 cp -r "$LOCCFG"/kitty "$STAGE2CFG"/
@@ -55,5 +53,5 @@ cp -r "$LOCBIN"/qtile-* "$STAGE4SCR"/
 cp -r "$LOCCFG"/picom.conf "$STAGE4DOT"/
 
 # Update stage7
-cp -r "$LOCCFG"/opencode "$STAGE7CFG"/
-cp -r "$LOCHOM"/.claude "$STAGE7DOT"/
+# cp -r "$LOCCFG"/opencode "$STAGE7CFG"/
+# cp -r "$LOCHOM"/.claude "$STAGE7DOT"/

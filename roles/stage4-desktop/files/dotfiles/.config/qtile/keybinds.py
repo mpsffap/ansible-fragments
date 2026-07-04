@@ -18,6 +18,7 @@ from globals import (
     spotifystop,
     tm,
     fm,
+    ds,
     xset,
     bb,
     ap,
@@ -103,6 +104,7 @@ keys_static = [
     Key(modctrl, "a", lazy.spawn(startup), desc="autostart"),
     Key(modctrl, "Delete", lazy.spawn(rofipower), desc="Powermenu"),
     Key(modctrl, "d", lazy.spawn(rofiautorandr), desc="Powermenu"),
+    Key(modctrl, "f", lazy.spawn(ds), desc="Powermenu"),
     Key(m, "d", lazy.spawncmd(), desc="dmenu"),
     # Move between groups
     Key(a, "Left", lazy.screen.prev_group(), desc="Move prev"),

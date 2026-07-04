@@ -5,6 +5,7 @@ local quickfix = require("helpers.quickfix")
 -- ── [E]scape / [m]ode switching ──────────────────────────────────────
 map("i", "jk", "<Esc>", { desc = "[Default] Exit insert mode" })
 map("i", "<C-c>", "<Esc>", { desc = "[Default] Escape via <C-c>" })
+map("n", "<C-c>", "<cmd>NoiceDismiss<CR>", { desc = "[Noice] Dismiss all messages" })
 
 -- ── [W]indow navigation ─────────────────────────────────────────────
 map("n", "<C-h>", "<C-w>h", { desc = "[Default] Window left" })

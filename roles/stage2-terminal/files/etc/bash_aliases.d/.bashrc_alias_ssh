@@ -4,8 +4,5 @@
 
 # ps stuff
 alias ssh-vault="ssh vault bw-fzf"
-alias ssh-opencode="ssh ailab-opencode"
-alias ssh-hermes="ssh ailab-hermes"
-alias ssh-kokoro="ssh ailab-kokoro"
-alias ssh-ollama="ssh ailab-ollama"
-alias ssh-openwebui="ssh ailab-openwebui"
+alias ssh-oc="ssh dev-oc chat"
+alias ssh-hermes="ssh dev-hermes chat"

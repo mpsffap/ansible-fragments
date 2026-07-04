@@ -6,3 +6,5 @@
 alias oo="opencode"
 alias oc="opencode -c"
 
+alias odo="ssh ailab-opencode opencode"
+alias odc="ssh ailab-opencode opencodei -c"
