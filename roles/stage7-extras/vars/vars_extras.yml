@@ -5,7 +5,7 @@ enable_extras_base: true
 enable_extras_base_essentials: true
 # Common
 enable_extras_common: true
-enable_extras_common_backup: true
+enable_extras_common_backup: false
 enable_extras_common_gaming: false
 enable_extras_common_gaming_essentials: true
 enable_extras_common_gaming_dxvk: true
